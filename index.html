@@ -89,61 +89,69 @@ header{
 .leg-box.aprobada {background:var(--aprobada-bg);border-color:var(--aprobada-border);}
 .legend-hint{font-family:'Share Tech Mono',monospace;font-size:0.55rem;color:var(--dim);letter-spacing:0.06em;margin-left:auto;}
 
-/* MALLA WRAPPER */
+/* APP */
 #app{display:none;}
-.malla-outer{padding:16px 20px 40px;min-width:900px;}
+.malla-outer{padding:14px 20px 40px;min-width:900px;}
 
 /* YEAR ROW */
-.year-row{display:flex;align-items:flex-start;margin-bottom:0;}
+.year-row{display:flex;align-items:stretch;margin-bottom:6px;}
 .year-label-col{
-  width:72px;flex-shrink:0;padding-top:14px;
-  font-family:'Share Tech Mono',monospace;font-size:0.6rem;color:var(--accent);
-  letter-spacing:0.1em;text-align:right;padding-right:14px;line-height:1.5;
+  width:68px;flex-shrink:0;
+  display:flex;flex-direction:column;justify-content:center;
+  padding-right:12px;border-right:1px solid var(--border);margin-right:12px;
+  font-family:'Share Tech Mono',monospace;text-align:right;
 }
-.year-label-col .yn{font-size:0.85rem;font-weight:700;}
-.year-label-col .ys{color:var(--muted);font-size:0.52rem;}
-.materias-row{
-  flex:1;display:grid;gap:8px;
-  padding:10px 0;
-  border-top:1px solid var(--border);
-}
-/* dynamic grid columns set via JS */
+.year-label-col .yn{font-size:0.95rem;color:var(--accent);font-weight:700;letter-spacing:0.1em;}
+.year-label-col .ys{font-size:0.5rem;color:var(--muted);letter-spacing:0.08em;margin-top:2px;line-height:1.4;}
 
-/* SVG ARROWS */
-#arrows-svg{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1;}
-.malla-container{position:relative;}
+.year-materias{
+  flex:1;display:grid;gap:7px;align-items:start;
+}
 
 /* MATERIA CARD */
 .materia{
   border-radius:5px;border:1px solid var(--pendiente-border);
   background:var(--pendiente-bg);
   padding:8px 10px;cursor:pointer;
-  transition:all 0.15s ease;user-select:none;
-  position:relative;z-index:2;
-  display:flex;flex-direction:column;gap:3px;
-  min-height:58px;
+  transition:filter 0.12s, transform 0.1s;
+  user-select:none;
+  display:flex;flex-direction:column;gap:2px;
+  min-height:54px;
 }
-.materia:hover{filter:brightness(1.25);transform:scale(1.02);}
-.materia:active{transform:scale(0.98);}
-.mat-name{font-family:'Rajdhani',sans-serif;font-size:0.78rem;font-weight:600;color:var(--pendiente-text);line-height:1.2;letter-spacing:0.03em;}
-.mat-status{font-family:'Share Tech Mono',monospace;font-size:0.52rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);}
-.mat-libre{font-family:'Share Tech Mono',monospace;font-size:0.46rem;color:var(--accent);opacity:0.6;letter-spacing:0.06em;}
+.materia:hover{filter:brightness(1.3);transform:scale(1.015);}
+.materia:active{transform:scale(0.97);}
+.mat-name{font-family:'Rajdhani',sans-serif;font-size:0.78rem;font-weight:600;color:var(--pendiente-text);line-height:1.2;letter-spacing:0.02em;}
+.mat-status{font-family:'Share Tech Mono',monospace;font-size:0.5rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-top:1px;}
 
+/* libre badge */
+.mat-libre{
+  display:inline-flex;align-items:center;gap:3px;
+  font-family:'Share Tech Mono',monospace;font-size:0.46rem;
+  color:var(--accent);opacity:0.65;letter-spacing:0.06em;
+  margin-top:2px;cursor:help;position:relative;
+}
+.mat-libre:hover::after{
+  content:'Se puede rendir en condición LIBRE si la escolaridad lo permite (RIEP Art. 123 bis)';
+  position:absolute;bottom:calc(100% + 6px);left:0;
+  background:#0d1a2e;border:1px solid var(--accent);
+  color:var(--text);font-size:0.62rem;letter-spacing:0.04em;line-height:1.4;
+  padding:6px 10px;border-radius:5px;width:220px;z-index:100;
+  white-space:normal;pointer-events:none;
+  box-shadow:0 4px 16px rgba(0,0,0,0.6);
+}
+
+/* state variants */
 .materia.cursable{border-color:var(--cursable-border);background:var(--cursable-bg);}
 .materia.cursable .mat-name{color:var(--cursable-text);}
-.materia.cursable .mat-status{color:var(--cursable-text);opacity:0.8;}
+.materia.cursable .mat-status{color:var(--cursable-text);opacity:0.75;}
 
 .materia.regular{border-color:var(--regular-border);background:var(--regular-bg);}
 .materia.regular .mat-name{color:var(--regular-text);}
-.materia.regular .mat-status{color:var(--regular-text);opacity:0.8;}
+.materia.regular .mat-status{color:var(--regular-text);opacity:0.75;}
 
 .materia.aprobada{border-color:var(--aprobada-border);background:var(--aprobada-bg);}
 .materia.aprobada .mat-name{color:var(--aprobada-text);}
-.materia.aprobada .mat-status{color:var(--aprobada-text);opacity:0.8;}
-
-/* highlight when hovering shows deps */
-.materia.highlight-from{box-shadow:0 0 0 2px var(--aprobada-border);}
-.materia.highlight-to  {box-shadow:0 0 0 2px var(--accent);}
+.materia.aprobada .mat-status{color:var(--aprobada-text);opacity:0.75;}
 
 @media(max-width:900px){.malla-outer{padding:10px;}}
 </style>
@@ -201,14 +209,11 @@ header{
     <div class="leg-item"><div class="leg-box cursable"></div>PUEDO CURSAR</div>
     <div class="leg-item"><div class="leg-box regular"></div>REGULAR</div>
     <div class="leg-item"><div class="leg-box aprobada"></div>APROBADA</div>
-    <div class="legend-hint">CLICK → cicla estado</div>
+    <div class="legend-hint">CLICK → cicla estado &nbsp;·&nbsp; ★ = se puede rendir libre (hover para info)</div>
   </div>
 
   <div class="malla-outer">
-    <div class="malla-container" id="malla-container">
-      <svg id="arrows-svg"></svg>
-      <div id="malla-grid"></div>
-    </div>
+    <div id="malla-grid"></div>
   </div>
 </div>
 
@@ -226,93 +231,94 @@ const firebaseConfig = {
   messagingSenderId:"292837545501",
   appId:"1:292837545501:web:81afc0868b7c9e482358f4"
 };
-const app  = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db   = getFirestore(app);
-const prov = new GoogleAuthProvider();
+const fbApp = initializeApp(firebaseConfig);
+const auth  = getAuth(fbApp);
+const db    = getFirestore(fbApp);
+const prov  = new GoogleAuthProvider();
 
 // ─── DATA ────────────────────────────────────────────────────
-// Each materia: { id, name, curso, sem, libre, corrCursar[], corrRendir[] }
 const materias = [
-  {id:'10026',name:'Derecho Privado I',       curso:1,sem:1,libre:false,corrCursar:[],corrRendir:[]},
-  {id:'10027',name:'Derecho Romano',           curso:1,sem:1,libre:false,corrCursar:[],corrRendir:[]},
-  {id:'10028',name:'Derecho Político',         curso:1,sem:1,libre:false,corrCursar:[],corrRendir:[]},
-  {id:'10029',name:'Pensamiento Filosófico',   curso:1,sem:1,libre:false,corrCursar:[],corrRendir:[]},
-  {id:'20020',name:'Derecho Privado II',       curso:1,sem:2,libre:false,corrCursar:['10026'],corrRendir:['10026']},
-  {id:'20021',name:'Derecho Penal I',          curso:1,sem:2,libre:false,corrCursar:[],corrRendir:[]},
-  {id:'20022',name:'Derechos Humanos',         curso:1,sem:2,libre:false,corrCursar:[],corrRendir:[]},
-  {id:'20023',name:'Derecho Constitucional',   curso:1,sem:2,libre:false,corrCursar:['10028'],corrRendir:['10028']},
-  {id:'20024',name:'Antropología',             curso:1,sem:2,libre:true, corrCursar:['10029'],corrRendir:['10029']},
-  {id:'10030',name:'Derecho Privado III',      curso:2,sem:1,libre:true, corrCursar:['20020'],corrRendir:['20020']},
-  {id:'10031',name:'Derecho Penal II',         curso:2,sem:1,libre:false,corrCursar:['20021'],corrRendir:['20021']},
-  {id:'10032',name:'Historia del Derecho',     curso:2,sem:1,libre:false,corrCursar:[],corrRendir:[]},
-  {id:'20025',name:'Der. Pub. Provi. y Munic.',curso:2,sem:1,libre:false,corrCursar:['20023'],corrRendir:['20023']},
-  {id:'10033',name:'Pensamiento Teológico',    curso:2,sem:1,libre:true, corrCursar:['20024'],corrRendir:['20024']},
-  {id:'20026',name:'Derecho Privado IV',       curso:2,sem:2,libre:true, corrCursar:['10030'],corrRendir:['10030']},
-  {id:'20027',name:'Derecho Procesal Civil',   curso:2,sem:2,libre:false,corrCursar:[],corrRendir:[]},
-  {id:'20028',name:'Práctica Profesional I',   curso:2,sem:2,libre:false,corrCursar:[],corrRendir:[]},
-  {id:'20029',name:'Pens. Social Cristiano',   curso:2,sem:2,libre:true, corrCursar:['10033'],corrRendir:['10033']},
-  {id:'20030',name:'Seminario Optativo I',     curso:2,sem:2,libre:false,corrCursar:[],corrRendir:[]},
-  {id:'10034',name:'Derecho Privado V',        curso:3,sem:1,libre:false,corrCursar:['20026'],corrRendir:['20026']},
-  {id:'10035',name:'Derecho del Trabajo',      curso:3,sem:1,libre:false,corrCursar:[],corrRendir:[]},
-  {id:'10036',name:'Derecho Procesal Penal',   curso:3,sem:1,libre:false,corrCursar:['10031'],corrRendir:['10031']},
-  {id:'10037',name:'Der. Proc. Cons. y Conv.', curso:3,sem:1,libre:false,corrCursar:['20023'],corrRendir:['20023']},
-  {id:'10038',name:'Sol. Altern. Conflictos',  curso:3,sem:1,libre:false,corrCursar:[],corrRendir:[]},
-  {id:'10039',name:'Sociología Jurídica',      curso:3,sem:1,libre:false,corrCursar:[],corrRendir:[]},
-  {id:'20031',name:'Derecho Concursal',        curso:3,sem:2,libre:true, corrCursar:['10034'],corrRendir:['10034']},
-  {id:'20032',name:'Derecho Privado VI',       curso:3,sem:2,libre:true, corrCursar:['20026'],corrRendir:['20026']},
-  {id:'20033',name:'Práctica Profesional II',  curso:3,sem:2,libre:false,corrCursar:['20027'],corrRendir:['20027']},
-  {id:'20034',name:'Filosofía del Derecho',    curso:3,sem:2,libre:true, corrCursar:[],corrRendir:[]},
-  {id:'20035',name:'Der. Seguridad Social',    curso:3,sem:2,libre:false,corrCursar:[],corrRendir:[]},
-  {id:'20036',name:'Sem. Form. Hum. I',        curso:3,sem:2,libre:true, corrCursar:[],corrRendir:[]},
-  {id:'20037',name:'Seminario Optativo II',    curso:3,sem:2,libre:false,corrCursar:[],corrRendir:[]},
-  {id:'10040',name:'Derecho Privado VII',      curso:4,sem:1,libre:false,corrCursar:[],corrRendir:[]},
-  {id:'10041',name:'Derecho Privado VIII',     curso:4,sem:1,libre:false,corrCursar:['20026'],corrRendir:['20026']},
-  {id:'10042',name:'Der. Internacional Pub.',  curso:4,sem:1,libre:false,corrCursar:[],corrRendir:[]},
-  {id:'10043',name:'Derecho Administrativo',   curso:4,sem:1,libre:true, corrCursar:['20025'],corrRendir:['20025']},
-  {id:'10044',name:'Sem. Form. Hum. II',       curso:4,sem:1,libre:true, corrCursar:[],corrRendir:[]},
-  {id:'20040',name:'Der. Procesal Laboral',    curso:4,sem:1,libre:false,corrCursar:['10035'],corrRendir:['10035']},
-  {id:'20038',name:'Derecho Privado IX',       curso:4,sem:2,libre:false,corrCursar:['10040'],corrRendir:['10040']},
-  {id:'20039',name:'Der. Proc. Administrativo',curso:4,sem:2,libre:false,corrCursar:['10043'],corrRendir:['10043']},
-  {id:'20056',name:'Der. Niñez y Adolescencia',curso:4,sem:2,libre:false,corrCursar:['10040'],corrRendir:['10040']},
-  {id:'20041',name:'Der. Procesal de Familia', curso:4,sem:2,libre:false,corrCursar:['10040'],corrRendir:['10040']},
-  {id:'20042',name:'Práctica Profesional III', curso:4,sem:2,libre:false,corrCursar:['10036'],corrRendir:['10036']},
-  {id:'20043',name:'Derecho del Consumidor',   curso:4,sem:2,libre:false,corrCursar:['20025'],corrRendir:['20025']},
-  {id:'20044',name:'Ética y Deontología',      curso:4,sem:2,libre:true, corrCursar:[],corrRendir:[]},
-  {id:'20045',name:'Seminario Optativo III',   curso:4,sem:2,libre:false,corrCursar:[],corrRendir:[]},
-  {id:'10045',name:'Der. Amb. y Rec. Nat.',    curso:5,sem:1,libre:true, corrCursar:[],corrRendir:[]},
-  {id:'10046',name:'Der. Internacional Priv.', curso:5,sem:1,libre:true, corrCursar:['20026'],corrRendir:['20026']},
+  // AÑO 1 S1
+  {id:'10026',name:'Derecho Privado I',        curso:1,sem:1,libre:false,corrCursar:[],corrRendir:[]},
+  {id:'10027',name:'Derecho Romano',            curso:1,sem:1,libre:false,corrCursar:[],corrRendir:[]},
+  {id:'10028',name:'Derecho Político',          curso:1,sem:1,libre:false,corrCursar:[],corrRendir:[]},
+  {id:'10029',name:'Pensamiento Filosófico',    curso:1,sem:1,libre:false,corrCursar:[],corrRendir:[]},
+  // AÑO 1 S2
+  {id:'20020',name:'Derecho Privado II',        curso:1,sem:2,libre:false,corrCursar:['10026'],corrRendir:['10026']},
+  {id:'20021',name:'Derecho Penal I',           curso:1,sem:2,libre:false,corrCursar:[],corrRendir:[]},
+  {id:'20022',name:'Derechos Humanos',          curso:1,sem:2,libre:false,corrCursar:[],corrRendir:[]},
+  {id:'20023',name:'Derecho Constitucional',    curso:1,sem:2,libre:false,corrCursar:['10028'],corrRendir:['10028']},
+  {id:'20024',name:'Antropología',              curso:1,sem:2,libre:true, corrCursar:['10029'],corrRendir:['10029']},
+  // AÑO 2 S1
+  {id:'10030',name:'Derecho Privado III',       curso:2,sem:1,libre:true, corrCursar:['20020'],corrRendir:['20020']},
+  {id:'10031',name:'Derecho Penal II',          curso:2,sem:1,libre:false,corrCursar:['20021'],corrRendir:['20021']},
+  {id:'10032',name:'Historia del Derecho',      curso:2,sem:1,libre:false,corrCursar:[],corrRendir:[]},
+  {id:'20025',name:'Der. Pub. Provi. y Munic.', curso:2,sem:1,libre:false,corrCursar:['20023'],corrRendir:['20023']},
+  {id:'10033',name:'Pensamiento Teológico',     curso:2,sem:1,libre:true, corrCursar:['20024'],corrRendir:['20024']},
+  // AÑO 2 S2
+  {id:'20026',name:'Derecho Privado IV',        curso:2,sem:2,libre:true, corrCursar:['10030'],corrRendir:['10030']},
+  {id:'20027',name:'Derecho Procesal Civil',    curso:2,sem:2,libre:false,corrCursar:[],corrRendir:[]},
+  {id:'20028',name:'Práctica Profesional I',    curso:2,sem:2,libre:false,corrCursar:[],corrRendir:[]},
+  {id:'20029',name:'Pens. Social Cristiano',    curso:2,sem:2,libre:true, corrCursar:['10033'],corrRendir:['10033']},
+  {id:'20030',name:'Seminario Optativo I',      curso:2,sem:2,libre:false,corrCursar:[],corrRendir:[]},
+  // AÑO 3 S1
+  {id:'10034',name:'Derecho Privado V',         curso:3,sem:1,libre:false,corrCursar:['20026'],corrRendir:['20026']},
+  {id:'10035',name:'Derecho del Trabajo',       curso:3,sem:1,libre:false,corrCursar:[],corrRendir:[]},
+  {id:'10036',name:'Derecho Procesal Penal',    curso:3,sem:1,libre:false,corrCursar:['10031'],corrRendir:['10031']},
+  {id:'10037',name:'Der. Proc. Cons. y Conv.',  curso:3,sem:1,libre:false,corrCursar:['20023'],corrRendir:['20023']},
+  {id:'10038',name:'Sol. Altern. Conflictos',   curso:3,sem:1,libre:false,corrCursar:[],corrRendir:[]},
+  {id:'10039',name:'Sociología Jurídica',       curso:3,sem:1,libre:false,corrCursar:[],corrRendir:[]},
+  // AÑO 3 S2
+  {id:'20031',name:'Derecho Concursal',         curso:3,sem:2,libre:true, corrCursar:['10034'],corrRendir:['10034']},
+  {id:'20032',name:'Derecho Privado VI',        curso:3,sem:2,libre:true, corrCursar:['20026'],corrRendir:['20026']},
+  {id:'20033',name:'Práctica Profesional II',   curso:3,sem:2,libre:false,corrCursar:['20027'],corrRendir:['20027']},
+  {id:'20034',name:'Filosofía del Derecho',     curso:3,sem:2,libre:true, corrCursar:[],corrRendir:[]},
+  {id:'20035',name:'Der. Seguridad Social',     curso:3,sem:2,libre:false,corrCursar:[],corrRendir:[]},
+  {id:'20036',name:'Sem. Form. Hum. I',         curso:3,sem:2,libre:true, corrCursar:[],corrRendir:[]},
+  {id:'20037',name:'Seminario Optativo II',     curso:3,sem:2,libre:false,corrCursar:[],corrRendir:[]},
+  // AÑO 4 S1
+  {id:'10040',name:'Derecho Privado VII',       curso:4,sem:1,libre:false,corrCursar:[],corrRendir:[]},
+  {id:'10041',name:'Derecho Privado VIII',      curso:4,sem:1,libre:false,corrCursar:['20026'],corrRendir:['20026']},
+  {id:'10042',name:'Der. Internacional Pub.',   curso:4,sem:1,libre:false,corrCursar:[],corrRendir:[]},
+  {id:'10043',name:'Derecho Administrativo',    curso:4,sem:1,libre:true, corrCursar:['20025'],corrRendir:['20025']},
+  {id:'10044',name:'Sem. Form. Hum. II',        curso:4,sem:1,libre:true, corrCursar:[],corrRendir:[]},
+  {id:'20040',name:'Der. Procesal Laboral',     curso:4,sem:1,libre:false,corrCursar:['10035'],corrRendir:['10035']},
+  // AÑO 4 S2
+  {id:'20038',name:'Derecho Privado IX',        curso:4,sem:2,libre:false,corrCursar:['10040'],corrRendir:['10040']},
+  {id:'20039',name:'Der. Proc. Administrativo', curso:4,sem:2,libre:false,corrCursar:['10043'],corrRendir:['10043']},
+  {id:'20056',name:'Der. Niñez y Adolescencia', curso:4,sem:2,libre:false,corrCursar:['10040'],corrRendir:['10040']},
+  {id:'20041',name:'Der. Procesal de Familia',  curso:4,sem:2,libre:false,corrCursar:['10040'],corrRendir:['10040']},
+  {id:'20042',name:'Práctica Profesional III',  curso:4,sem:2,libre:false,corrCursar:['10036'],corrRendir:['10036']},
+  {id:'20043',name:'Derecho del Consumidor',    curso:4,sem:2,libre:false,corrCursar:['20025'],corrRendir:['20025']},
+  {id:'20044',name:'Ética y Deontología',       curso:4,sem:2,libre:true, corrCursar:[],corrRendir:[]},
+  {id:'20045',name:'Seminario Optativo III',    curso:4,sem:2,libre:false,corrCursar:[],corrRendir:[]},
+  // AÑO 5 S1
+  {id:'10045',name:'Der. Amb. y Rec. Nat.',     curso:5,sem:1,libre:true, corrCursar:[],corrRendir:[]},
+  {id:'10046',name:'Der. Internacional Priv.',  curso:5,sem:1,libre:true, corrCursar:['20026'],corrRendir:['20026']},
   {id:'10047',name:'Finanzas y Der. Tributario',curso:5,sem:1,libre:false,corrCursar:['20025'],corrRendir:['20025']},
-  {id:'10048',name:'Práctica Profesional IV',  curso:5,sem:1,libre:false,corrCursar:['20033'],corrRendir:['20033']},
-  {id:'10049',name:'Derecho Privado X',        curso:5,sem:1,libre:false,corrCursar:['20031'],corrRendir:['20031']},
-  {id:'10050',name:'Seminario Optativo IV',    curso:5,sem:1,libre:false,corrCursar:[],corrRendir:[]},
-  {id:'20046',name:'Argumentación Jurídica',   curso:5,sem:2,libre:false,corrCursar:['20034'],corrRendir:['20034']},
-  {id:'20047',name:'Metod. Investigación Jur.',curso:5,sem:2,libre:false,corrCursar:[],corrRendir:[]},
-  {id:'20048',name:'Técnicas Litigación Oral', curso:5,sem:2,libre:false,corrCursar:[],corrRendir:[]},
+  {id:'10048',name:'Práctica Profesional IV',   curso:5,sem:1,libre:false,corrCursar:['20033'],corrRendir:['20033']},
+  {id:'10049',name:'Derecho Privado X',         curso:5,sem:1,libre:false,corrCursar:['20031'],corrRendir:['20031']},
+  {id:'10050',name:'Seminario Optativo IV',     curso:5,sem:1,libre:false,corrCursar:[],corrRendir:[]},
+  // AÑO 5 S2
+  {id:'20046',name:'Argumentación Jurídica',    curso:5,sem:2,libre:false,corrCursar:['20034'],corrRendir:['20034']},
+  {id:'20047',name:'Metod. Investigación Jur.', curso:5,sem:2,libre:false,corrCursar:[],corrRendir:[]},
+  {id:'20048',name:'Técnicas Litigación Oral',  curso:5,sem:2,libre:false,corrCursar:[],corrRendir:[]},
   {id:'20049',name:'Práctica Prof. Supervisada',curso:5,sem:2,libre:false,corrCursar:['20042','20033'],corrRendir:['20042','20033']},
-  {id:'20057',name:'Der. Medios de Transporte',curso:5,sem:2,libre:false,corrCursar:[],corrRendir:[]},
-  {id:'20058',name:'Der. Bursátil y Cambiario',curso:5,sem:2,libre:false,corrCursar:['10049'],corrRendir:['10049']},
-  {id:'20051',name:'Idioma Extranjero',        curso:5,sem:2,libre:false,corrCursar:[],corrRendir:[]},
+  {id:'20057',name:'Der. Medios de Transporte', curso:5,sem:2,libre:false,corrCursar:[],corrRendir:[]},
+  {id:'20058',name:'Der. Bursátil y Cambiario', curso:5,sem:2,libre:false,corrCursar:['10049'],corrRendir:['10049']},
+  {id:'20051',name:'Idioma Extranjero',         curso:5,sem:2,libre:false,corrCursar:[],corrRendir:[]},
 ];
 
 const MAP = {};
 materias.forEach(m => MAP[m.id] = m);
 
-// Group by semester (1..10)
-function semKey(m){ return (m.curso-1)*2 + m.sem; } // 1..10
-const bySem = {};
-for(let s=1;s<=10;s++) bySem[s]=[];
-materias.forEach(m => bySem[semKey(m)].push(m));
+// Group by año
+const byYear = {1:[],2:[],3:[],4:[],5:[]};
+materias.forEach(m => byYear[m.curso].push(m));
 
-const CYCLE = ['pendiente','regular','aprobada'];
+const YEAR_NAMES = ['Primer Año','Segundo Año','Tercer Año','Cuarto Año','Quinto Año'];
+const CYCLE  = ['pendiente','regular','aprobada'];
 const LABELS = {pendiente:'PENDIENTE', cursable:'PUEDO CURSAR', regular:'REGULAR', aprobada:'APROBADA'};
-const SEM_NAMES = [
-  '1° · Año 1 · 1er Sem.','2° · Año 1 · 2do Sem.',
-  '3° · Año 2 · 1er Sem.','4° · Año 2 · 2do Sem.',
-  '5° · Año 3 · 1er Sem.','6° · Año 3 · 2do Sem.',
-  '7° · Año 4 · 1er Sem.','8° · Año 4 · 2do Sem.',
-  '9° · Año 5 · 1er Sem.','10° · Año 5 · 2do Sem.',
-];
 
 // ─── STATE ───────────────────────────────────────────────────
 let estados = {};
@@ -350,17 +356,15 @@ function getEstado(id){ return estados[id]||'pendiente'; }
 function displayState(mat){
   const e=getEstado(mat.id);
   if(e!=='pendiente') return e;
-  const canCursar = mat.corrCursar.length>0 && mat.corrCursar.every(c=>{
-    const ce=getEstado(c); return ce==='regular'||ce==='aprobada';
-  });
-  return canCursar ? 'cursable' : 'pendiente';
+  if(!mat.corrCursar.length) return 'pendiente';
+  const ok=mat.corrCursar.every(c=>{ const ce=getEstado(c); return ce==='regular'||ce==='aprobada'; });
+  return ok ? 'cursable' : 'pendiente';
 }
 
 function cycleEstado(id){
   const cur=getEstado(id);
   const idx=CYCLE.indexOf(cur);
-  const next=CYCLE[(idx+1)%CYCLE.length];
-  estados[id]=next;
+  estados[id]=CYCLE[(idx+1)%CYCLE.length];
   saveData();
   renderAll();
 }
@@ -384,7 +388,6 @@ onAuthStateChanged(auth,async user=>{
     renderAll();
     document.getElementById('loading').style.display='none';
     document.getElementById('app').style.display='block';
-    setTimeout(drawArrows,100);
   }else{
     currentUser=null; estados={};
     document.getElementById('app').style.display='none';
@@ -409,24 +412,25 @@ function renderStats(){
 
 function renderGrid(){
   const grid=document.getElementById('malla-grid');
-  // Find max cols across all sems
-  const maxCols=Math.max(...Object.values(bySem).map(arr=>arr.length),1);
+  const maxCols=Math.max(...Object.values(byYear).map(arr=>arr.length));
 
   let html='';
-  for(let s=1;s<=10;s++){
-    const mats=bySem[s];
-    if(!mats||!mats.length) continue;
-    const cols=mats.length;
-    html+=`<div class="year-row" data-sem="${s}">
-      <div class="year-label-col"><div class="yn">${s}°</div><div class="ys">${SEM_NAMES[s-1].split('·').slice(1).join('·')}</div></div>
-      <div class="materias-row" style="grid-template-columns:repeat(${cols},1fr);">
+  for(let y=1;y<=5;y++){
+    const mats=byYear[y];
+    html+=`<div class="year-row">
+      <div class="year-label-col">
+        <div class="yn">${y}°</div>
+        <div class="ys">${YEAR_NAMES[y-1]}</div>
+      </div>
+      <div class="year-materias" style="grid-template-columns:repeat(${maxCols},1fr);">
         ${mats.map(m=>{
           const ds=displayState(m);
-          const statusLabel=LABELS[ds]||ds.toUpperCase();
-          const libreTag=m.libre?`<div class="mat-libre">★ LIBRE</div>`:'';
-          return `<div class="materia ${ds}" data-id="${m.id}" id="mat-${m.id}" onclick="window._cycle('${m.id}')">
+          const libreTag=m.libre
+            ?`<div class="mat-libre">★ LIBRE</div>`
+            :'';
+          return `<div class="materia ${ds}" data-id="${m.id}" onclick="window._cycle('${m.id}')">
             <div class="mat-name">${m.name}</div>
-            <div class="mat-status">${statusLabel}</div>
+            <div class="mat-status">${LABELS[ds]}</div>
             ${libreTag}
           </div>`;
         }).join('')}
@@ -434,53 +438,9 @@ function renderGrid(){
     </div>`;
   }
   grid.innerHTML=html;
-  setTimeout(drawArrows,50);
 }
 
-// ─── ARROWS ──────────────────────────────────────────────────
-function drawArrows(){
-  const svg=document.getElementById('arrows-svg');
-  const container=document.getElementById('malla-container');
-  const cRect=container.getBoundingClientRect();
-  const scrollTop=container.scrollTop||0;
-  const scrollLeft=container.scrollLeft||0;
-
-  // set SVG size
-  svg.setAttribute('width',container.scrollWidth);
-  svg.setAttribute('height',container.scrollHeight);
-  svg.innerHTML='<defs><marker id="arr" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#1e3a5a" opacity="0.7"/></marker></defs>';
-
-  materias.forEach(mat=>{
-    const toEl=document.getElementById('mat-'+mat.id);
-    if(!toEl) return;
-    const toR=toEl.getBoundingClientRect();
-    const tx=toR.left-cRect.left+container.scrollLeft+toR.width/2;
-    const ty=toR.top -cRect.top +container.scrollTop;
-
-    mat.corrCursar.forEach(fromId=>{
-      const fromEl=document.getElementById('mat-'+fromId);
-      if(!fromEl) return;
-      const fromR=fromEl.getBoundingClientRect();
-      const fx=fromR.left-cRect.left+container.scrollLeft+fromR.width/2;
-      const fy=fromR.top -cRect.top +container.scrollTop+fromR.height;
-
-      // cubic bezier
-      const midY=(fy+ty)/2;
-      const path=document.createElementNS('http://www.w3.org/2000/svg','path');
-      path.setAttribute('d',`M${fx},${fy} C${fx},${midY} ${tx},${midY} ${tx},${ty}`);
-      path.setAttribute('stroke','#1e3a5a');
-      path.setAttribute('stroke-width','1.2');
-      path.setAttribute('fill','none');
-      path.setAttribute('opacity','0.6');
-      path.setAttribute('marker-end','url(#arr)');
-      svg.appendChild(path);
-    });
-  });
-}
-
-window._cycle=function(id){ cycleEstado(id); };
-
-window.addEventListener('resize',()=>{ setTimeout(drawArrows,100); });
+window._cycle=id=>cycleEstado(id);
 </script>
 </body>
 </html>
