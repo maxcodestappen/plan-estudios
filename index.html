@@ -3,192 +3,159 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Plan de Estudios — Abogacía UCC 2019</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<title>Abogacía UCC — Malla Curricular 2019</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg:#0e0e10; --surface:#16161a; --border:#2a2a30; --text:#e8e8ec; --muted:#7070a0;
-    --accent:#c9a84c; --accent-dim:rgba(201,168,76,0.12);
-    --cursable-text:#5ba3d9; --cursable-border:#2a5a8a; --cursable-bg:#1a2a3a;
-    --rendible-text:#5bc99a; --rendible-border:#2a7a5a; --rendible-bg:#1a3a2a;
-    --cursando-text:#d9a83c; --cursando-border:#7a5a20; --cursando-bg:#2a2010;
-    --aprobada-text:#4caf68; --aprobada-border:#2d7a3d; --aprobada-bg:#1e3a1e;
-    --regular-text:#8dcca0; --regular-border:#2a5a2a; --regular-bg:#1a2a1a;
-  }
-  *{box-sizing:border-box;margin:0;padding:0;}
-  body{background:var(--bg);color:var(--text);font-family:'IBM Plex Sans',sans-serif;min-height:100vh;}
+:root{
+  --bg:#080c14;--surface:#0d1220;--border:#1a2540;
+  --text:#c8d8f0;--muted:#4a6080;--dim:#2a3a55;
+  --pendiente-bg:#0d1220;--pendiente-border:#1a2540;--pendiente-text:#3a5070;
+  --cursable-bg:#0e1e30;--cursable-border:#2a4a7a;--cursable-text:#8ab8e0;
+  --regular-bg:#1a1a08;--regular-border:#7a6020;--regular-text:#e0c060;
+  --aprobada-bg:#081808;--aprobada-border:#206030;--aprobada-text:#60d080;
+  --accent:#4a8af0;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'Rajdhani',sans-serif;min-height:100vh;overflow-x:auto;}
 
-  /* ── LOGIN SCREEN ── */
-  #login-screen{
-    position:fixed;inset:0;background:var(--bg);
-    display:flex;flex-direction:column;align-items:center;justify-content:center;
-    z-index:999;gap:20px;
-  }
-  #login-screen h1{font-family:'Playfair Display',serif;font-size:2rem;font-weight:900;color:var(--accent);}
-  #login-screen p{font-family:'IBM Plex Mono',monospace;font-size:0.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;}
-  .google-btn{
-    display:flex;align-items:center;gap:12px;padding:12px 24px;
-    background:#fff;color:#333;border:none;border-radius:8px;cursor:pointer;
-    font-family:'IBM Plex Sans',sans-serif;font-size:0.9rem;font-weight:500;
-    box-shadow:0 2px 12px rgba(0,0,0,0.4);transition:all 0.15s;margin-top:10px;
-  }
-  .google-btn:hover{transform:translateY(-1px);box-shadow:0 4px 20px rgba(0,0,0,0.5);}
-  .google-btn img{width:20px;height:20px;}
-  .login-error{font-family:'IBM Plex Mono',monospace;font-size:0.65rem;color:#e05a5a;}
+/* LOGIN */
+#login-screen{
+  position:fixed;inset:0;background:var(--bg);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:999;gap:16px;
+}
+#login-screen h1{font-family:'Share Tech Mono',monospace;font-size:1.6rem;color:var(--accent);letter-spacing:0.2em;text-transform:uppercase;}
+#login-screen p{font-family:'Share Tech Mono',monospace;font-size:0.65rem;color:var(--muted);letter-spacing:0.15em;text-transform:uppercase;}
+.google-btn{
+  display:flex;align-items:center;gap:10px;padding:10px 22px;margin-top:8px;
+  background:#fff;color:#333;border:none;border-radius:6px;cursor:pointer;
+  font-family:'Rajdhani',sans-serif;font-size:0.95rem;font-weight:600;
+  box-shadow:0 2px 16px rgba(0,0,0,0.5);transition:all 0.15s;
+}
+.google-btn:hover{transform:translateY(-1px);box-shadow:0 4px 24px rgba(0,0,0,0.6);}
+.google-btn img{width:18px;}
+.login-error{font-family:'Share Tech Mono',monospace;font-size:0.62rem;color:#e05a5a;letter-spacing:0.08em;}
 
-  /* ── LOADING ── */
-  #loading{
-    position:fixed;inset:0;background:var(--bg);
-    display:flex;flex-direction:column;align-items:center;justify-content:center;
-    z-index:998;gap:12px;
-  }
-  #loading h2{font-family:'Playfair Display',serif;color:var(--accent);font-size:1.4rem;}
-  #loading p{font-family:'IBM Plex Mono',monospace;font-size:0.63rem;color:var(--muted);}
-  .spinner{width:26px;height:26px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin 0.7s linear infinite;}
-  @keyframes spin{to{transform:rotate(360deg);}}
-  @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+/* LOADING */
+#loading{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:998;gap:10px;}
+#loading h2{font-family:'Share Tech Mono',monospace;color:var(--accent);font-size:1.1rem;letter-spacing:0.2em;}
+#loading p{font-family:'Share Tech Mono',monospace;font-size:0.6rem;color:var(--muted);}
+.spinner{width:24px;height:24px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin 0.7s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
 
-  /* ── HEADER ── */
-  header{
-    border-bottom:1px solid var(--border);padding:20px 32px;
-    display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
-    background:linear-gradient(to bottom,#0a0a0c,var(--bg));
-    position:sticky;top:0;z-index:100;backdrop-filter:blur(12px);
-  }
-  .header-left h1{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;color:var(--accent);letter-spacing:-0.02em;line-height:1;}
-  .header-left p{font-family:'IBM Plex Mono',monospace;font-size:0.62rem;color:var(--muted);margin-top:3px;letter-spacing:0.08em;text-transform:uppercase;}
-  .header-right{display:flex;gap:16px;align-items:center;flex-wrap:wrap;}
-  .stats-bar{display:flex;gap:16px;align-items:center;flex-wrap:wrap;}
-  .stat{text-align:center;}
-  .stat-num{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;line-height:1;}
-  .stat-label{font-family:'IBM Plex Mono',monospace;font-size:0.54rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-top:2px;}
-  .stat.aprobadas .stat-num{color:var(--aprobada-text);}
-  .stat.regulares .stat-num{color:var(--regular-text);}
-  .stat.cursando  .stat-num{color:var(--cursando-text);}
-  .stat.restantes .stat-num{color:var(--muted);}
+/* HEADER */
+header{
+  padding:10px 20px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
+  background:rgba(8,12,20,0.95);position:sticky;top:0;z-index:50;backdrop-filter:blur(8px);
+}
+.h-title{font-family:'Share Tech Mono',monospace;font-size:1rem;color:var(--accent);letter-spacing:0.18em;text-transform:uppercase;}
+.h-sub{font-family:'Share Tech Mono',monospace;font-size:0.55rem;color:var(--muted);letter-spacing:0.12em;margin-top:1px;}
+.h-right{display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+.stats{display:flex;gap:14px;align-items:center;}
+.stat{text-align:center;}
+.stat-n{font-family:'Share Tech Mono',monospace;font-size:1.1rem;line-height:1;}
+.stat-l{font-family:'Share Tech Mono',monospace;font-size:0.5rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-top:1px;}
+.stat.ap .stat-n{color:var(--aprobada-text);}
+.stat.rg .stat-n{color:var(--regular-text);}
+.stat.rs .stat-n{color:var(--muted);}
+.prog-wrap{width:80px;}
+.prog-row{display:flex;justify-content:space-between;font-family:'Share Tech Mono',monospace;font-size:0.5rem;color:var(--muted);margin-bottom:3px;}
+.prog-bar-bg{height:2px;background:var(--border);border-radius:1px;}
+.prog-bar{height:100%;background:var(--accent);border-radius:1px;transition:width 0.4s;}
+.user-pill{display:flex;align-items:center;gap:7px;padding:4px 10px 4px 4px;border:1px solid var(--border);border-radius:20px;background:var(--surface);}
+.user-pill img{width:22px;height:22px;border-radius:50%;object-fit:cover;}
+.user-pill span{font-family:'Share Tech Mono',monospace;font-size:0.6rem;color:var(--muted);}
+.logout-btn{background:none;border:1px solid var(--dim);color:var(--muted);font-family:'Share Tech Mono',monospace;font-size:0.52rem;padding:2px 7px;border-radius:3px;cursor:pointer;transition:all 0.12s;letter-spacing:0.08em;}
+.logout-btn:hover{background:var(--border);color:var(--text);}
+.sync-dot-wrap{display:flex;align-items:center;gap:5px;font-family:'Share Tech Mono',monospace;font-size:0.55rem;color:var(--muted);}
+.sdot{width:5px;height:5px;border-radius:50%;background:currentColor;}
+.sync-dot-wrap.syncing{color:var(--regular-text);}
+.sync-dot-wrap.syncing .sdot{animation:blink 0.8s infinite;}
+.sync-dot-wrap.synced{color:var(--aprobada-text);}
+.sync-dot-wrap.error{color:#e05a5a;}
 
-  .user-pill{
-    display:flex;align-items:center;gap:8px;padding:5px 12px 5px 5px;
-    border:1px solid var(--border);border-radius:20px;background:var(--surface);
-    font-family:'IBM Plex Mono',monospace;font-size:0.62rem;color:var(--muted);
-  }
-  .user-pill img{width:24px;height:24px;border-radius:50%;object-fit:cover;}
-  .logout-btn{
-    background:none;border:1px solid var(--border);color:var(--muted);
-    font-family:'IBM Plex Mono',monospace;font-size:0.58rem;padding:3px 8px;
-    border-radius:4px;cursor:pointer;transition:all 0.12s;
-  }
-  .logout-btn:hover{background:var(--border);color:var(--text);}
+/* LEGEND */
+.legend-bar{
+  padding:7px 20px;border-bottom:1px solid var(--border);
+  display:flex;gap:20px;align-items:center;flex-wrap:wrap;
+  background:rgba(13,18,32,0.9);
+}
+.leg-item{display:flex;align-items:center;gap:6px;font-family:'Share Tech Mono',monospace;font-size:0.6rem;color:var(--muted);letter-spacing:0.08em;}
+.leg-box{width:14px;height:14px;border-radius:3px;border:1px solid;flex-shrink:0;}
+.leg-box.pendiente{background:var(--pendiente-bg);border-color:var(--pendiente-border);}
+.leg-box.cursable {background:var(--cursable-bg);border-color:var(--cursable-border);}
+.leg-box.regular  {background:var(--regular-bg);border-color:var(--regular-border);}
+.leg-box.aprobada {background:var(--aprobada-bg);border-color:var(--aprobada-border);}
+.legend-hint{font-family:'Share Tech Mono',monospace;font-size:0.55rem;color:var(--dim);letter-spacing:0.06em;margin-left:auto;}
 
-  .sync-indicator{
-    display:flex;align-items:center;gap:6px;font-family:'IBM Plex Mono',monospace;
-    font-size:0.58rem;color:var(--muted);padding:4px 10px;
-    border:1px solid var(--border);border-radius:20px;transition:all 0.3s;
-  }
-  .sync-indicator.syncing{color:var(--cursando-text);border-color:var(--cursando-border);}
-  .sync-indicator.synced {color:var(--aprobada-text);border-color:var(--aprobada-border);}
-  .sync-indicator.error  {color:#e05a5a;border-color:#7a2a2a;}
-  .sync-dot{width:6px;height:6px;border-radius:50%;background:currentColor;}
-  .sync-indicator.syncing .sync-dot{animation:pulse 0.8s infinite;}
+/* MALLA WRAPPER */
+#app{display:none;}
+.malla-outer{padding:16px 20px 40px;min-width:900px;}
 
-  .progress-wrap{height:3px;background:var(--border);border-radius:2px;overflow:hidden;margin-top:4px;}
-  .progress-bar{height:100%;background:var(--accent);border-radius:2px;transition:width 0.4s ease;}
+/* YEAR ROW */
+.year-row{display:flex;align-items:flex-start;margin-bottom:0;}
+.year-label-col{
+  width:72px;flex-shrink:0;padding-top:14px;
+  font-family:'Share Tech Mono',monospace;font-size:0.6rem;color:var(--accent);
+  letter-spacing:0.1em;text-align:right;padding-right:14px;line-height:1.5;
+}
+.year-label-col .yn{font-size:0.85rem;font-weight:700;}
+.year-label-col .ys{color:var(--muted);font-size:0.52rem;}
+.materias-row{
+  flex:1;display:grid;gap:8px;
+  padding:10px 0;
+  border-top:1px solid var(--border);
+}
+/* dynamic grid columns set via JS */
 
-  /* ── LEGEND ── */
-  .legend{
-    padding:10px 32px;border-bottom:1px solid var(--border);
-    display:flex;gap:14px;flex-wrap:wrap;align-items:center;background:var(--surface);
-  }
-  .legend-title{font-family:'IBM Plex Mono',monospace;font-size:0.57rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;}
-  .legend-item{display:flex;align-items:center;gap:5px;font-size:0.67rem;color:var(--muted);}
-  .legend-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
-  .instructions{padding:7px 32px;border-bottom:1px solid var(--border);background:rgba(201,168,76,0.04);}
-  .instructions p{font-family:'IBM Plex Mono',monospace;font-size:0.6rem;color:rgba(201,168,76,0.5);letter-spacing:0.04em;}
+/* SVG ARROWS */
+#arrows-svg{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1;}
+.malla-container{position:relative;}
 
-  /* ── GRID ── */
-  main{padding:24px 32px;display:flex;flex-direction:column;gap:30px;}
-  .year-header{display:flex;align-items:center;gap:14px;margin-bottom:15px;}
-  .year-label{font-family:'Playfair Display',serif;font-size:0.78rem;color:var(--accent);font-weight:700;letter-spacing:0.15em;text-transform:uppercase;}
-  .year-line{flex:1;height:1px;background:var(--border);}
-  .semester-group{display:flex;gap:18px;flex-wrap:wrap;}
-  .semester-col{flex:1;min-width:240px;}
-  .sem-label{font-family:'IBM Plex Mono',monospace;font-size:0.55rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:8px;}
-  .materias-list{display:flex;flex-direction:column;gap:5px;}
+/* MATERIA CARD */
+.materia{
+  border-radius:5px;border:1px solid var(--pendiente-border);
+  background:var(--pendiente-bg);
+  padding:8px 10px;cursor:pointer;
+  transition:all 0.15s ease;user-select:none;
+  position:relative;z-index:2;
+  display:flex;flex-direction:column;gap:3px;
+  min-height:58px;
+}
+.materia:hover{filter:brightness(1.25);transform:scale(1.02);}
+.materia:active{transform:scale(0.98);}
+.mat-name{font-family:'Rajdhani',sans-serif;font-size:0.78rem;font-weight:600;color:var(--pendiente-text);line-height:1.2;letter-spacing:0.03em;}
+.mat-status{font-family:'Share Tech Mono',monospace;font-size:0.52rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);}
+.mat-libre{font-family:'Share Tech Mono',monospace;font-size:0.46rem;color:var(--accent);opacity:0.6;letter-spacing:0.06em;}
 
-  /* ── MATERIA CARD ── */
-  .materia{
-    border-radius:6px;border:1px solid var(--border);background:var(--surface);
-    padding:8px 12px;cursor:pointer;transition:all 0.15s ease;user-select:none;
-  }
-  .materia:hover{transform:translateY(-1px);filter:brightness(1.15);}
-  .materia-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;}
-  .materia-name{font-size:0.73rem;font-weight:500;color:var(--muted);line-height:1.3;}
-  .materia-code{font-family:'IBM Plex Mono',monospace;font-size:0.53rem;color:var(--muted);flex-shrink:0;margin-top:1px;opacity:0.6;}
-  .status-badge{font-family:'IBM Plex Mono',monospace;font-size:0.51rem;text-transform:uppercase;letter-spacing:0.08em;padding:2px 6px;border-radius:3px;margin-top:5px;display:inline-block;font-weight:500;}
-  .libre-tag{font-family:'IBM Plex Mono',monospace;font-size:0.49rem;color:var(--accent);opacity:0.6;margin-left:3px;}
+.materia.cursable{border-color:var(--cursable-border);background:var(--cursable-bg);}
+.materia.cursable .mat-name{color:var(--cursable-text);}
+.materia.cursable .mat-status{color:var(--cursable-text);opacity:0.8;}
 
-  .materia.libre           .status-badge{background:var(--border);color:var(--muted);}
-  .materia.puede-cursar          {border-color:var(--cursable-border);background:var(--cursable-bg);}
-  .materia.puede-cursar          .materia-name{color:var(--cursable-text);}
-  .materia.puede-cursar          .status-badge{background:rgba(91,163,217,0.15);color:var(--cursable-text);}
-  .materia.puede-cursar-y-rendir {border-color:var(--rendible-border);background:var(--rendible-bg);}
-  .materia.puede-cursar-y-rendir .materia-name{color:var(--rendible-text);}
-  .materia.puede-cursar-y-rendir .status-badge{background:rgba(91,201,154,0.15);color:var(--rendible-text);}
-  .materia.cursando              {border-color:var(--cursando-border);background:var(--cursando-bg);}
-  .materia.cursando              .materia-name{color:var(--cursando-text);}
-  .materia.cursando              .status-badge{background:rgba(217,168,60,0.15);color:var(--cursando-text);}
-  .materia.regular               {border-color:var(--regular-border);background:var(--regular-bg);}
-  .materia.regular               .materia-name{color:var(--regular-text);}
-  .materia.regular               .status-badge{background:rgba(141,204,160,0.15);color:var(--regular-text);}
-  .materia.aprobada              {border-color:var(--aprobada-border);background:var(--aprobada-bg);}
-  .materia.aprobada              .materia-name{color:var(--aprobada-text);}
-  .materia.aprobada              .status-badge{background:rgba(76,175,104,0.15);color:var(--aprobada-text);}
+.materia.regular{border-color:var(--regular-border);background:var(--regular-bg);}
+.materia.regular .mat-name{color:var(--regular-text);}
+.materia.regular .mat-status{color:var(--regular-text);opacity:0.8;}
 
-  /* ── INFO PANEL ── */
-  .info-panel{
-    position:fixed;right:0;top:0;bottom:0;width:285px;
-    background:#13131a;border-left:1px solid var(--border);
-    z-index:200;transform:translateX(100%);transition:transform 0.22s ease;
-    overflow-y:auto;padding:22px 18px;
-  }
-  .info-panel.open{transform:translateX(0);}
-  .panel-close{
-    position:absolute;top:12px;right:12px;background:var(--border);border:none;
-    color:var(--muted);width:24px;height:24px;border-radius:50%;cursor:pointer;
-    font-size:0.78rem;display:flex;align-items:center;justify-content:center;transition:background 0.12s;
-  }
-  .panel-close:hover{background:#3a3a50;color:var(--text);}
-  .panel-code{font-family:'IBM Plex Mono',monospace;font-size:0.59rem;color:var(--muted);margin-bottom:6px;}
-  .panel-name{font-family:'Playfair Display',serif;font-size:1.08rem;font-weight:700;line-height:1.3;color:var(--text);margin-bottom:13px;}
-  .panel-section{margin-top:15px;}
-  .panel-section-title{font-family:'IBM Plex Mono',monospace;font-size:0.55rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:6px;padding-bottom:4px;border-bottom:1px solid var(--border);}
-  .panel-corr-list{display:flex;flex-direction:column;gap:3px;}
-  .panel-corr-item{font-size:0.68rem;padding:5px 8px;border-radius:4px;display:flex;align-items:center;gap:7px;cursor:pointer;transition:filter 0.12s;}
-  .panel-corr-item:hover{filter:brightness(1.2);}
-  .panel-corr-item .dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
-  .panel-state-btn{
-    width:100%;padding:8px 10px;border-radius:5px;border:1px solid var(--border);
-    background:var(--surface);color:var(--text);font-family:'IBM Plex Mono',monospace;
-    font-size:0.65rem;cursor:pointer;text-align:left;display:flex;align-items:center;gap:9px;
-    transition:all 0.12s;margin-bottom:4px;
-  }
-  .panel-state-btn:hover{background:var(--border);}
-  .panel-state-btn.active{border-color:var(--accent);background:var(--accent-dim);}
+.materia.aprobada{border-color:var(--aprobada-border);background:var(--aprobada-bg);}
+.materia.aprobada .mat-name{color:var(--aprobada-text);}
+.materia.aprobada .mat-status{color:var(--aprobada-text);opacity:0.8;}
 
-  @media(max-width:700px){
-    header,main,.legend,.instructions{padding-left:14px;padding-right:14px;}
-    .info-panel{width:100%;}
-  }
+/* highlight when hovering shows deps */
+.materia.highlight-from{box-shadow:0 0 0 2px var(--aprobada-border);}
+.materia.highlight-to  {box-shadow:0 0 0 2px var(--accent);}
+
+@media(max-width:900px){.malla-outer{padding:10px;}}
 </style>
 </head>
 <body>
 
 <!-- LOGIN -->
 <div id="login-screen">
-  <h1>Abogacía — UCC</h1>
-  <p>Plan de estudios 2019</p>
+  <h1>Abogacía · UCC</h1>
+  <p>Malla Curricular — Plan 2019</p>
   <button class="google-btn" onclick="loginGoogle()">
-    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google">
+    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg">
     Continuar con Google
   </button>
   <div class="login-error" id="login-error"></div>
@@ -197,336 +164,323 @@
 <!-- LOADING -->
 <div id="loading" style="display:none">
   <div class="spinner"></div>
-  <h2>Abogacía UCC</h2>
-  <p id="loading-msg">Cargando tu progreso...</p>
+  <h2>CARGANDO</h2>
+  <p id="loading-msg">recuperando tu progreso...</p>
 </div>
 
 <!-- APP -->
-<div id="app" style="display:none">
+<div id="app">
   <header>
-    <div class="header-left">
-      <h1>Abogacía — UCC</h1>
-      <p>Plan 2019 · Facultad de Derecho y Ciencias Sociales</p>
+    <div>
+      <div class="h-title">Abogacía · UCC</div>
+      <div class="h-sub">Malla Curricular · Plan 2019 · FDyCS</div>
     </div>
-    <div class="header-right">
-      <div class="stats-bar">
-        <div class="stat aprobadas"><div class="stat-num" id="cnt-aprobadas">0</div><div class="stat-label">Aprobadas</div></div>
-        <div class="stat regulares"><div class="stat-num" id="cnt-regulares">0</div><div class="stat-label">Regulares</div></div>
-        <div class="stat cursando" ><div class="stat-num" id="cnt-cursando">0</div><div class="stat-label">Cursando</div></div>
-        <div class="stat restantes"><div class="stat-num" id="cnt-restantes">59</div><div class="stat-label">Restantes</div></div>
-        <div style="width:72px">
-          <div style="display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;font-size:0.54rem;color:var(--muted)">
-            <span>Progreso</span><span id="pct">0%</span>
-          </div>
-          <div class="progress-wrap"><div class="progress-bar" id="progress-bar" style="width:0%"></div></div>
-        </div>
+    <div class="h-right">
+      <div class="stats">
+        <div class="stat ap"><div class="stat-n" id="cnt-ap">0</div><div class="stat-l">Aprobadas</div></div>
+        <div class="stat rg"><div class="stat-n" id="cnt-rg">0</div><div class="stat-l">Regulares</div></div>
+        <div class="stat rs"><div class="stat-n" id="cnt-rs">59</div><div class="stat-l">Restantes</div></div>
+      </div>
+      <div class="prog-wrap">
+        <div class="prog-row"><span>Progreso</span><span id="pct">0%</span></div>
+        <div class="prog-bar-bg"><div class="prog-bar" id="prog-bar" style="width:0%"></div></div>
       </div>
       <div class="user-pill">
         <img id="user-photo" src="" alt="">
         <span id="user-name"></span>
-        <button class="logout-btn" onclick="logoutUser()">Salir</button>
+        <button class="logout-btn" onclick="logoutUser()">SALIR</button>
       </div>
-      <div class="sync-indicator synced" id="sync-indicator">
-        <span class="sync-dot"></span>
-        <span id="sync-label">Sincronizado</span>
+      <div class="sync-dot-wrap synced" id="sync-wrap">
+        <span class="sdot"></span><span id="sync-lbl">OK</span>
       </div>
     </div>
   </header>
 
-  <div class="legend">
-    <span class="legend-title">Estado:</span>
-    <span class="legend-item"><span class="legend-dot" style="background:#3a3a50"></span>Libre</span>
-    <span class="legend-item"><span class="legend-dot" style="background:var(--cursable-text)"></span>Puede cursar</span>
-    <span class="legend-item"><span class="legend-dot" style="background:var(--rendible-text)"></span>Puede cursar y rendir</span>
-    <span class="legend-item"><span class="legend-dot" style="background:var(--cursando-text)"></span>Cursando</span>
-    <span class="legend-item"><span class="legend-dot" style="background:var(--regular-text)"></span>Regular</span>
-    <span class="legend-item"><span class="legend-dot" style="background:var(--aprobada-text)"></span>Aprobada</span>
-  </div>
-  <div class="instructions">
-    <p>▸ Click en una materia para cambiar su estado · Cada usuario tiene su propio progreso guardado en la nube</p>
+  <div class="legend-bar">
+    <div class="leg-item"><div class="leg-box pendiente"></div>PENDIENTE</div>
+    <div class="leg-item"><div class="leg-box cursable"></div>PUEDO CURSAR</div>
+    <div class="leg-item"><div class="leg-box regular"></div>REGULAR</div>
+    <div class="leg-item"><div class="leg-box aprobada"></div>APROBADA</div>
+    <div class="legend-hint">CLICK → cicla estado</div>
   </div>
 
-  <main id="main"></main>
+  <div class="malla-outer">
+    <div class="malla-container" id="malla-container">
+      <svg id="arrows-svg"></svg>
+      <div id="malla-grid"></div>
+    </div>
+  </div>
 </div>
 
-<!-- INFO PANEL -->
-<div class="info-panel" id="info-panel">
-  <button class="panel-close" onclick="closePanel()">✕</button>
-  <div class="panel-code" id="panel-code"></div>
-  <div class="panel-name" id="panel-name"></div>
-  <div id="panel-state-btns"></div>
-  <div class="panel-section" id="sec-cursar"     style="display:none"><div class="panel-section-title">Para CURSAR — necesita regular:</div><div class="panel-corr-list" id="list-cursar"></div></div>
-  <div class="panel-section" id="sec-rendir"     style="display:none"><div class="panel-section-title">Para RENDIR — necesita aprobada:</div><div class="panel-corr-list" id="list-rendir"></div></div>
-  <div class="panel-section" id="sec-desbloquea" style="display:none"><div class="panel-section-title">Desbloquea para cursar:</div><div class="panel-corr-list" id="list-desbloquea"></div></div>
-</div>
-
-<!-- FIREBASE SDKs -->
 <script type="module">
-import { initializeApp }                        from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { initializeApp }                     from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged }
-                                                from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-import { getFirestore, doc, getDoc, setDoc }    from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+                                             from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-// ── CONFIG ──────────────────────────────────────────────────
 const firebaseConfig = {
-  apiKey:            "AIzaSyBEr1HUuUYvWHkI8DfoO9KWm8wraqLmZnY",
-  authDomain:        "plan-abogacia-ucc.firebaseapp.com",
-  projectId:         "plan-abogacia-ucc",
-  storageBucket:     "plan-abogacia-ucc.firebasestorage.app",
-  messagingSenderId: "292837545501",
-  appId:             "1:292837545501:web:81afc0868b7c9e482358f4"
+  apiKey:"AIzaSyBEr1HUuUYvWHkI8DfoO9KWm8wraqLmZnY",
+  authDomain:"plan-abogacia-ucc.firebaseapp.com",
+  projectId:"plan-abogacia-ucc",
+  storageBucket:"plan-abogacia-ucc.firebasestorage.app",
+  messagingSenderId:"292837545501",
+  appId:"1:292837545501:web:81afc0868b7c9e482358f4"
 };
+const app  = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db   = getFirestore(app);
+const prov = new GoogleAuthProvider();
 
-const app      = initializeApp(firebaseConfig);
-const auth     = getAuth(app);
-const db       = getFirestore(app);
-const provider = new GoogleAuthProvider();
-
-// ── DATA ─────────────────────────────────────────────────────
+// ─── DATA ────────────────────────────────────────────────────
+// Each materia: { id, name, curso, sem, libre, corrCursar[], corrRendir[] }
 const materias = [
-  { id:'10026', name:'Derecho Privado I',              curso:1, sem:1, libre:false, corrCursar:[], corrRendir:[] },
-  { id:'10027', name:'Derecho Romano',                  curso:1, sem:1, libre:false, corrCursar:[], corrRendir:[] },
-  { id:'10028', name:'Derecho Político',                curso:1, sem:1, libre:false, corrCursar:[], corrRendir:[] },
-  { id:'10029', name:'Pensamiento Filosófico',          curso:1, sem:1, libre:false, corrCursar:[], corrRendir:[] },
-  { id:'20020', name:'Derecho Privado II',              curso:1, sem:2, libre:false, corrCursar:['10026'], corrRendir:['10026'] },
-  { id:'20021', name:'Derecho Penal I',                 curso:1, sem:2, libre:false, corrCursar:[], corrRendir:[] },
-  { id:'20022', name:'Derechos Humanos',                curso:1, sem:2, libre:false, corrCursar:[], corrRendir:[] },
-  { id:'20023', name:'Derecho Constitucional',          curso:1, sem:2, libre:false, corrCursar:['10028'], corrRendir:['10028'] },
-  { id:'20024', name:'Antropología',                    curso:1, sem:2, libre:true,  corrCursar:['10029'], corrRendir:['10029'] },
-  { id:'10030', name:'Derecho Privado III',             curso:2, sem:1, libre:true,  corrCursar:['20020'], corrRendir:['20020'] },
-  { id:'10031', name:'Derecho Penal II',                curso:2, sem:1, libre:false, corrCursar:['20021'], corrRendir:['20021'] },
-  { id:'10032', name:'Historia del Derecho',            curso:2, sem:1, libre:false, corrCursar:[], corrRendir:[] },
-  { id:'20025', name:'Der. Pub. Provi. y Munic.',       curso:2, sem:1, libre:false, corrCursar:['20023'], corrRendir:['20023'] },
-  { id:'10033', name:'Pensamiento Teológico',           curso:2, sem:1, libre:true,  corrCursar:['20024'], corrRendir:['20024'] },
-  { id:'20026', name:'Derecho Privado IV',              curso:2, sem:2, libre:true,  corrCursar:['10030'], corrRendir:['10030'] },
-  { id:'20027', name:'Derecho Procesal Civil',          curso:2, sem:2, libre:false, corrCursar:[], corrRendir:[] },
-  { id:'20028', name:'Práctica Profesional I',          curso:2, sem:2, libre:false, corrCursar:[], corrRendir:[] },
-  { id:'20029', name:'Pensamiento Social Cristiano',    curso:2, sem:2, libre:true,  corrCursar:['10033'], corrRendir:['10033'] },
-  { id:'20030', name:'Seminario Optativo I',            curso:2, sem:2, libre:false, corrCursar:[], corrRendir:[] },
-  { id:'10034', name:'Derecho Privado V',               curso:3, sem:1, libre:false, corrCursar:['20026'], corrRendir:['20026'] },
-  { id:'10035', name:'Derecho del Trabajo',             curso:3, sem:1, libre:false, corrCursar:[], corrRendir:[] },
-  { id:'10036', name:'Derecho Procesal Penal',          curso:3, sem:1, libre:false, corrCursar:['10031'], corrRendir:['10031'] },
-  { id:'10037', name:'Der. Proc. Cons. y Conv.',        curso:3, sem:1, libre:false, corrCursar:['20023'], corrRendir:['20023'] },
-  { id:'10038', name:'Soluc. Alternativ. de Conflictos',curso:3, sem:1, libre:false, corrCursar:[], corrRendir:[] },
-  { id:'10039', name:'Sociología Jurídica',             curso:3, sem:1, libre:false, corrCursar:[], corrRendir:[] },
-  { id:'20031', name:'Derecho Concursal',               curso:3, sem:2, libre:true,  corrCursar:['10034'], corrRendir:['10034'] },
-  { id:'20032', name:'Derecho Privado VI',              curso:3, sem:2, libre:true,  corrCursar:['20026'], corrRendir:['20026'] },
-  { id:'20033', name:'Práctica Profesional II',         curso:3, sem:2, libre:false, corrCursar:['20027'], corrRendir:['20027'] },
-  { id:'20034', name:'Filosofía del Derecho',           curso:3, sem:2, libre:true,  corrCursar:[], corrRendir:[] },
-  { id:'20035', name:'Derecho de la Seguridad Social',  curso:3, sem:2, libre:false, corrCursar:[], corrRendir:[] },
-  { id:'20036', name:'Sem. de Form. Hum. I',            curso:3, sem:2, libre:true,  corrCursar:[], corrRendir:[] },
-  { id:'20037', name:'Seminario Optativo II',           curso:3, sem:2, libre:false, corrCursar:[], corrRendir:[] },
-  { id:'10040', name:'Derecho Privado VII',             curso:4, sem:1, libre:false, corrCursar:[], corrRendir:[] },
-  { id:'10041', name:'Derecho Privado VIII',            curso:4, sem:1, libre:false, corrCursar:['20026'], corrRendir:['20026'] },
-  { id:'10042', name:'Derecho Internacional Público',   curso:4, sem:1, libre:false, corrCursar:[], corrRendir:[] },
-  { id:'10043', name:'Derecho Administrativo',          curso:4, sem:1, libre:true,  corrCursar:['20025'], corrRendir:['20025'] },
-  { id:'10044', name:'Sem. de Form. Hum. II',           curso:4, sem:1, libre:true,  corrCursar:[], corrRendir:[] },
-  { id:'20040', name:'Derecho Procesal Laboral',        curso:4, sem:1, libre:false, corrCursar:['10035'], corrRendir:['10035'] },
-  { id:'20038', name:'Derecho Privado IX',              curso:4, sem:2, libre:false, corrCursar:['10040'], corrRendir:['10040'] },
-  { id:'20039', name:'Derecho Procesal Administrativo', curso:4, sem:2, libre:false, corrCursar:['10043'], corrRendir:['10043'] },
-  { id:'20056', name:'Derechos de la Niñez, Adolescencia',curso:4,sem:2,libre:false, corrCursar:['10040'], corrRendir:['10040'] },
-  { id:'20041', name:'Derecho Procesal de Familia',     curso:4, sem:2, libre:false, corrCursar:['10040'], corrRendir:['10040'] },
-  { id:'20042', name:'Práctica Profesional III',        curso:4, sem:2, libre:false, corrCursar:['10036'], corrRendir:['10036'] },
-  { id:'20043', name:'Derecho del Consumidor',          curso:4, sem:2, libre:false, corrCursar:['20025'], corrRendir:['20025'] },
-  { id:'20044', name:'Ética y Deontología',             curso:4, sem:2, libre:true,  corrCursar:[], corrRendir:[] },
-  { id:'20045', name:'Seminario Optativo III',          curso:4, sem:2, libre:false, corrCursar:[], corrRendir:[] },
-  { id:'10045', name:'Der. Amb. y de los Rec. Nat.',    curso:5, sem:1, libre:true,  corrCursar:[], corrRendir:[] },
-  { id:'10046', name:'Derecho Internacional Privado',   curso:5, sem:1, libre:true,  corrCursar:['20026'], corrRendir:['20026'] },
-  { id:'10047', name:'Finanzas y Derecho Tributario',   curso:5, sem:1, libre:false, corrCursar:['20025'], corrRendir:['20025'] },
-  { id:'10048', name:'Práctica Profesional IV',         curso:5, sem:1, libre:false, corrCursar:['20033'], corrRendir:['20033'] },
-  { id:'10049', name:'Derecho Privado X',               curso:5, sem:1, libre:false, corrCursar:['20031'], corrRendir:['20031'] },
-  { id:'10050', name:'Seminario Optativo IV',           curso:5, sem:1, libre:false, corrCursar:[], corrRendir:[] },
-  { id:'20046', name:'Argumentación Jurídica',          curso:5, sem:2, libre:false, corrCursar:['20034'], corrRendir:['20034'] },
-  { id:'20047', name:'Metodología de la Investigación Jur.',curso:5,sem:2,libre:false,corrCursar:[],corrRendir:[] },
-  { id:'20048', name:'Técnicas de Litigación Oral',     curso:5, sem:2, libre:false, corrCursar:[], corrRendir:[] },
-  { id:'20049', name:'Práctica Profesional Supervisada',curso:5, sem:2, libre:false, corrCursar:['20042','20033'], corrRendir:['20042','20033'] },
-  { id:'20057', name:'Derecho de los Medios de Transporte',curso:5,sem:2,libre:false,corrCursar:[],corrRendir:[] },
-  { id:'20058', name:'Derecho Bursátil y Cambiario',    curso:5, sem:2, libre:false, corrCursar:['10049'], corrRendir:['10049'] },
-  { id:'20051', name:'Idioma Extranjero',               curso:5, sem:2, libre:false, corrCursar:[], corrRendir:[] },
+  {id:'10026',name:'Derecho Privado I',       curso:1,sem:1,libre:false,corrCursar:[],corrRendir:[]},
+  {id:'10027',name:'Derecho Romano',           curso:1,sem:1,libre:false,corrCursar:[],corrRendir:[]},
+  {id:'10028',name:'Derecho Político',         curso:1,sem:1,libre:false,corrCursar:[],corrRendir:[]},
+  {id:'10029',name:'Pensamiento Filosófico',   curso:1,sem:1,libre:false,corrCursar:[],corrRendir:[]},
+  {id:'20020',name:'Derecho Privado II',       curso:1,sem:2,libre:false,corrCursar:['10026'],corrRendir:['10026']},
+  {id:'20021',name:'Derecho Penal I',          curso:1,sem:2,libre:false,corrCursar:[],corrRendir:[]},
+  {id:'20022',name:'Derechos Humanos',         curso:1,sem:2,libre:false,corrCursar:[],corrRendir:[]},
+  {id:'20023',name:'Derecho Constitucional',   curso:1,sem:2,libre:false,corrCursar:['10028'],corrRendir:['10028']},
+  {id:'20024',name:'Antropología',             curso:1,sem:2,libre:true, corrCursar:['10029'],corrRendir:['10029']},
+  {id:'10030',name:'Derecho Privado III',      curso:2,sem:1,libre:true, corrCursar:['20020'],corrRendir:['20020']},
+  {id:'10031',name:'Derecho Penal II',         curso:2,sem:1,libre:false,corrCursar:['20021'],corrRendir:['20021']},
+  {id:'10032',name:'Historia del Derecho',     curso:2,sem:1,libre:false,corrCursar:[],corrRendir:[]},
+  {id:'20025',name:'Der. Pub. Provi. y Munic.',curso:2,sem:1,libre:false,corrCursar:['20023'],corrRendir:['20023']},
+  {id:'10033',name:'Pensamiento Teológico',    curso:2,sem:1,libre:true, corrCursar:['20024'],corrRendir:['20024']},
+  {id:'20026',name:'Derecho Privado IV',       curso:2,sem:2,libre:true, corrCursar:['10030'],corrRendir:['10030']},
+  {id:'20027',name:'Derecho Procesal Civil',   curso:2,sem:2,libre:false,corrCursar:[],corrRendir:[]},
+  {id:'20028',name:'Práctica Profesional I',   curso:2,sem:2,libre:false,corrCursar:[],corrRendir:[]},
+  {id:'20029',name:'Pens. Social Cristiano',   curso:2,sem:2,libre:true, corrCursar:['10033'],corrRendir:['10033']},
+  {id:'20030',name:'Seminario Optativo I',     curso:2,sem:2,libre:false,corrCursar:[],corrRendir:[]},
+  {id:'10034',name:'Derecho Privado V',        curso:3,sem:1,libre:false,corrCursar:['20026'],corrRendir:['20026']},
+  {id:'10035',name:'Derecho del Trabajo',      curso:3,sem:1,libre:false,corrCursar:[],corrRendir:[]},
+  {id:'10036',name:'Derecho Procesal Penal',   curso:3,sem:1,libre:false,corrCursar:['10031'],corrRendir:['10031']},
+  {id:'10037',name:'Der. Proc. Cons. y Conv.', curso:3,sem:1,libre:false,corrCursar:['20023'],corrRendir:['20023']},
+  {id:'10038',name:'Sol. Altern. Conflictos',  curso:3,sem:1,libre:false,corrCursar:[],corrRendir:[]},
+  {id:'10039',name:'Sociología Jurídica',      curso:3,sem:1,libre:false,corrCursar:[],corrRendir:[]},
+  {id:'20031',name:'Derecho Concursal',        curso:3,sem:2,libre:true, corrCursar:['10034'],corrRendir:['10034']},
+  {id:'20032',name:'Derecho Privado VI',       curso:3,sem:2,libre:true, corrCursar:['20026'],corrRendir:['20026']},
+  {id:'20033',name:'Práctica Profesional II',  curso:3,sem:2,libre:false,corrCursar:['20027'],corrRendir:['20027']},
+  {id:'20034',name:'Filosofía del Derecho',    curso:3,sem:2,libre:true, corrCursar:[],corrRendir:[]},
+  {id:'20035',name:'Der. Seguridad Social',    curso:3,sem:2,libre:false,corrCursar:[],corrRendir:[]},
+  {id:'20036',name:'Sem. Form. Hum. I',        curso:3,sem:2,libre:true, corrCursar:[],corrRendir:[]},
+  {id:'20037',name:'Seminario Optativo II',    curso:3,sem:2,libre:false,corrCursar:[],corrRendir:[]},
+  {id:'10040',name:'Derecho Privado VII',      curso:4,sem:1,libre:false,corrCursar:[],corrRendir:[]},
+  {id:'10041',name:'Derecho Privado VIII',     curso:4,sem:1,libre:false,corrCursar:['20026'],corrRendir:['20026']},
+  {id:'10042',name:'Der. Internacional Pub.',  curso:4,sem:1,libre:false,corrCursar:[],corrRendir:[]},
+  {id:'10043',name:'Derecho Administrativo',   curso:4,sem:1,libre:true, corrCursar:['20025'],corrRendir:['20025']},
+  {id:'10044',name:'Sem. Form. Hum. II',       curso:4,sem:1,libre:true, corrCursar:[],corrRendir:[]},
+  {id:'20040',name:'Der. Procesal Laboral',    curso:4,sem:1,libre:false,corrCursar:['10035'],corrRendir:['10035']},
+  {id:'20038',name:'Derecho Privado IX',       curso:4,sem:2,libre:false,corrCursar:['10040'],corrRendir:['10040']},
+  {id:'20039',name:'Der. Proc. Administrativo',curso:4,sem:2,libre:false,corrCursar:['10043'],corrRendir:['10043']},
+  {id:'20056',name:'Der. Niñez y Adolescencia',curso:4,sem:2,libre:false,corrCursar:['10040'],corrRendir:['10040']},
+  {id:'20041',name:'Der. Procesal de Familia', curso:4,sem:2,libre:false,corrCursar:['10040'],corrRendir:['10040']},
+  {id:'20042',name:'Práctica Profesional III', curso:4,sem:2,libre:false,corrCursar:['10036'],corrRendir:['10036']},
+  {id:'20043',name:'Derecho del Consumidor',   curso:4,sem:2,libre:false,corrCursar:['20025'],corrRendir:['20025']},
+  {id:'20044',name:'Ética y Deontología',      curso:4,sem:2,libre:true, corrCursar:[],corrRendir:[]},
+  {id:'20045',name:'Seminario Optativo III',   curso:4,sem:2,libre:false,corrCursar:[],corrRendir:[]},
+  {id:'10045',name:'Der. Amb. y Rec. Nat.',    curso:5,sem:1,libre:true, corrCursar:[],corrRendir:[]},
+  {id:'10046',name:'Der. Internacional Priv.', curso:5,sem:1,libre:true, corrCursar:['20026'],corrRendir:['20026']},
+  {id:'10047',name:'Finanzas y Der. Tributario',curso:5,sem:1,libre:false,corrCursar:['20025'],corrRendir:['20025']},
+  {id:'10048',name:'Práctica Profesional IV',  curso:5,sem:1,libre:false,corrCursar:['20033'],corrRendir:['20033']},
+  {id:'10049',name:'Derecho Privado X',        curso:5,sem:1,libre:false,corrCursar:['20031'],corrRendir:['20031']},
+  {id:'10050',name:'Seminario Optativo IV',    curso:5,sem:1,libre:false,corrCursar:[],corrRendir:[]},
+  {id:'20046',name:'Argumentación Jurídica',   curso:5,sem:2,libre:false,corrCursar:['20034'],corrRendir:['20034']},
+  {id:'20047',name:'Metod. Investigación Jur.',curso:5,sem:2,libre:false,corrCursar:[],corrRendir:[]},
+  {id:'20048',name:'Técnicas Litigación Oral', curso:5,sem:2,libre:false,corrCursar:[],corrRendir:[]},
+  {id:'20049',name:'Práctica Prof. Supervisada',curso:5,sem:2,libre:false,corrCursar:['20042','20033'],corrRendir:['20042','20033']},
+  {id:'20057',name:'Der. Medios de Transporte',curso:5,sem:2,libre:false,corrCursar:[],corrRendir:[]},
+  {id:'20058',name:'Der. Bursátil y Cambiario',curso:5,sem:2,libre:false,corrCursar:['10049'],corrRendir:['10049']},
+  {id:'20051',name:'Idioma Extranjero',        curso:5,sem:2,libre:false,corrCursar:[],corrRendir:[]},
 ];
 
 const MAP = {};
 materias.forEach(m => MAP[m.id] = m);
 
-const LABELS = { libre:'Libre', cursando:'Cursando', regular:'Regular', aprobada:'Aprobada', 'puede-cursar':'Puede cursar', 'puede-cursar-y-rendir':'Puede cursar y rendir' };
-const DOTS   = { libre:'#3a3a50', cursando:'#d9a83c', regular:'#8dcca0', aprobada:'#4caf68', 'puede-cursar':'#5ba3d9', 'puede-cursar-y-rendir':'#5bc99a' };
+// Group by semester (1..10)
+function semKey(m){ return (m.curso-1)*2 + m.sem; } // 1..10
+const bySem = {};
+for(let s=1;s<=10;s++) bySem[s]=[];
+materias.forEach(m => bySem[semKey(m)].push(m));
 
-// ── STATE ────────────────────────────────────────────────────
+const CYCLE = ['pendiente','regular','aprobada'];
+const LABELS = {pendiente:'PENDIENTE', cursable:'PUEDO CURSAR', regular:'REGULAR', aprobada:'APROBADA'};
+const SEM_NAMES = [
+  '1° · Año 1 · 1er Sem.','2° · Año 1 · 2do Sem.',
+  '3° · Año 2 · 1er Sem.','4° · Año 2 · 2do Sem.',
+  '5° · Año 3 · 1er Sem.','6° · Año 3 · 2do Sem.',
+  '7° · Año 4 · 1er Sem.','8° · Año 4 · 2do Sem.',
+  '9° · Año 5 · 1er Sem.','10° · Año 5 · 2do Sem.',
+];
+
+// ─── STATE ───────────────────────────────────────────────────
 let estados = {};
 let currentUser = null;
 let syncTimeout = null;
 
-function setSyncStatus(cls, text) {
-  const el = document.getElementById('sync-indicator');
-  el.className = 'sync-indicator ' + cls;
-  document.getElementById('sync-label').textContent = text;
+function setSyncStatus(cls,txt){
+  const w=document.getElementById('sync-wrap');
+  w.className='sync-dot-wrap '+cls;
+  document.getElementById('sync-lbl').textContent=txt;
 }
 
-async function loadUserData(uid) {
-  try {
-    const snap = await getDoc(doc(db, 'usuarios', uid));
-    if (snap.exists()) estados = snap.data().estados || {};
-    else estados = {};
-    setSyncStatus('synced', 'Sincronizado ✓');
-  } catch(e) {
-    console.error(e);
-    setSyncStatus('error', 'Error al cargar');
-  }
+async function loadData(uid){
+  try{
+    const snap=await getDoc(doc(db,'usuarios',uid));
+    estados = snap.exists() ? (snap.data().estados||{}) : {};
+    setSyncStatus('synced','OK');
+  }catch(e){ setSyncStatus('error','ERR'); }
 }
 
-async function saveUserData() {
-  if (!currentUser) return;
-  setSyncStatus('syncing', 'Guardando...');
-  if (syncTimeout) clearTimeout(syncTimeout);
-  syncTimeout = setTimeout(async () => {
-    try {
-      await setDoc(doc(db, 'usuarios', currentUser.uid), { estados }, { merge: true });
-      setSyncStatus('synced', 'Sincronizado ✓');
-    } catch(e) {
-      setSyncStatus('error', 'Error al guardar');
-    }
-  }, 800);
+async function saveData(){
+  if(!currentUser)return;
+  setSyncStatus('syncing','...');
+  if(syncTimeout)clearTimeout(syncTimeout);
+  syncTimeout=setTimeout(async()=>{
+    try{
+      await setDoc(doc(db,'usuarios',currentUser.uid),{estados},{merge:true});
+      setSyncStatus('synced','OK');
+    }catch(e){ setSyncStatus('error','ERR'); }
+  },600);
 }
 
-function getEstado(id) { return estados[id] || 'libre'; }
+function getEstado(id){ return estados[id]||'pendiente'; }
 
-function setEstado(id, estado) {
-  estados[id] = estado;
-  saveUserData();
+function displayState(mat){
+  const e=getEstado(mat.id);
+  if(e!=='pendiente') return e;
+  const canCursar = mat.corrCursar.length>0 && mat.corrCursar.every(c=>{
+    const ce=getEstado(c); return ce==='regular'||ce==='aprobada';
+  });
+  return canCursar ? 'cursable' : 'pendiente';
+}
+
+function cycleEstado(id){
+  const cur=getEstado(id);
+  const idx=CYCLE.indexOf(cur);
+  const next=CYCLE[(idx+1)%CYCLE.length];
+  estados[id]=next;
+  saveData();
   renderAll();
-  if (document.getElementById('info-panel').classList.contains('open')) openPanel(id);
 }
 
-// ── AUTH ─────────────────────────────────────────────────────
-window.loginGoogle = async function() {
-  document.getElementById('login-error').textContent = '';
-  try {
-    await signInWithPopup(auth, provider);
-  } catch(e) {
-    document.getElementById('login-error').textContent = 'Error al iniciar sesión. Intentá de nuevo.';
-  }
+// ─── AUTH ────────────────────────────────────────────────────
+window.loginGoogle=async function(){
+  document.getElementById('login-error').textContent='';
+  try{ await signInWithPopup(auth,prov); }
+  catch(e){ document.getElementById('login-error').textContent='Error al iniciar sesión.'; }
 };
+window.logoutUser=async function(){ await signOut(auth); };
 
-window.logoutUser = async function() {
-  await signOut(auth);
-};
-
-onAuthStateChanged(auth, async (user) => {
-  if (user) {
-    currentUser = user;
-    document.getElementById('login-screen').style.display = 'none';
-    document.getElementById('loading').style.display = 'flex';
-    document.getElementById('loading-msg').textContent = 'Cargando tu progreso...';
-    // Set user pill
-    document.getElementById('user-photo').src = user.photoURL || '';
-    document.getElementById('user-name').textContent = user.displayName?.split(' ')[0] || user.email;
-    await loadUserData(user.uid);
+onAuthStateChanged(auth,async user=>{
+  if(user){
+    currentUser=user;
+    document.getElementById('login-screen').style.display='none';
+    document.getElementById('loading').style.display='flex';
+    document.getElementById('user-photo').src=user.photoURL||'';
+    document.getElementById('user-name').textContent=user.displayName?.split(' ')[0]||'';
+    await loadData(user.uid);
     renderAll();
-    document.getElementById('loading').style.display = 'none';
-    document.getElementById('app').style.display = 'block';
-  } else {
-    currentUser = null;
-    estados = {};
-    document.getElementById('app').style.display = 'none';
-    document.getElementById('loading').style.display = 'none';
-    document.getElementById('login-screen').style.display = 'flex';
+    document.getElementById('loading').style.display='none';
+    document.getElementById('app').style.display='block';
+    setTimeout(drawArrows,100);
+  }else{
+    currentUser=null; estados={};
+    document.getElementById('app').style.display='none';
+    document.getElementById('loading').style.display='none';
+    document.getElementById('login-screen').style.display='flex';
   }
 });
 
-// ── LOGIC ─────────────────────────────────────────────────────
-function computeDisplayState(mat) {
-  const est = getEstado(mat.id);
-  if (est !== 'libre') return est;
-  const puedeRendir = mat.corrRendir.length > 0 && mat.corrRendir.every(cid => getEstado(cid) === 'aprobada');
-  const puedeCursar = mat.corrCursar.length > 0 && mat.corrCursar.every(cid => ['regular','aprobada','cursando'].includes(getEstado(cid)));
-  if (puedeRendir) return 'puede-cursar-y-rendir';
-  if (puedeCursar) return 'puede-cursar';
-  return 'libre';
+// ─── RENDER ──────────────────────────────────────────────────
+function renderAll(){ renderGrid(); renderStats(); }
+
+function renderStats(){
+  let ap=0,rg=0;
+  materias.forEach(m=>{ const e=getEstado(m.id); if(e==='aprobada')ap++; else if(e==='regular')rg++; });
+  document.getElementById('cnt-ap').textContent=ap;
+  document.getElementById('cnt-rg').textContent=rg;
+  document.getElementById('cnt-rs').textContent=materias.length-ap-rg;
+  const pct=Math.round(ap/materias.length*100);
+  document.getElementById('pct').textContent=pct+'%';
+  document.getElementById('prog-bar').style.width=pct+'%';
 }
 
-// ── RENDER ────────────────────────────────────────────────────
-function renderAll() { renderGrid(); renderStats(); }
+function renderGrid(){
+  const grid=document.getElementById('malla-grid');
+  // Find max cols across all sems
+  const maxCols=Math.max(...Object.values(bySem).map(arr=>arr.length),1);
 
-function renderStats() {
-  let apr=0, reg=0, cur=0;
-  materias.forEach(m => { const e=getEstado(m.id); if(e==='aprobada')apr++; else if(e==='regular')reg++; else if(e==='cursando')cur++; });
-  document.getElementById('cnt-aprobadas').textContent = apr;
-  document.getElementById('cnt-regulares').textContent = reg;
-  document.getElementById('cnt-cursando').textContent  = cur;
-  document.getElementById('cnt-restantes').textContent = materias.length - apr - reg - cur;
-  const pct = Math.round(apr / materias.length * 100);
-  document.getElementById('pct').textContent = pct + '%';
-  document.getElementById('progress-bar').style.width = pct + '%';
-}
-
-function renderGrid() {
-  const byYear = {};
-  materias.forEach(m => { if(!byYear[m.curso]) byYear[m.curso]={1:[],2:[]}; byYear[m.curso][m.sem].push(m); });
-  const names = ['Primer Año','Segundo Año','Tercer Año','Cuarto Año','Quinto Año'];
-  document.getElementById('main').innerHTML = Object.keys(byYear).map(c => `
-    <div class="year-block">
-      <div class="year-header"><span class="year-label">${names[c-1]}</span><div class="year-line"></div></div>
-      <div class="semester-group">
-        <div class="semester-col"><div class="sem-label">1er semestre</div><div class="materias-list">${(byYear[c][1]||[]).map(renderMateria).join('')}</div></div>
-        <div class="semester-col"><div class="sem-label">2do semestre</div><div class="materias-list">${(byYear[c][2]||[]).map(renderMateria).join('')}</div></div>
+  let html='';
+  for(let s=1;s<=10;s++){
+    const mats=bySem[s];
+    if(!mats||!mats.length) continue;
+    const cols=mats.length;
+    html+=`<div class="year-row" data-sem="${s}">
+      <div class="year-label-col"><div class="yn">${s}°</div><div class="ys">${SEM_NAMES[s-1].split('·').slice(1).join('·')}</div></div>
+      <div class="materias-row" style="grid-template-columns:repeat(${cols},1fr);">
+        ${mats.map(m=>{
+          const ds=displayState(m);
+          const statusLabel=LABELS[ds]||ds.toUpperCase();
+          const libreTag=m.libre?`<div class="mat-libre">★ LIBRE</div>`:'';
+          return `<div class="materia ${ds}" data-id="${m.id}" id="mat-${m.id}" onclick="window._cycle('${m.id}')">
+            <div class="mat-name">${m.name}</div>
+            <div class="mat-status">${statusLabel}</div>
+            ${libreTag}
+          </div>`;
+        }).join('')}
       </div>
-    </div>`).join('');
-  document.querySelectorAll('.materia').forEach(el =>
-    el.addEventListener('click', e => { e.stopPropagation(); openPanel(el.dataset.id); })
-  );
+    </div>`;
+  }
+  grid.innerHTML=html;
+  setTimeout(drawArrows,50);
 }
 
-function renderMateria(mat) {
-  const ds   = computeDisplayState(mat);
-  const real = getEstado(mat.id);
-  const label = LABELS[real !== 'libre' ? real : ds];
-  const tag   = mat.libre ? '<span class="libre-tag">★ libre</span>' : '';
-  return `<div class="materia ${ds}" data-id="${mat.id}">
-    <div class="materia-top"><span class="materia-name">${mat.name}${tag}</span><span class="materia-code">${mat.id}</span></div>
-    <span class="status-badge">${label}</span>
-  </div>`;
+// ─── ARROWS ──────────────────────────────────────────────────
+function drawArrows(){
+  const svg=document.getElementById('arrows-svg');
+  const container=document.getElementById('malla-container');
+  const cRect=container.getBoundingClientRect();
+  const scrollTop=container.scrollTop||0;
+  const scrollLeft=container.scrollLeft||0;
+
+  // set SVG size
+  svg.setAttribute('width',container.scrollWidth);
+  svg.setAttribute('height',container.scrollHeight);
+  svg.innerHTML='<defs><marker id="arr" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#1e3a5a" opacity="0.7"/></marker></defs>';
+
+  materias.forEach(mat=>{
+    const toEl=document.getElementById('mat-'+mat.id);
+    if(!toEl) return;
+    const toR=toEl.getBoundingClientRect();
+    const tx=toR.left-cRect.left+container.scrollLeft+toR.width/2;
+    const ty=toR.top -cRect.top +container.scrollTop;
+
+    mat.corrCursar.forEach(fromId=>{
+      const fromEl=document.getElementById('mat-'+fromId);
+      if(!fromEl) return;
+      const fromR=fromEl.getBoundingClientRect();
+      const fx=fromR.left-cRect.left+container.scrollLeft+fromR.width/2;
+      const fy=fromR.top -cRect.top +container.scrollTop+fromR.height;
+
+      // cubic bezier
+      const midY=(fy+ty)/2;
+      const path=document.createElementNS('http://www.w3.org/2000/svg','path');
+      path.setAttribute('d',`M${fx},${fy} C${fx},${midY} ${tx},${midY} ${tx},${ty}`);
+      path.setAttribute('stroke','#1e3a5a');
+      path.setAttribute('stroke-width','1.2');
+      path.setAttribute('fill','none');
+      path.setAttribute('opacity','0.6');
+      path.setAttribute('marker-end','url(#arr)');
+      svg.appendChild(path);
+    });
+  });
 }
 
-// ── PANEL ─────────────────────────────────────────────────────
-function corrItem(cid) {
-  const cm = MAP[cid]; if(!cm) return '';
-  const real = getEstado(cid);
-  const ds   = computeDisplayState(cm);
-  const s    = real !== 'libre' ? real : ds;
-  const dot  = DOTS[s] || DOTS.libre;
-  return `<div class="panel-corr-item" style="background:${dot}22;color:${dot}" onclick="window._openPanel('${cid}')">
-    <span class="dot" style="background:${dot}"></span>${cm.name}
-  </div>`;
-}
+window._cycle=function(id){ cycleEstado(id); };
 
-window._openPanel = function(id) { openPanel(id); };
-
-function openPanel(id) {
-  const mat = MAP[id];
-  document.getElementById('panel-code').textContent = id + (mat.libre ? ' · ★ Se puede rendir libre' : '');
-  document.getElementById('panel-name').textContent = mat.name;
-  const cur = getEstado(id);
-  document.getElementById('panel-state-btns').innerHTML = ['libre','cursando','regular','aprobada'].map(s =>
-    `<button class="panel-state-btn ${cur===s?'active':''}" onclick="window._setEstado('${id}','${s}')">
-      <span style="width:8px;height:8px;border-radius:50%;background:${DOTS[s]};flex-shrink:0;display:inline-block"></span>
-      ${LABELS[s]}
-    </button>`).join('');
-  const show = (secId, listId, items) => {
-    document.getElementById(secId).style.display = items.length ? '' : 'none';
-    document.getElementById(listId).innerHTML = items.map(corrItem).join('');
-  };
-  show('sec-cursar',     'list-cursar',     mat.corrCursar);
-  show('sec-rendir',     'list-rendir',     mat.corrRendir);
-  show('sec-desbloquea', 'list-desbloquea', materias.filter(m => m.corrCursar.includes(id)||m.corrRendir.includes(id)).map(m=>m.id));
-  document.getElementById('info-panel').classList.add('open');
-}
-
-window._setEstado = function(id, estado) { setEstado(id, estado); };
-window.closePanel = function() { document.getElementById('info-panel').classList.remove('open'); };
-document.addEventListener('click', e => {
-  if (!document.getElementById('info-panel').contains(e.target)) closePanel();
-});
-
+window.addEventListener('resize',()=>{ setTimeout(drawArrows,100); });
 </script>
 </body>
 </html>
