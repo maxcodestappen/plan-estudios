@@ -7,954 +7,526 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0e0e10;
-    --surface: #16161a;
-    --border: #2a2a30;
-    --text: #e8e8ec;
-    --muted: #7070a0;
-    --accent: #c9a84c;
-    --accent-dim: rgba(201,168,76,0.12);
-    --libre: #2a2a30;
-    --libre-text: #7070a0;
-    --cursable: #1a2a3a;
-    --cursable-text: #5ba3d9;
-    --cursable-border: #2a5a8a;
-    --rendible: #1a3a2a;
-    --rendible-text: #5bc99a;
-    --rendible-border: #2a7a5a;
-    --cursando: #2a2010;
-    --cursando-text: #d9a83c;
-    --cursando-border: #7a5a20;
-    --aprobada: #1e3a1e;
-    --aprobada-text: #4caf68;
-    --aprobada-border: #2d7a3d;
-    --regular: #1a2a1a;
-    --regular-text: #8dcca0;
-    --regular-border: #2a5a2a;
+    --bg:#0e0e10; --surface:#16161a; --border:#2a2a30; --text:#e8e8ec; --muted:#7070a0;
+    --accent:#c9a84c; --accent-dim:rgba(201,168,76,0.12);
+    --cursable-text:#5ba3d9; --cursable-border:#2a5a8a; --cursable-bg:#1a2a3a;
+    --rendible-text:#5bc99a; --rendible-border:#2a7a5a; --rendible-bg:#1a3a2a;
+    --cursando-text:#d9a83c; --cursando-border:#7a5a20; --cursando-bg:#2a2010;
+    --aprobada-text:#4caf68; --aprobada-border:#2d7a3d; --aprobada-bg:#1e3a1e;
+    --regular-text:#8dcca0; --regular-border:#2a5a2a; --regular-bg:#1a2a1a;
   }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg);color:var(--text);font-family:'IBM Plex Sans',sans-serif;min-height:100vh;}
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'IBM Plex Sans', sans-serif;
-    min-height: 100vh;
-    overflow-x: hidden;
+  /* ── LOGIN SCREEN ── */
+  #login-screen{
+    position:fixed;inset:0;background:var(--bg);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    z-index:999;gap:20px;
   }
-
-  /* HEADER */
-  header {
-    border-bottom: 1px solid var(--border);
-    padding: 28px 40px 24px;
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 20px;
-    flex-wrap: wrap;
-    background: linear-gradient(to bottom, #0a0a0c, var(--bg));
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    backdrop-filter: blur(12px);
+  #login-screen h1{font-family:'Playfair Display',serif;font-size:2rem;font-weight:900;color:var(--accent);}
+  #login-screen p{font-family:'IBM Plex Mono',monospace;font-size:0.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;}
+  .google-btn{
+    display:flex;align-items:center;gap:12px;padding:12px 24px;
+    background:#fff;color:#333;border:none;border-radius:8px;cursor:pointer;
+    font-family:'IBM Plex Sans',sans-serif;font-size:0.9rem;font-weight:500;
+    box-shadow:0 2px 12px rgba(0,0,0,0.4);transition:all 0.15s;margin-top:10px;
   }
+  .google-btn:hover{transform:translateY(-1px);box-shadow:0 4px 20px rgba(0,0,0,0.5);}
+  .google-btn img{width:20px;height:20px;}
+  .login-error{font-family:'IBM Plex Mono',monospace;font-size:0.65rem;color:#e05a5a;}
 
-  .header-left h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.7rem;
-    font-weight: 900;
-    color: var(--accent);
-    letter-spacing: -0.02em;
-    line-height: 1;
+  /* ── LOADING ── */
+  #loading{
+    position:fixed;inset:0;background:var(--bg);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    z-index:998;gap:12px;
   }
+  #loading h2{font-family:'Playfair Display',serif;color:var(--accent);font-size:1.4rem;}
+  #loading p{font-family:'IBM Plex Mono',monospace;font-size:0.63rem;color:var(--muted);}
+  .spinner{width:26px;height:26px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin 0.7s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
 
-  .header-left p {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.7rem;
-    color: var(--muted);
-    margin-top: 4px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+  /* ── HEADER ── */
+  header{
+    border-bottom:1px solid var(--border);padding:20px 32px;
+    display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
+    background:linear-gradient(to bottom,#0a0a0c,var(--bg));
+    position:sticky;top:0;z-index:100;backdrop-filter:blur(12px);
   }
+  .header-left h1{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;color:var(--accent);letter-spacing:-0.02em;line-height:1;}
+  .header-left p{font-family:'IBM Plex Mono',monospace;font-size:0.62rem;color:var(--muted);margin-top:3px;letter-spacing:0.08em;text-transform:uppercase;}
+  .header-right{display:flex;gap:16px;align-items:center;flex-wrap:wrap;}
+  .stats-bar{display:flex;gap:16px;align-items:center;flex-wrap:wrap;}
+  .stat{text-align:center;}
+  .stat-num{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;line-height:1;}
+  .stat-label{font-family:'IBM Plex Mono',monospace;font-size:0.54rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-top:2px;}
+  .stat.aprobadas .stat-num{color:var(--aprobada-text);}
+  .stat.regulares .stat-num{color:var(--regular-text);}
+  .stat.cursando  .stat-num{color:var(--cursando-text);}
+  .stat.restantes .stat-num{color:var(--muted);}
 
-  .stats-bar {
-    display: flex;
-    gap: 24px;
-    align-items: center;
-    flex-wrap: wrap;
+  .user-pill{
+    display:flex;align-items:center;gap:8px;padding:5px 12px 5px 5px;
+    border:1px solid var(--border);border-radius:20px;background:var(--surface);
+    font-family:'IBM Plex Mono',monospace;font-size:0.62rem;color:var(--muted);
   }
-
-  .stat {
-    text-align: center;
+  .user-pill img{width:24px;height:24px;border-radius:50%;object-fit:cover;}
+  .logout-btn{
+    background:none;border:1px solid var(--border);color:var(--muted);
+    font-family:'IBM Plex Mono',monospace;font-size:0.58rem;padding:3px 8px;
+    border-radius:4px;cursor:pointer;transition:all 0.12s;
   }
+  .logout-btn:hover{background:var(--border);color:var(--text);}
 
-  .stat-num {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.4rem;
-    font-weight: 700;
-    line-height: 1;
+  .sync-indicator{
+    display:flex;align-items:center;gap:6px;font-family:'IBM Plex Mono',monospace;
+    font-size:0.58rem;color:var(--muted);padding:4px 10px;
+    border:1px solid var(--border);border-radius:20px;transition:all 0.3s;
   }
+  .sync-indicator.syncing{color:var(--cursando-text);border-color:var(--cursando-border);}
+  .sync-indicator.synced {color:var(--aprobada-text);border-color:var(--aprobada-border);}
+  .sync-indicator.error  {color:#e05a5a;border-color:#7a2a2a;}
+  .sync-dot{width:6px;height:6px;border-radius:50%;background:currentColor;}
+  .sync-indicator.syncing .sync-dot{animation:pulse 0.8s infinite;}
 
-  .stat-label {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.6rem;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin-top: 2px;
+  .progress-wrap{height:3px;background:var(--border);border-radius:2px;overflow:hidden;margin-top:4px;}
+  .progress-bar{height:100%;background:var(--accent);border-radius:2px;transition:width 0.4s ease;}
+
+  /* ── LEGEND ── */
+  .legend{
+    padding:10px 32px;border-bottom:1px solid var(--border);
+    display:flex;gap:14px;flex-wrap:wrap;align-items:center;background:var(--surface);
   }
+  .legend-title{font-family:'IBM Plex Mono',monospace;font-size:0.57rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;}
+  .legend-item{display:flex;align-items:center;gap:5px;font-size:0.67rem;color:var(--muted);}
+  .legend-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+  .instructions{padding:7px 32px;border-bottom:1px solid var(--border);background:rgba(201,168,76,0.04);}
+  .instructions p{font-family:'IBM Plex Mono',monospace;font-size:0.6rem;color:rgba(201,168,76,0.5);letter-spacing:0.04em;}
 
-  .stat.aprobadas .stat-num { color: var(--aprobada-text); }
-  .stat.regulares .stat-num { color: var(--regular-text); }
-  .stat.cursando .stat-num { color: var(--cursando-text); }
-  .stat.restantes .stat-num { color: var(--muted); }
+  /* ── GRID ── */
+  main{padding:24px 32px;display:flex;flex-direction:column;gap:30px;}
+  .year-header{display:flex;align-items:center;gap:14px;margin-bottom:15px;}
+  .year-label{font-family:'Playfair Display',serif;font-size:0.78rem;color:var(--accent);font-weight:700;letter-spacing:0.15em;text-transform:uppercase;}
+  .year-line{flex:1;height:1px;background:var(--border);}
+  .semester-group{display:flex;gap:18px;flex-wrap:wrap;}
+  .semester-col{flex:1;min-width:240px;}
+  .sem-label{font-family:'IBM Plex Mono',monospace;font-size:0.55rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:8px;}
+  .materias-list{display:flex;flex-direction:column;gap:5px;}
 
-  /* LEGEND */
-  .legend {
-    padding: 14px 40px;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-    align-items: center;
-    background: var(--surface);
+  /* ── MATERIA CARD ── */
+  .materia{
+    border-radius:6px;border:1px solid var(--border);background:var(--surface);
+    padding:8px 12px;cursor:pointer;transition:all 0.15s ease;user-select:none;
   }
+  .materia:hover{transform:translateY(-1px);filter:brightness(1.15);}
+  .materia-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;}
+  .materia-name{font-size:0.73rem;font-weight:500;color:var(--muted);line-height:1.3;}
+  .materia-code{font-family:'IBM Plex Mono',monospace;font-size:0.53rem;color:var(--muted);flex-shrink:0;margin-top:1px;opacity:0.6;}
+  .status-badge{font-family:'IBM Plex Mono',monospace;font-size:0.51rem;text-transform:uppercase;letter-spacing:0.08em;padding:2px 6px;border-radius:3px;margin-top:5px;display:inline-block;font-weight:500;}
+  .libre-tag{font-family:'IBM Plex Mono',monospace;font-size:0.49rem;color:var(--accent);opacity:0.6;margin-left:3px;}
 
-  .legend-title {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.62rem;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin-right: 4px;
+  .materia.libre           .status-badge{background:var(--border);color:var(--muted);}
+  .materia.puede-cursar          {border-color:var(--cursable-border);background:var(--cursable-bg);}
+  .materia.puede-cursar          .materia-name{color:var(--cursable-text);}
+  .materia.puede-cursar          .status-badge{background:rgba(91,163,217,0.15);color:var(--cursable-text);}
+  .materia.puede-cursar-y-rendir {border-color:var(--rendible-border);background:var(--rendible-bg);}
+  .materia.puede-cursar-y-rendir .materia-name{color:var(--rendible-text);}
+  .materia.puede-cursar-y-rendir .status-badge{background:rgba(91,201,154,0.15);color:var(--rendible-text);}
+  .materia.cursando              {border-color:var(--cursando-border);background:var(--cursando-bg);}
+  .materia.cursando              .materia-name{color:var(--cursando-text);}
+  .materia.cursando              .status-badge{background:rgba(217,168,60,0.15);color:var(--cursando-text);}
+  .materia.regular               {border-color:var(--regular-border);background:var(--regular-bg);}
+  .materia.regular               .materia-name{color:var(--regular-text);}
+  .materia.regular               .status-badge{background:rgba(141,204,160,0.15);color:var(--regular-text);}
+  .materia.aprobada              {border-color:var(--aprobada-border);background:var(--aprobada-bg);}
+  .materia.aprobada              .materia-name{color:var(--aprobada-text);}
+  .materia.aprobada              .status-badge{background:rgba(76,175,104,0.15);color:var(--aprobada-text);}
+
+  /* ── INFO PANEL ── */
+  .info-panel{
+    position:fixed;right:0;top:0;bottom:0;width:285px;
+    background:#13131a;border-left:1px solid var(--border);
+    z-index:200;transform:translateX(100%);transition:transform 0.22s ease;
+    overflow-y:auto;padding:22px 18px;
   }
-
-  .legend-item {
-    display: flex;
-    align-items: center;
-    gap: 7px;
-    font-size: 0.72rem;
-    color: var(--muted);
-    cursor: pointer;
-    padding: 4px 10px;
-    border-radius: 4px;
-    transition: background 0.15s;
+  .info-panel.open{transform:translateX(0);}
+  .panel-close{
+    position:absolute;top:12px;right:12px;background:var(--border);border:none;
+    color:var(--muted);width:24px;height:24px;border-radius:50%;cursor:pointer;
+    font-size:0.78rem;display:flex;align-items:center;justify-content:center;transition:background 0.12s;
   }
-
-  .legend-item:hover { background: var(--border); }
-
-  .legend-dot {
-    width: 9px;
-    height: 9px;
-    border-radius: 50%;
-    flex-shrink: 0;
+  .panel-close:hover{background:#3a3a50;color:var(--text);}
+  .panel-code{font-family:'IBM Plex Mono',monospace;font-size:0.59rem;color:var(--muted);margin-bottom:6px;}
+  .panel-name{font-family:'Playfair Display',serif;font-size:1.08rem;font-weight:700;line-height:1.3;color:var(--text);margin-bottom:13px;}
+  .panel-section{margin-top:15px;}
+  .panel-section-title{font-family:'IBM Plex Mono',monospace;font-size:0.55rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:6px;padding-bottom:4px;border-bottom:1px solid var(--border);}
+  .panel-corr-list{display:flex;flex-direction:column;gap:3px;}
+  .panel-corr-item{font-size:0.68rem;padding:5px 8px;border-radius:4px;display:flex;align-items:center;gap:7px;cursor:pointer;transition:filter 0.12s;}
+  .panel-corr-item:hover{filter:brightness(1.2);}
+  .panel-corr-item .dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+  .panel-state-btn{
+    width:100%;padding:8px 10px;border-radius:5px;border:1px solid var(--border);
+    background:var(--surface);color:var(--text);font-family:'IBM Plex Mono',monospace;
+    font-size:0.65rem;cursor:pointer;text-align:left;display:flex;align-items:center;gap:9px;
+    transition:all 0.12s;margin-bottom:4px;
   }
+  .panel-state-btn:hover{background:var(--border);}
+  .panel-state-btn.active{border-color:var(--accent);background:var(--accent-dim);}
 
-  /* INSTRUCTIONS */
-  .instructions {
-    padding: 10px 40px;
-    border-bottom: 1px solid var(--border);
-    background: rgba(201,168,76,0.04);
-  }
-
-  .instructions p {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.65rem;
-    color: rgba(201,168,76,0.6);
-    letter-spacing: 0.04em;
-  }
-
-  /* MAIN GRID */
-  main {
-    padding: 32px 40px;
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
-  }
-
-  .year-block {}
-
-  .year-header {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 20px;
-  }
-
-  .year-label {
-    font-family: 'Playfair Display', serif;
-    font-size: 0.85rem;
-    color: var(--accent);
-    font-weight: 700;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-  }
-
-  .year-line {
-    flex: 1;
-    height: 1px;
-    background: var(--border);
-  }
-
-  .semester-group {
-    display: flex;
-    gap: 24px;
-    flex-wrap: wrap;
-  }
-
-  .semester-col {
-    flex: 1;
-    min-width: 280px;
-  }
-
-  .sem-label {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.6rem;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    margin-bottom: 10px;
-    padding-left: 2px;
-  }
-
-  .materias-list {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-
-  /* MATERIA CARD */
-  .materia {
-    border-radius: 6px;
-    border: 1px solid var(--libre);
-    background: var(--libre);
-    padding: 10px 14px;
-    cursor: pointer;
-    transition: all 0.18s ease;
-    position: relative;
-    user-select: none;
-  }
-
-  .materia:hover { transform: translateY(-1px); filter: brightness(1.15); }
-  .materia:active { transform: translateY(0); }
-
-  .materia-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 8px;
-  }
-
-  .materia-name {
-    font-size: 0.78rem;
-    font-weight: 500;
-    color: var(--libre-text);
-    line-height: 1.3;
-    transition: color 0.18s;
-  }
-
-  .materia-code {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.58rem;
-    color: var(--muted);
-    flex-shrink: 0;
-    margin-top: 1px;
-  }
-
-  .status-badge {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.55rem;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    padding: 2px 7px;
-    border-radius: 3px;
-    margin-top: 6px;
-    display: inline-block;
-    font-weight: 500;
-  }
-
-  .correlativas-info {
-    margin-top: 6px;
-    font-size: 0.62rem;
-    color: var(--muted);
-    line-height: 1.5;
-    display: none;
-  }
-
-  .materia:hover .correlativas-info,
-  .materia.selected .correlativas-info {
-    display: block;
-  }
-
-  /* State styles */
-  .materia.libre {
-    border-color: var(--border);
-    background: var(--surface);
-  }
-  .materia.libre .materia-name { color: var(--libre-text); }
-  .materia.libre .status-badge { background: var(--border); color: var(--muted); }
-
-  .materia.puede-cursar {
-    border-color: var(--cursable-border);
-    background: var(--cursable);
-  }
-  .materia.puede-cursar .materia-name { color: var(--cursable-text); }
-  .materia.puede-cursar .status-badge { background: rgba(91,163,217,0.15); color: var(--cursable-text); }
-
-  .materia.puede-rendir {
-    border-color: var(--rendible-border);
-    background: var(--rendible);
-  }
-  .materia.puede-rendir .materia-name { color: var(--rendible-text); }
-  .materia.puede-rendir .status-badge { background: rgba(91,201,154,0.15); color: var(--rendible-text); }
-
-  .materia.puede-cursar-y-rendir {
-    border-color: var(--rendible-border);
-    background: linear-gradient(135deg, var(--cursable) 0%, var(--rendible) 100%);
-  }
-  .materia.puede-cursar-y-rendir .materia-name { color: var(--rendible-text); }
-  .materia.puede-cursar-y-rendir .status-badge { background: rgba(91,201,154,0.15); color: var(--rendible-text); }
-
-  .materia.cursando {
-    border-color: var(--cursando-border);
-    background: var(--cursando);
-  }
-  .materia.cursando .materia-name { color: var(--cursando-text); }
-  .materia.cursando .status-badge { background: rgba(217,168,60,0.15); color: var(--cursando-text); }
-
-  .materia.regular {
-    border-color: var(--regular-border);
-    background: var(--regular);
-  }
-  .materia.regular .materia-name { color: var(--regular-text); }
-  .materia.regular .status-badge { background: rgba(141,204,160,0.15); color: var(--regular-text); }
-
-  .materia.aprobada {
-    border-color: var(--aprobada-border);
-    background: var(--aprobada);
-  }
-  .materia.aprobada .materia-name { color: var(--aprobada-text); }
-  .materia.aprobada .status-badge { background: rgba(76,175,104,0.15); color: var(--aprobada-text); }
-
-  /* Context menu for state selection */
-  .ctx-menu {
-    position: fixed;
-    background: #1c1c24;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 6px;
-    z-index: 1000;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
-    display: none;
-    min-width: 160px;
-  }
-
-  .ctx-menu.show { display: block; }
-
-  .ctx-menu-title {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.6rem;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    padding: 4px 10px 8px;
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 4px;
-  }
-
-  .ctx-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 7px 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 0.75rem;
-    transition: background 0.12s;
-  }
-
-  .ctx-item:hover { background: var(--border); }
-
-  .ctx-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-
-  /* Info panel */
-  .info-panel {
-    position: fixed;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    width: 320px;
-    background: #13131a;
-    border-left: 1px solid var(--border);
-    z-index: 200;
-    transform: translateX(100%);
-    transition: transform 0.25s ease;
-    overflow-y: auto;
-    padding: 28px 24px;
-  }
-
-  .info-panel.open { transform: translateX(0); }
-
-  .panel-close {
-    position: absolute;
-    top: 16px;
-    right: 16px;
-    background: var(--border);
-    border: none;
-    color: var(--muted);
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    cursor: pointer;
-    font-size: 0.9rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background 0.12s;
-  }
-
-  .panel-close:hover { background: #3a3a50; color: var(--text); }
-
-  .panel-code {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.65rem;
-    color: var(--muted);
-    letter-spacing: 0.1em;
-    margin-bottom: 8px;
-  }
-
-  .panel-name {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.2rem;
-    font-weight: 700;
-    line-height: 1.3;
-    color: var(--text);
-    margin-bottom: 16px;
-  }
-
-  .panel-section {
-    margin-top: 20px;
-  }
-
-  .panel-section-title {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.6rem;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    margin-bottom: 8px;
-    padding-bottom: 5px;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .panel-corr-list {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
-
-  .panel-corr-item {
-    font-size: 0.72rem;
-    padding: 5px 8px;
-    border-radius: 4px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    cursor: pointer;
-    transition: filter 0.12s;
-  }
-
-  .panel-corr-item:hover { filter: brightness(1.2); }
-
-  .panel-corr-item .dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-
-  .panel-state-btn {
-    width: 100%;
-    padding: 9px;
-    border-radius: 5px;
-    border: 1px solid var(--border);
-    background: var(--surface);
-    color: var(--text);
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.7rem;
-    cursor: pointer;
-    text-align: left;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    transition: all 0.12s;
-    margin-bottom: 5px;
-  }
-
-  .panel-state-btn:hover { background: var(--border); }
-  .panel-state-btn.active { border-color: var(--accent); }
-
-  /* Progress bar */
-  .progress-wrap {
-    height: 3px;
-    background: var(--border);
-    border-radius: 2px;
-    overflow: hidden;
-    margin-top: 4px;
-  }
-
-  .progress-bar {
-    height: 100%;
-    background: var(--accent);
-    border-radius: 2px;
-    transition: width 0.4s ease;
-  }
-
-  .libre-tag {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.55rem;
-    color: var(--accent);
-    opacity: 0.7;
-    margin-left: 4px;
-  }
-
-  @media (max-width: 700px) {
-    header { padding: 20px; }
-    main { padding: 20px; }
-    .legend { padding: 10px 20px; }
-    .instructions { padding: 8px 20px; }
-    .info-panel { width: 100%; }
+  @media(max-width:700px){
+    header,main,.legend,.instructions{padding-left:14px;padding-right:14px;}
+    .info-panel{width:100%;}
   }
 </style>
 </head>
 <body>
 
-<header>
-  <div class="header-left">
-    <h1>Abogacía — UCC</h1>
-    <p>Plan 2019 · Facultad de Derecho y Ciencias Sociales</p>
-  </div>
-  <div class="stats-bar">
-    <div class="stat aprobadas">
-      <div class="stat-num" id="cnt-aprobadas">0</div>
-      <div class="stat-label">Aprobadas</div>
+<!-- LOGIN -->
+<div id="login-screen">
+  <h1>Abogacía — UCC</h1>
+  <p>Plan de estudios 2019</p>
+  <button class="google-btn" onclick="loginGoogle()">
+    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google">
+    Continuar con Google
+  </button>
+  <div class="login-error" id="login-error"></div>
+</div>
+
+<!-- LOADING -->
+<div id="loading" style="display:none">
+  <div class="spinner"></div>
+  <h2>Abogacía UCC</h2>
+  <p id="loading-msg">Cargando tu progreso...</p>
+</div>
+
+<!-- APP -->
+<div id="app" style="display:none">
+  <header>
+    <div class="header-left">
+      <h1>Abogacía — UCC</h1>
+      <p>Plan 2019 · Facultad de Derecho y Ciencias Sociales</p>
     </div>
-    <div class="stat regulares">
-      <div class="stat-num" id="cnt-regulares">0</div>
-      <div class="stat-label">Regulares</div>
-    </div>
-    <div class="stat cursando">
-      <div class="stat-num" id="cnt-cursando">0</div>
-      <div class="stat-label">Cursando</div>
-    </div>
-    <div class="stat restantes">
-      <div class="stat-num" id="cnt-restantes">59</div>
-      <div class="stat-label">Restantes</div>
-    </div>
-    <div style="width:90px">
-      <div style="display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;font-size:0.6rem;color:var(--muted)">
-        <span>Progreso</span><span id="pct">0%</span>
+    <div class="header-right">
+      <div class="stats-bar">
+        <div class="stat aprobadas"><div class="stat-num" id="cnt-aprobadas">0</div><div class="stat-label">Aprobadas</div></div>
+        <div class="stat regulares"><div class="stat-num" id="cnt-regulares">0</div><div class="stat-label">Regulares</div></div>
+        <div class="stat cursando" ><div class="stat-num" id="cnt-cursando">0</div><div class="stat-label">Cursando</div></div>
+        <div class="stat restantes"><div class="stat-num" id="cnt-restantes">59</div><div class="stat-label">Restantes</div></div>
+        <div style="width:72px">
+          <div style="display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;font-size:0.54rem;color:var(--muted)">
+            <span>Progreso</span><span id="pct">0%</span>
+          </div>
+          <div class="progress-wrap"><div class="progress-bar" id="progress-bar" style="width:0%"></div></div>
+        </div>
       </div>
-      <div class="progress-wrap"><div class="progress-bar" id="progress-bar" style="width:0%"></div></div>
+      <div class="user-pill">
+        <img id="user-photo" src="" alt="">
+        <span id="user-name"></span>
+        <button class="logout-btn" onclick="logoutUser()">Salir</button>
+      </div>
+      <div class="sync-indicator synced" id="sync-indicator">
+        <span class="sync-dot"></span>
+        <span id="sync-label">Sincronizado</span>
+      </div>
     </div>
+  </header>
+
+  <div class="legend">
+    <span class="legend-title">Estado:</span>
+    <span class="legend-item"><span class="legend-dot" style="background:#3a3a50"></span>Libre</span>
+    <span class="legend-item"><span class="legend-dot" style="background:var(--cursable-text)"></span>Puede cursar</span>
+    <span class="legend-item"><span class="legend-dot" style="background:var(--rendible-text)"></span>Puede cursar y rendir</span>
+    <span class="legend-item"><span class="legend-dot" style="background:var(--cursando-text)"></span>Cursando</span>
+    <span class="legend-item"><span class="legend-dot" style="background:var(--regular-text)"></span>Regular</span>
+    <span class="legend-item"><span class="legend-dot" style="background:var(--aprobada-text)"></span>Aprobada</span>
   </div>
-</header>
+  <div class="instructions">
+    <p>▸ Click en una materia para cambiar su estado · Cada usuario tiene su propio progreso guardado en la nube</p>
+  </div>
 
-<div class="legend">
-  <span class="legend-title">Estado:</span>
-  <span class="legend-item"><span class="legend-dot" style="background:#3a3a50"></span>Libre</span>
-  <span class="legend-item"><span class="legend-dot" style="background:var(--cursable-text)"></span>Puede cursar</span>
-  <span class="legend-item"><span class="legend-dot" style="background:var(--rendible-text)"></span>Puede cursar y rendir</span>
-  <span class="legend-item"><span class="legend-dot" style="background:var(--cursando-text)"></span>Cursando</span>
-  <span class="legend-item"><span class="legend-dot" style="background:var(--regular-text)"></span>Regular (cursada)</span>
-  <span class="legend-item"><span class="legend-dot" style="background:var(--aprobada-text)"></span>Aprobada (final)</span>
+  <main id="main"></main>
 </div>
 
-<div class="instructions">
-  <p>▸ Click izquierdo = abrir panel de detalle &amp; cambiar estado &nbsp;|&nbsp; Los estados se guardan automáticamente en el navegador</p>
-</div>
-
-<main id="main"></main>
-
-<!-- Context menu -->
-<div class="ctx-menu" id="ctx-menu">
-  <div class="ctx-menu-title" id="ctx-title">Cambiar estado</div>
-  <div class="ctx-item" data-state="libre"><span class="ctx-dot" style="background:#3a3a50"></span>Libre</div>
-  <div class="ctx-item" data-state="cursando"><span class="ctx-dot" style="background:var(--cursando-text)"></span>Cursando</div>
-  <div class="ctx-item" data-state="regular"><span class="ctx-dot" style="background:var(--regular-text)"></span>Regular (cursada)</div>
-  <div class="ctx-item" data-state="aprobada"><span class="ctx-dot" style="background:var(--aprobada-text)"></span>Aprobada (final)</div>
-</div>
-
-<!-- Info panel -->
+<!-- INFO PANEL -->
 <div class="info-panel" id="info-panel">
   <button class="panel-close" onclick="closePanel()">✕</button>
   <div class="panel-code" id="panel-code"></div>
   <div class="panel-name" id="panel-name"></div>
   <div id="panel-state-btns"></div>
-  <div class="panel-section" id="panel-correlativas-cursar-sec">
-    <div class="panel-section-title">Para CURSAR necesita regular:</div>
-    <div class="panel-corr-list" id="panel-corr-cursar"></div>
-  </div>
-  <div class="panel-section" id="panel-correlativas-rendir-sec">
-    <div class="panel-section-title">Para RENDIR necesita aprobada:</div>
-    <div class="panel-corr-list" id="panel-corr-rendir"></div>
-  </div>
-  <div class="panel-section" id="panel-desbloquea-sec">
-    <div class="panel-section-title">Desbloquea para cursar:</div>
-    <div class="panel-corr-list" id="panel-desbloquea"></div>
-  </div>
+  <div class="panel-section" id="sec-cursar"     style="display:none"><div class="panel-section-title">Para CURSAR — necesita regular:</div><div class="panel-corr-list" id="list-cursar"></div></div>
+  <div class="panel-section" id="sec-rendir"     style="display:none"><div class="panel-section-title">Para RENDIR — necesita aprobada:</div><div class="panel-corr-list" id="list-rendir"></div></div>
+  <div class="panel-section" id="sec-desbloquea" style="display:none"><div class="panel-section-title">Desbloquea para cursar:</div><div class="panel-corr-list" id="list-desbloquea"></div></div>
 </div>
 
-<script>
-// ============================================================
-// DATA — extracted from official PDF
-// ============================================================
+<!-- FIREBASE SDKs -->
+<script type="module">
+import { initializeApp }                        from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged }
+                                                from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc }    from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+// ── CONFIG ──────────────────────────────────────────────────
+const firebaseConfig = {
+  apiKey:            "AIzaSyBEr1HUuUYvWHkI8DfoO9KWm8wraqLmZnY",
+  authDomain:        "plan-abogacia-ucc.firebaseapp.com",
+  projectId:         "plan-abogacia-ucc",
+  storageBucket:     "plan-abogacia-ucc.firebasestorage.app",
+  messagingSenderId: "292837545501",
+  appId:             "1:292837545501:web:81afc0868b7c9e482358f4"
+};
+
+const app      = initializeApp(firebaseConfig);
+const auth     = getAuth(app);
+const db       = getFirestore(app);
+const provider = new GoogleAuthProvider();
+
+// ── DATA ─────────────────────────────────────────────────────
 const materias = [
-  // CURSO 1 - S1
-  { id:'10026', name:'Derecho Privado I',         curso:1, sem:1, libre:false, corrCursar:[], corrRendir:[] },
-  { id:'10027', name:'Derecho Romano',             curso:1, sem:1, libre:false, corrCursar:[], corrRendir:[] },
-  { id:'10028', name:'Derecho Político',           curso:1, sem:1, libre:false, corrCursar:[], corrRendir:[] },
-  { id:'10029', name:'Pensamiento Filosófico',     curso:1, sem:1, libre:false, corrCursar:[], corrRendir:[] },
-  // CURSO 1 - S2
-  { id:'20020', name:'Derecho Privado II',         curso:1, sem:2, libre:false, corrCursar:['10026'], corrRendir:['10026'] },
-  { id:'20021', name:'Derecho Penal I',            curso:1, sem:2, libre:false, corrCursar:[], corrRendir:[] },
-  { id:'20022', name:'Derechos Humanos',           curso:1, sem:2, libre:false, corrCursar:[], corrRendir:[] },
-  { id:'20023', name:'Derecho Constitucional',     curso:1, sem:2, libre:false, corrCursar:['10028'], corrRendir:['10028'] },
-  { id:'20024', name:'Antropología',               curso:1, sem:2, libre:true,  corrCursar:['10029'], corrRendir:['10029'] },
-  // CURSO 2 - S1
-  { id:'10030', name:'Derecho Privado III',        curso:2, sem:1, libre:true,  corrCursar:['20020'], corrRendir:['20020'] },
-  { id:'10031', name:'Derecho Penal II',           curso:2, sem:1, libre:false, corrCursar:['20021'], corrRendir:['20021'] },
-  { id:'10032', name:'Historia del Derecho',       curso:2, sem:1, libre:false, corrCursar:[], corrRendir:[] },
-  { id:'20025', name:'Der. Pub. Provi. y Munic.',  curso:2, sem:1, libre:false, corrCursar:['20023'], corrRendir:['20023'] },
-  { id:'10033', name:'Pensamiento Teológico',      curso:2, sem:1, libre:true,  corrCursar:['20024'], corrRendir:['20024'] },
-  // CURSO 2 - S2
-  { id:'20026', name:'Derecho Privado IV',         curso:2, sem:2, libre:true,  corrCursar:['10030'], corrRendir:['10030'] },
-  { id:'20027', name:'Derecho Procesal Civil',     curso:2, sem:2, libre:false, corrCursar:[], corrRendir:[] },
-  { id:'20028', name:'Práctica Profesional I',     curso:2, sem:2, libre:false, corrCursar:[], corrRendir:[] },
-  { id:'20029', name:'Pensamiento Social Cristiano',curso:2, sem:2, libre:true, corrCursar:['10033'], corrRendir:['10033'] },
-  { id:'20030', name:'Seminario Optativo I',       curso:2, sem:2, libre:false, corrCursar:[], corrRendir:[] },
-  // CURSO 3 - S1
-  { id:'10034', name:'Derecho Privado V',          curso:3, sem:1, libre:false, corrCursar:['20026'], corrRendir:['20026'] },
-  { id:'10035', name:'Derecho del Trabajo',        curso:3, sem:1, libre:false, corrCursar:[], corrRendir:[] },
-  { id:'10036', name:'Derecho Procesal Penal',     curso:3, sem:1, libre:false, corrCursar:['10031'], corrRendir:['10031'] },
-  { id:'10037', name:'Der. Proc. Cons. y Conv.',   curso:3, sem:1, libre:false, corrCursar:['20023'], corrRendir:['20023'] },
-  { id:'10038', name:'Soluc. Alternativ. de Conflictos', curso:3, sem:1, libre:false, corrCursar:[], corrRendir:[] },
-  { id:'10039', name:'Sociología Jurídica',        curso:3, sem:1, libre:false, corrCursar:[], corrRendir:[] },
-  // CURSO 3 - S2
-  { id:'20031', name:'Derecho Concursal',          curso:3, sem:2, libre:true,  corrCursar:['10034'], corrRendir:['10034'] },
-  { id:'20032', name:'Derecho Privado VI',         curso:3, sem:2, libre:true,  corrCursar:['20026'], corrRendir:['20026'] },
-  { id:'20033', name:'Práctica Profesional II',    curso:3, sem:2, libre:false, corrCursar:['20027'], corrRendir:['20027'] },
-  { id:'20034', name:'Filosofía del Derecho',      curso:3, sem:2, libre:true,  corrCursar:[], corrRendir:[] },
-  { id:'20035', name:'Derecho de la Seguridad Social', curso:3, sem:2, libre:false, corrCursar:[], corrRendir:[] },
-  { id:'20036', name:'Sem. de Form. Hum. I',       curso:3, sem:2, libre:true,  corrCursar:[], corrRendir:[] },
-  { id:'20037', name:'Seminario Optativo II',      curso:3, sem:2, libre:false, corrCursar:[], corrRendir:[] },
-  // CURSO 4 - S1
-  { id:'10040', name:'Derecho Privado VII',        curso:4, sem:1, libre:false, corrCursar:[], corrRendir:[] },
-  { id:'10041', name:'Derecho Privado VIII',       curso:4, sem:1, libre:false, corrCursar:['20026'], corrRendir:['20026'] },
-  { id:'10042', name:'Derecho Internacional Público', curso:4, sem:1, libre:false, corrCursar:[], corrRendir:[] },
-  { id:'10043', name:'Derecho Administrativo',     curso:4, sem:1, libre:true,  corrCursar:['20025'], corrRendir:['20025'] },
-  { id:'10044', name:'Sem. de Form. Hum. II',      curso:4, sem:1, libre:true,  corrCursar:[], corrRendir:[] },
-  { id:'20040', name:'Derecho Procesal Laboral',   curso:4, sem:1, libre:false, corrCursar:['10035'], corrRendir:['10035'] },
-  // CURSO 4 - S2
-  { id:'20038', name:'Derecho Privado IX',         curso:4, sem:2, libre:false, corrCursar:['10040'], corrRendir:['10040'] },
+  { id:'10026', name:'Derecho Privado I',              curso:1, sem:1, libre:false, corrCursar:[], corrRendir:[] },
+  { id:'10027', name:'Derecho Romano',                  curso:1, sem:1, libre:false, corrCursar:[], corrRendir:[] },
+  { id:'10028', name:'Derecho Político',                curso:1, sem:1, libre:false, corrCursar:[], corrRendir:[] },
+  { id:'10029', name:'Pensamiento Filosófico',          curso:1, sem:1, libre:false, corrCursar:[], corrRendir:[] },
+  { id:'20020', name:'Derecho Privado II',              curso:1, sem:2, libre:false, corrCursar:['10026'], corrRendir:['10026'] },
+  { id:'20021', name:'Derecho Penal I',                 curso:1, sem:2, libre:false, corrCursar:[], corrRendir:[] },
+  { id:'20022', name:'Derechos Humanos',                curso:1, sem:2, libre:false, corrCursar:[], corrRendir:[] },
+  { id:'20023', name:'Derecho Constitucional',          curso:1, sem:2, libre:false, corrCursar:['10028'], corrRendir:['10028'] },
+  { id:'20024', name:'Antropología',                    curso:1, sem:2, libre:true,  corrCursar:['10029'], corrRendir:['10029'] },
+  { id:'10030', name:'Derecho Privado III',             curso:2, sem:1, libre:true,  corrCursar:['20020'], corrRendir:['20020'] },
+  { id:'10031', name:'Derecho Penal II',                curso:2, sem:1, libre:false, corrCursar:['20021'], corrRendir:['20021'] },
+  { id:'10032', name:'Historia del Derecho',            curso:2, sem:1, libre:false, corrCursar:[], corrRendir:[] },
+  { id:'20025', name:'Der. Pub. Provi. y Munic.',       curso:2, sem:1, libre:false, corrCursar:['20023'], corrRendir:['20023'] },
+  { id:'10033', name:'Pensamiento Teológico',           curso:2, sem:1, libre:true,  corrCursar:['20024'], corrRendir:['20024'] },
+  { id:'20026', name:'Derecho Privado IV',              curso:2, sem:2, libre:true,  corrCursar:['10030'], corrRendir:['10030'] },
+  { id:'20027', name:'Derecho Procesal Civil',          curso:2, sem:2, libre:false, corrCursar:[], corrRendir:[] },
+  { id:'20028', name:'Práctica Profesional I',          curso:2, sem:2, libre:false, corrCursar:[], corrRendir:[] },
+  { id:'20029', name:'Pensamiento Social Cristiano',    curso:2, sem:2, libre:true,  corrCursar:['10033'], corrRendir:['10033'] },
+  { id:'20030', name:'Seminario Optativo I',            curso:2, sem:2, libre:false, corrCursar:[], corrRendir:[] },
+  { id:'10034', name:'Derecho Privado V',               curso:3, sem:1, libre:false, corrCursar:['20026'], corrRendir:['20026'] },
+  { id:'10035', name:'Derecho del Trabajo',             curso:3, sem:1, libre:false, corrCursar:[], corrRendir:[] },
+  { id:'10036', name:'Derecho Procesal Penal',          curso:3, sem:1, libre:false, corrCursar:['10031'], corrRendir:['10031'] },
+  { id:'10037', name:'Der. Proc. Cons. y Conv.',        curso:3, sem:1, libre:false, corrCursar:['20023'], corrRendir:['20023'] },
+  { id:'10038', name:'Soluc. Alternativ. de Conflictos',curso:3, sem:1, libre:false, corrCursar:[], corrRendir:[] },
+  { id:'10039', name:'Sociología Jurídica',             curso:3, sem:1, libre:false, corrCursar:[], corrRendir:[] },
+  { id:'20031', name:'Derecho Concursal',               curso:3, sem:2, libre:true,  corrCursar:['10034'], corrRendir:['10034'] },
+  { id:'20032', name:'Derecho Privado VI',              curso:3, sem:2, libre:true,  corrCursar:['20026'], corrRendir:['20026'] },
+  { id:'20033', name:'Práctica Profesional II',         curso:3, sem:2, libre:false, corrCursar:['20027'], corrRendir:['20027'] },
+  { id:'20034', name:'Filosofía del Derecho',           curso:3, sem:2, libre:true,  corrCursar:[], corrRendir:[] },
+  { id:'20035', name:'Derecho de la Seguridad Social',  curso:3, sem:2, libre:false, corrCursar:[], corrRendir:[] },
+  { id:'20036', name:'Sem. de Form. Hum. I',            curso:3, sem:2, libre:true,  corrCursar:[], corrRendir:[] },
+  { id:'20037', name:'Seminario Optativo II',           curso:3, sem:2, libre:false, corrCursar:[], corrRendir:[] },
+  { id:'10040', name:'Derecho Privado VII',             curso:4, sem:1, libre:false, corrCursar:[], corrRendir:[] },
+  { id:'10041', name:'Derecho Privado VIII',            curso:4, sem:1, libre:false, corrCursar:['20026'], corrRendir:['20026'] },
+  { id:'10042', name:'Derecho Internacional Público',   curso:4, sem:1, libre:false, corrCursar:[], corrRendir:[] },
+  { id:'10043', name:'Derecho Administrativo',          curso:4, sem:1, libre:true,  corrCursar:['20025'], corrRendir:['20025'] },
+  { id:'10044', name:'Sem. de Form. Hum. II',           curso:4, sem:1, libre:true,  corrCursar:[], corrRendir:[] },
+  { id:'20040', name:'Derecho Procesal Laboral',        curso:4, sem:1, libre:false, corrCursar:['10035'], corrRendir:['10035'] },
+  { id:'20038', name:'Derecho Privado IX',              curso:4, sem:2, libre:false, corrCursar:['10040'], corrRendir:['10040'] },
   { id:'20039', name:'Derecho Procesal Administrativo', curso:4, sem:2, libre:false, corrCursar:['10043'], corrRendir:['10043'] },
-  { id:'20056', name:'Derechos de la Niñez, Adolescencia', curso:4, sem:2, libre:false, corrCursar:['10040'], corrRendir:['10040'] },
-  { id:'20041', name:'Derecho Procesal de Familia', curso:4, sem:2, libre:false, corrCursar:['10040'], corrRendir:['10040'] },
-  { id:'20042', name:'Práctica Profesional III',   curso:4, sem:2, libre:false, corrCursar:['10036'], corrRendir:['10036'] },
-  { id:'20043', name:'Derecho del Consumidor',     curso:4, sem:2, libre:false, corrCursar:['20025'], corrRendir:['20025'] },
-  // CURSO 4 - S2 cont
-  { id:'20044', name:'Ética y Deontología',        curso:4, sem:2, libre:true,  corrCursar:[], corrRendir:[] },
-  { id:'20045', name:'Seminario Optativo III',     curso:4, sem:2, libre:false, corrCursar:[], corrRendir:[] },
-  // CURSO 5 - S1
-  { id:'10045', name:'Der. Amb. y de los Rec. Nat.', curso:5, sem:1, libre:true, corrCursar:[], corrRendir:[] },
-  { id:'10046', name:'Derecho Internacional Privado', curso:5, sem:1, libre:true, corrCursar:['20026'], corrRendir:['20026'] },
-  { id:'10047', name:'Finanzas y Derecho Tributario', curso:5, sem:1, libre:false, corrCursar:['20025'], corrRendir:['20025'] },
-  { id:'10048', name:'Práctica Profesional IV',    curso:5, sem:1, libre:false, corrCursar:['20033'], corrRendir:['20033'] },
-  { id:'10049', name:'Derecho Privado X',          curso:5, sem:1, libre:false, corrCursar:['20031'], corrRendir:['20031'] },
-  { id:'10050', name:'Seminario Optativo IV',      curso:5, sem:1, libre:false, corrCursar:[], corrRendir:[] },
-  // CURSO 5 - S2
-  { id:'20046', name:'Argumentación Jurídica',     curso:5, sem:2, libre:false, corrCursar:['20034'], corrRendir:['20034'] },
-  { id:'20047', name:'Metodología de la Investigación Jur.', curso:5, sem:2, libre:false, corrCursar:[], corrRendir:[] },
-  { id:'20048', name:'Técnicas de Litigación Oral', curso:5, sem:2, libre:false, corrCursar:[], corrRendir:[] },
-  { id:'20049', name:'Práctica Profesional Supervisada', curso:5, sem:2, libre:false, corrCursar:['20042','20033'], corrRendir:['20042','20033'] },
-  { id:'20057', name:'Derecho de los Medios de Transporte', curso:5, sem:2, libre:false, corrCursar:[], corrRendir:[] },
-  { id:'20058', name:'Derecho Bursátil y Cambiario', curso:5, sem:2, libre:false, corrCursar:['10049'], corrRendir:['10049'] },
-  { id:'20051', name:'Idioma Extranjero',          curso:5, sem:2, libre:false, corrCursar:[], corrRendir:[] },
+  { id:'20056', name:'Derechos de la Niñez, Adolescencia',curso:4,sem:2,libre:false, corrCursar:['10040'], corrRendir:['10040'] },
+  { id:'20041', name:'Derecho Procesal de Familia',     curso:4, sem:2, libre:false, corrCursar:['10040'], corrRendir:['10040'] },
+  { id:'20042', name:'Práctica Profesional III',        curso:4, sem:2, libre:false, corrCursar:['10036'], corrRendir:['10036'] },
+  { id:'20043', name:'Derecho del Consumidor',          curso:4, sem:2, libre:false, corrCursar:['20025'], corrRendir:['20025'] },
+  { id:'20044', name:'Ética y Deontología',             curso:4, sem:2, libre:true,  corrCursar:[], corrRendir:[] },
+  { id:'20045', name:'Seminario Optativo III',          curso:4, sem:2, libre:false, corrCursar:[], corrRendir:[] },
+  { id:'10045', name:'Der. Amb. y de los Rec. Nat.',    curso:5, sem:1, libre:true,  corrCursar:[], corrRendir:[] },
+  { id:'10046', name:'Derecho Internacional Privado',   curso:5, sem:1, libre:true,  corrCursar:['20026'], corrRendir:['20026'] },
+  { id:'10047', name:'Finanzas y Derecho Tributario',   curso:5, sem:1, libre:false, corrCursar:['20025'], corrRendir:['20025'] },
+  { id:'10048', name:'Práctica Profesional IV',         curso:5, sem:1, libre:false, corrCursar:['20033'], corrRendir:['20033'] },
+  { id:'10049', name:'Derecho Privado X',               curso:5, sem:1, libre:false, corrCursar:['20031'], corrRendir:['20031'] },
+  { id:'10050', name:'Seminario Optativo IV',           curso:5, sem:1, libre:false, corrCursar:[], corrRendir:[] },
+  { id:'20046', name:'Argumentación Jurídica',          curso:5, sem:2, libre:false, corrCursar:['20034'], corrRendir:['20034'] },
+  { id:'20047', name:'Metodología de la Investigación Jur.',curso:5,sem:2,libre:false,corrCursar:[],corrRendir:[] },
+  { id:'20048', name:'Técnicas de Litigación Oral',     curso:5, sem:2, libre:false, corrCursar:[], corrRendir:[] },
+  { id:'20049', name:'Práctica Profesional Supervisada',curso:5, sem:2, libre:false, corrCursar:['20042','20033'], corrRendir:['20042','20033'] },
+  { id:'20057', name:'Derecho de los Medios de Transporte',curso:5,sem:2,libre:false,corrCursar:[],corrRendir:[] },
+  { id:'20058', name:'Derecho Bursátil y Cambiario',    curso:5, sem:2, libre:false, corrCursar:['10049'], corrRendir:['10049'] },
+  { id:'20051', name:'Idioma Extranjero',               curso:5, sem:2, libre:false, corrCursar:[], corrRendir:[] },
 ];
 
-// State per id: 'libre' | 'cursando' | 'regular' | 'aprobada'
+const MAP = {};
+materias.forEach(m => MAP[m.id] = m);
+
+const LABELS = { libre:'Libre', cursando:'Cursando', regular:'Regular', aprobada:'Aprobada', 'puede-cursar':'Puede cursar', 'puede-cursar-y-rendir':'Puede cursar y rendir' };
+const DOTS   = { libre:'#3a3a50', cursando:'#d9a83c', regular:'#8dcca0', aprobada:'#4caf68', 'puede-cursar':'#5ba3d9', 'puede-cursar-y-rendir':'#5bc99a' };
+
+// ── STATE ────────────────────────────────────────────────────
 let estados = {};
+let currentUser = null;
+let syncTimeout = null;
 
-// Load from localStorage
-try {
-  const saved = localStorage.getItem('ucc-plan-2019');
-  if (saved) estados = JSON.parse(saved);
-} catch(e) {}
-
-function saveEstados() {
-  localStorage.setItem('ucc-plan-2019', JSON.stringify(estados));
+function setSyncStatus(cls, text) {
+  const el = document.getElementById('sync-indicator');
+  el.className = 'sync-indicator ' + cls;
+  document.getElementById('sync-label').textContent = text;
 }
 
-function getEstado(id) {
-  return estados[id] || 'libre';
+async function loadUserData(uid) {
+  try {
+    const snap = await getDoc(doc(db, 'usuarios', uid));
+    if (snap.exists()) estados = snap.data().estados || {};
+    else estados = {};
+    setSyncStatus('synced', 'Sincronizado ✓');
+  } catch(e) {
+    console.error(e);
+    setSyncStatus('error', 'Error al cargar');
+  }
 }
+
+async function saveUserData() {
+  if (!currentUser) return;
+  setSyncStatus('syncing', 'Guardando...');
+  if (syncTimeout) clearTimeout(syncTimeout);
+  syncTimeout = setTimeout(async () => {
+    try {
+      await setDoc(doc(db, 'usuarios', currentUser.uid), { estados }, { merge: true });
+      setSyncStatus('synced', 'Sincronizado ✓');
+    } catch(e) {
+      setSyncStatus('error', 'Error al guardar');
+    }
+  }, 800);
+}
+
+function getEstado(id) { return estados[id] || 'libre'; }
 
 function setEstado(id, estado) {
   estados[id] = estado;
-  saveEstados();
+  saveUserData();
   renderAll();
+  if (document.getElementById('info-panel').classList.contains('open')) openPanel(id);
 }
 
-function getMap() {
-  const m = {};
-  materias.forEach(mat => m[mat.id] = mat);
-  return m;
-}
-const MAP = getMap();
+// ── AUTH ─────────────────────────────────────────────────────
+window.loginGoogle = async function() {
+  document.getElementById('login-error').textContent = '';
+  try {
+    await signInWithPopup(auth, provider);
+  } catch(e) {
+    document.getElementById('login-error').textContent = 'Error al iniciar sesión. Intentá de nuevo.';
+  }
+};
 
-// Compute display state for a materia (considering correlativas)
+window.logoutUser = async function() {
+  await signOut(auth);
+};
+
+onAuthStateChanged(auth, async (user) => {
+  if (user) {
+    currentUser = user;
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('loading').style.display = 'flex';
+    document.getElementById('loading-msg').textContent = 'Cargando tu progreso...';
+    // Set user pill
+    document.getElementById('user-photo').src = user.photoURL || '';
+    document.getElementById('user-name').textContent = user.displayName?.split(' ')[0] || user.email;
+    await loadUserData(user.uid);
+    renderAll();
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+  } else {
+    currentUser = null;
+    estados = {};
+    document.getElementById('app').style.display = 'none';
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('login-screen').style.display = 'flex';
+  }
+});
+
+// ── LOGIC ─────────────────────────────────────────────────────
 function computeDisplayState(mat) {
   const est = getEstado(mat.id);
-  if (est !== 'libre') return est; // user-set state takes priority
-
-  const puedeRendir = mat.corrRendir.length === 0 || mat.corrRendir.every(cid => getEstado(cid) === 'aprobada');
-  const puedeCursar = mat.corrCursar.length === 0 || mat.corrCursar.every(cid => {
-    const ce = getEstado(cid);
-    return ce === 'regular' || ce === 'aprobada' || ce === 'cursando';
-  });
-
-  if (puedeRendir && mat.corrRendir.length > 0) return 'puede-cursar-y-rendir';
-  if (puedeCursar && mat.corrCursar.length > 0) return 'puede-cursar';
+  if (est !== 'libre') return est;
+  const puedeRendir = mat.corrRendir.length > 0 && mat.corrRendir.every(cid => getEstado(cid) === 'aprobada');
+  const puedeCursar = mat.corrCursar.length > 0 && mat.corrCursar.every(cid => ['regular','aprobada','cursando'].includes(getEstado(cid)));
+  if (puedeRendir) return 'puede-cursar-y-rendir';
+  if (puedeCursar) return 'puede-cursar';
   return 'libre';
 }
 
-function getStateLabel(state) {
-  const labels = {
-    'libre': 'Libre',
-    'cursando': 'Cursando',
-    'regular': 'Regular',
-    'aprobada': 'Aprobada',
-    'puede-cursar': 'Puede cursar',
-    'puede-cursar-y-rendir': 'Puede cursar y rendir',
-  };
-  return labels[state] || state;
-}
-
-function getStateDot(state) {
-  const colors = {
-    'libre': '#3a3a50',
-    'cursando': '#d9a83c',
-    'regular': '#8dcca0',
-    'aprobada': '#4caf68',
-    'puede-cursar': '#5ba3d9',
-    'puede-cursar-y-rendir': '#5bc99a',
-  };
-  return colors[state] || '#3a3a50';
-}
-
-// ============================================================
-// RENDER
-// ============================================================
-function renderAll() {
-  renderGrid();
-  renderStats();
-}
+// ── RENDER ────────────────────────────────────────────────────
+function renderAll() { renderGrid(); renderStats(); }
 
 function renderStats() {
-  let apr = 0, reg = 0, cur = 0;
-  materias.forEach(m => {
-    const e = getEstado(m.id);
-    if (e === 'aprobada') apr++;
-    else if (e === 'regular') reg++;
-    else if (e === 'cursando') cur++;
-  });
-  const total = materias.length;
+  let apr=0, reg=0, cur=0;
+  materias.forEach(m => { const e=getEstado(m.id); if(e==='aprobada')apr++; else if(e==='regular')reg++; else if(e==='cursando')cur++; });
   document.getElementById('cnt-aprobadas').textContent = apr;
   document.getElementById('cnt-regulares').textContent = reg;
-  document.getElementById('cnt-cursando').textContent = cur;
-  document.getElementById('cnt-restantes').textContent = total - apr - reg - cur;
-  const pct = Math.round((apr / total) * 100);
+  document.getElementById('cnt-cursando').textContent  = cur;
+  document.getElementById('cnt-restantes').textContent = materias.length - apr - reg - cur;
+  const pct = Math.round(apr / materias.length * 100);
   document.getElementById('pct').textContent = pct + '%';
   document.getElementById('progress-bar').style.width = pct + '%';
 }
 
 function renderGrid() {
-  const main = document.getElementById('main');
-  // Group by curso and sem
   const byYear = {};
-  materias.forEach(m => {
-    if (!byYear[m.curso]) byYear[m.curso] = { 1: [], 2: [] };
-    byYear[m.curso][m.sem].push(m);
-  });
-
-  const yearNames = ['Primer Año','Segundo Año','Tercer Año','Cuarto Año','Quinto Año'];
-
-  main.innerHTML = Object.keys(byYear).map(curso => {
-    const sems = byYear[curso];
-    return `
+  materias.forEach(m => { if(!byYear[m.curso]) byYear[m.curso]={1:[],2:[]}; byYear[m.curso][m.sem].push(m); });
+  const names = ['Primer Año','Segundo Año','Tercer Año','Cuarto Año','Quinto Año'];
+  document.getElementById('main').innerHTML = Object.keys(byYear).map(c => `
     <div class="year-block">
-      <div class="year-header">
-        <span class="year-label">${yearNames[curso-1]}</span>
-        <div class="year-line"></div>
-      </div>
+      <div class="year-header"><span class="year-label">${names[c-1]}</span><div class="year-line"></div></div>
       <div class="semester-group">
-        <div class="semester-col">
-          <div class="sem-label">1er semestre</div>
-          <div class="materias-list">
-            ${(sems[1]||[]).map(renderMateria).join('')}
-          </div>
-        </div>
-        <div class="semester-col">
-          <div class="sem-label">2do semestre</div>
-          <div class="materias-list">
-            ${(sems[2]||[]).map(renderMateria).join('')}
-          </div>
-        </div>
+        <div class="semester-col"><div class="sem-label">1er semestre</div><div class="materias-list">${(byYear[c][1]||[]).map(renderMateria).join('')}</div></div>
+        <div class="semester-col"><div class="sem-label">2do semestre</div><div class="materias-list">${(byYear[c][2]||[]).map(renderMateria).join('')}</div></div>
       </div>
-    </div>`;
-  }).join('');
-
-  // Attach events
-  document.querySelectorAll('.materia').forEach(el => {
-    el.addEventListener('click', (e) => {
-      e.stopPropagation();
-      openPanel(el.dataset.id);
-    });
-  });
+    </div>`).join('');
+  document.querySelectorAll('.materia').forEach(el =>
+    el.addEventListener('click', e => { e.stopPropagation(); openPanel(el.dataset.id); })
+  );
 }
 
 function renderMateria(mat) {
-  const displayState = computeDisplayState(mat);
-  const realState = getEstado(mat.id);
-  const label = getStateLabel(realState !== 'libre' ? realState : displayState);
-  const libreTag = mat.libre ? '<span class="libre-tag">★ libre</span>' : '';
-
-  let corrInfo = '';
-  if (mat.corrCursar.length > 0) {
-    corrInfo += `<div style="color:var(--muted);font-size:0.6rem;margin-top:2px">Cursar: ${mat.corrCursar.map(id => MAP[id]?.name || id).join(', ')}</div>`;
-  }
-  if (mat.corrRendir.length > 0) {
-    corrInfo += `<div style="color:var(--muted);font-size:0.6rem">Rendir: ${mat.corrRendir.map(id => MAP[id]?.name || id).join(', ')}</div>`;
-  }
-
-  return `
-  <div class="materia ${displayState}" data-id="${mat.id}">
-    <div class="materia-top">
-      <span class="materia-name">${mat.name}${libreTag}</span>
-      <span class="materia-code">${mat.id}</span>
-    </div>
+  const ds   = computeDisplayState(mat);
+  const real = getEstado(mat.id);
+  const label = LABELS[real !== 'libre' ? real : ds];
+  const tag   = mat.libre ? '<span class="libre-tag">★ libre</span>' : '';
+  return `<div class="materia ${ds}" data-id="${mat.id}">
+    <div class="materia-top"><span class="materia-name">${mat.name}${tag}</span><span class="materia-code">${mat.id}</span></div>
     <span class="status-badge">${label}</span>
-    ${corrInfo ? `<div class="correlativas-info">${corrInfo}</div>` : ''}
   </div>`;
 }
 
-// ============================================================
-// INFO PANEL
-// ============================================================
-let currentPanelId = null;
+// ── PANEL ─────────────────────────────────────────────────────
+function corrItem(cid) {
+  const cm = MAP[cid]; if(!cm) return '';
+  const real = getEstado(cid);
+  const ds   = computeDisplayState(cm);
+  const s    = real !== 'libre' ? real : ds;
+  const dot  = DOTS[s] || DOTS.libre;
+  return `<div class="panel-corr-item" style="background:${dot}22;color:${dot}" onclick="window._openPanel('${cid}')">
+    <span class="dot" style="background:${dot}"></span>${cm.name}
+  </div>`;
+}
+
+window._openPanel = function(id) { openPanel(id); };
 
 function openPanel(id) {
-  currentPanelId = id;
   const mat = MAP[id];
-  const panel = document.getElementById('info-panel');
-  
   document.getElementById('panel-code').textContent = id + (mat.libre ? ' · ★ Se puede rendir libre' : '');
   document.getElementById('panel-name').textContent = mat.name;
-
-  // State buttons
-  const states = ['libre','cursando','regular','aprobada'];
   const cur = getEstado(id);
-  document.getElementById('panel-state-btns').innerHTML = states.map(s => `
-    <button class="panel-state-btn ${cur === s ? 'active' : ''}" onclick="setEstado('${id}','${s}');openPanel('${id}')">
-      <span style="width:8px;height:8px;border-radius:50%;background:${getStateDot(s)};flex-shrink:0;display:inline-block"></span>
-      ${getStateLabel(s)}
-    </button>
-  `).join('');
-
-  // Correlativas para cursar
-  const corrCursarSec = document.getElementById('panel-correlativas-cursar-sec');
-  const corrCursarEl = document.getElementById('panel-corr-cursar');
-  if (mat.corrCursar.length > 0) {
-    corrCursarSec.style.display = '';
-    corrCursarEl.innerHTML = mat.corrCursar.map(cid => {
-      const cm = MAP[cid];
-      const ce = getEstado(cid);
-      const ds = computeDisplayState(cm);
-      const state = ce !== 'libre' ? ce : ds;
-      return `<div class="panel-corr-item" style="background:${getStateDot(state)}22;color:${getStateDot(state)}" onclick="openPanel('${cid}')">
-        <span class="dot" style="background:${getStateDot(state)}"></span>
-        ${cm?.name || cid}
-      </div>`;
-    }).join('');
-  } else {
-    corrCursarSec.style.display = 'none';
-  }
-
-  // Correlativas para rendir
-  const corrRendirSec = document.getElementById('panel-correlativas-rendir-sec');
-  const corrRendirEl = document.getElementById('panel-corr-rendir');
-  if (mat.corrRendir.length > 0) {
-    corrRendirSec.style.display = '';
-    corrRendirEl.innerHTML = mat.corrRendir.map(cid => {
-      const cm = MAP[cid];
-      const ce = getEstado(cid);
-      const ds = computeDisplayState(cm);
-      const state = ce !== 'libre' ? ce : ds;
-      return `<div class="panel-corr-item" style="background:${getStateDot(state)}22;color:${getStateDot(state)}" onclick="openPanel('${cid}')">
-        <span class="dot" style="background:${getStateDot(state)}"></span>
-        ${cm?.name || cid}
-      </div>`;
-    }).join('');
-  } else {
-    corrRendirSec.style.display = 'none';
-  }
-
-  // What this unlocks
-  const desbloquea = materias.filter(m => 
-    m.corrCursar.includes(id) || m.corrRendir.includes(id)
-  );
-  const desbloqueSec = document.getElementById('panel-desbloquea-sec');
-  const desbloqueEl = document.getElementById('panel-desbloquea');
-  if (desbloquea.length > 0) {
-    desbloqueSec.style.display = '';
-    desbloqueEl.innerHTML = desbloquea.map(m => {
-      const ce = getEstado(m.id);
-      const ds = computeDisplayState(m);
-      const state = ce !== 'libre' ? ce : ds;
-      return `<div class="panel-corr-item" style="background:${getStateDot(state)}22;color:${getStateDot(state)}" onclick="openPanel('${m.id}')">
-        <span class="dot" style="background:${getStateDot(state)}"></span>
-        ${m.name}
-      </div>`;
-    }).join('');
-  } else {
-    desbloqueSec.style.display = 'none';
-  }
-
-  panel.classList.add('open');
+  document.getElementById('panel-state-btns').innerHTML = ['libre','cursando','regular','aprobada'].map(s =>
+    `<button class="panel-state-btn ${cur===s?'active':''}" onclick="window._setEstado('${id}','${s}')">
+      <span style="width:8px;height:8px;border-radius:50%;background:${DOTS[s]};flex-shrink:0;display:inline-block"></span>
+      ${LABELS[s]}
+    </button>`).join('');
+  const show = (secId, listId, items) => {
+    document.getElementById(secId).style.display = items.length ? '' : 'none';
+    document.getElementById(listId).innerHTML = items.map(corrItem).join('');
+  };
+  show('sec-cursar',     'list-cursar',     mat.corrCursar);
+  show('sec-rendir',     'list-rendir',     mat.corrRendir);
+  show('sec-desbloquea', 'list-desbloquea', materias.filter(m => m.corrCursar.includes(id)||m.corrRendir.includes(id)).map(m=>m.id));
+  document.getElementById('info-panel').classList.add('open');
 }
 
-function closePanel() {
-  document.getElementById('info-panel').classList.remove('open');
-  currentPanelId = null;
-}
-
-// Close panel on outside click
-document.addEventListener('click', (e) => {
-  const panel = document.getElementById('info-panel');
-  if (!panel.contains(e.target)) {
-    closePanel();
-  }
+window._setEstado = function(id, estado) { setEstado(id, estado); };
+window.closePanel = function() { document.getElementById('info-panel').classList.remove('open'); };
+document.addEventListener('click', e => {
+  if (!document.getElementById('info-panel').contains(e.target)) closePanel();
 });
 
-// ============================================================
-// INIT
-// ============================================================
-renderAll();
 </script>
 </body>
 </html>
