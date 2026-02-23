@@ -14,13 +14,15 @@
   --regular-bg:#1a1a08;--regular-border:#7a6020;--regular-text:#e0c060;
   --aprobada-bg:#081808;--aprobada-border:#206030;--aprobada-text:#60d080;
   --accent:#4a8af0;
-  --divider:#1e2e4a;
-  --card-w:150px;
-  --card-h:82px;
+  --prereq:#e07040;
+  --postreq:#40b0e0;
+  --card-w:155px;
+  --card-h:86px;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 body{background:var(--bg);color:var(--text);font-family:'Rajdhani',sans-serif;min-height:100vh;overflow-x:auto;}
 
+/* ── LOGIN ── */
 #login-screen{
   position:fixed;inset:0;background:var(--bg);
   display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:999;gap:16px;
@@ -37,6 +39,7 @@ body{background:var(--bg);color:var(--text);font-family:'Rajdhani',sans-serif;mi
 .google-btn img{width:18px;}
 .login-error{font-family:'Share Tech Mono',monospace;font-size:0.62rem;color:#e05a5a;}
 
+/* ── LOADING ── */
 #loading{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:998;gap:10px;}
 #loading h2{font-family:'Share Tech Mono',monospace;color:var(--accent);font-size:1.1rem;letter-spacing:0.2em;}
 #loading p{font-family:'Share Tech Mono',monospace;font-size:0.6rem;color:var(--muted);}
@@ -44,6 +47,7 @@ body{background:var(--bg);color:var(--text);font-family:'Rajdhani',sans-serif;mi
 @keyframes spin{to{transform:rotate(360deg);}}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
 
+/* ── HEADER ── */
 header{
   padding:10px 20px;border-bottom:1px solid var(--border);
   display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
@@ -75,72 +79,53 @@ header{
 .sync-dot-wrap.synced{color:var(--aprobada-text);}
 .sync-dot-wrap.error{color:#e05a5a;}
 
+/* ── LEGEND ── */
 .legend-bar{
   padding:7px 20px;border-bottom:1px solid var(--border);
-  display:flex;gap:20px;align-items:center;flex-wrap:wrap;
+  display:flex;gap:18px;align-items:center;flex-wrap:wrap;
   background:rgba(13,18,32,0.9);
 }
-.leg-item{display:flex;align-items:center;gap:6px;font-family:'Share Tech Mono',monospace;font-size:0.62rem;font-weight:700;color:var(--muted);letter-spacing:0.08em;}
+.leg-item{display:flex;align-items:center;gap:6px;font-family:'Share Tech Mono',monospace;font-size:0.6rem;font-weight:700;color:var(--muted);letter-spacing:0.08em;}
 .leg-box{width:13px;height:13px;border-radius:3px;border:1px solid;flex-shrink:0;}
-.leg-box.nocursada{background:var(--nocursada-bg);border-color:var(--nocursada-border);}
-.leg-box.cursable {background:var(--cursable-bg); border-color:var(--cursable-border);}
-.leg-box.regular  {background:var(--regular-bg);  border-color:var(--regular-border);}
-.leg-box.aprobada {background:var(--aprobada-bg); border-color:var(--aprobada-border);}
+.leg-box.nocursada  {background:var(--nocursada-bg); border-color:var(--nocursada-border);}
+.leg-box.cursable   {background:var(--cursable-bg);  border-color:var(--cursable-border);}
+.leg-box.regular    {background:var(--regular-bg);   border-color:var(--regular-border);}
+.leg-box.aprobada   {background:var(--aprobada-bg);  border-color:var(--aprobada-border);}
+.leg-box.hl-prereq  {background:#1a0a04;             border-color:var(--prereq);}
+.leg-box.hl-postreq {background:#04121a;             border-color:var(--postreq);}
 .legend-hint{font-family:'Share Tech Mono',monospace;font-size:0.57rem;font-weight:700;color:var(--dim);letter-spacing:0.06em;margin-left:auto;}
-.arrow-legend{display:flex;gap:14px;align-items:center;}
-.al-item{display:flex;align-items:center;gap:5px;font-family:'Share Tech Mono',monospace;font-size:0.52rem;color:var(--muted);}
-.al-line{width:18px;height:2px;border-radius:1px;position:relative;}
-.al-line::after{content:'▶';position:absolute;right:-6px;top:50%;transform:translateY(-50%);font-size:6px;}
-.al-line.pre{background:#e07040;}
-.al-line.pre::after{color:#e07040;}
-.al-line.post{background:#40b0e0;}
-.al-line.post::after{color:#40b0e0;}
 
+/* ── LAYOUT ── */
 #app{display:none;}
-
-/* ARROW OVERLAY CANVAS */
-#arrow-canvas{
-  position:absolute;
-  top:0;left:0;
-  width:100%;height:100%;
-  pointer-events:none;
-  z-index:10;
-}
-.malla-outer{
-  padding:12px 16px 32px;
-  position:relative;
-}
+.malla-outer{padding:16px 16px 40px;}
 
 /* YEAR ROW */
 .year-row{display:flex;align-items:flex-start;margin-bottom:32px;}
 
-/* label col */
 .year-label-col{
-  width:60px;flex-shrink:0;
+  width:72px;flex-shrink:0;
   display:flex;align-items:flex-start;justify-content:flex-end;
-  padding-right:10px;border-right:1px solid var(--border);margin-right:12px;
-  font-family:'Share Tech Mono',monospace;
+  padding-right:12px;border-right:1px solid var(--border);margin-right:14px;
   padding-top:10px;
 }
-.yn{display:flex;flex-direction:column;align-items:center;gap:3px;}
-.yn-num{font-size:1.1rem;color:var(--accent);font-weight:700;letter-spacing:0.1em;line-height:1;}
-.yn-txt{font-size:0.38rem;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;text-align:center;white-space:nowrap;}
+.yn{display:flex;flex-direction:column;align-items:center;gap:4px;}
+.yn-num{font-family:'Share Tech Mono',monospace;font-size:1.4rem;color:var(--accent);font-weight:700;letter-spacing:0.08em;line-height:1;}
+.yn-txt{font-family:'Share Tech Mono',monospace;font-size:0.52rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;text-align:center;white-space:nowrap;}
 
-/* semesters stacked */
 .year-sems{flex:1;display:flex;flex-direction:column;gap:22px;}
 .sem-half{display:flex;flex-wrap:wrap;gap:8px;}
 
-/* CARD — fixed width AND height */
+/* ── CARD ── */
 .materia{
   width:var(--card-w);
   height:var(--card-h);
   flex-shrink:0;
-  border-radius:5px;
+  border-radius:6px;
   border:1px solid var(--nocursada-border);
   background:var(--nocursada-bg);
-  padding:9px 9px 7px;
+  padding:9px 10px 8px;
   cursor:pointer;
-  transition:filter 0.15s, transform 0.1s, border-color 0.2s, box-shadow 0.2s;
+  transition:filter 0.15s, transform 0.12s, border-color 0.25s, box-shadow 0.25s, opacity 0.25s;
   user-select:none;
   display:flex;
   flex-direction:column;
@@ -148,20 +133,37 @@ header{
   position:relative;
   overflow:visible;
 }
-.materia:hover{filter:brightness(1.35);transform:scale(1.03);z-index:100;}
+.materia:hover{filter:brightness(1.4);transform:scale(1.04);z-index:100;}
 .materia:active{transform:scale(0.97);}
 
-/* arrow highlight states */
-.materia.hl-prereq{border-color:#e07040 !important;box-shadow:0 0 10px rgba(224,112,64,0.45);}
-.materia.hl-postreq{border-color:#40b0e0 !important;box-shadow:0 0 10px rgba(64,176,224,0.45);}
-.materia.hl-origin{border-color:#ffffff !important;box-shadow:0 0 14px rgba(255,255,255,0.25);}
+/* dim non-related cards on hover */
+.dimmed{opacity:0.22;filter:brightness(0.6);}
+
+/* highlight prereqs (orange) */
+.materia.hl-prereq{
+  border-color:var(--prereq) !important;
+  box-shadow:0 0 0 1px var(--prereq), 0 0 12px rgba(224,112,64,0.4);
+  opacity:1 !important;
+}
+/* highlight postreqs (blue) */
+.materia.hl-postreq{
+  border-color:var(--postreq) !important;
+  box-shadow:0 0 0 1px var(--postreq), 0 0 12px rgba(64,176,224,0.4);
+  opacity:1 !important;
+}
+/* the hovered card itself */
+.materia.hl-origin{
+  border-color:#fff !important;
+  box-shadow:0 0 0 1px #fff, 0 0 16px rgba(255,255,255,0.2);
+  opacity:1 !important;
+  filter:brightness(1.4) !important;
+}
 
 .mat-name{
   font-family:'Rajdhani',sans-serif;
   font-size:0.82rem;
   font-weight:500;
   line-height:1.22;
-  letter-spacing:0.02em;
   color:var(--nocursada-text);
   word-break:break-word;
   hyphens:auto;
@@ -172,57 +174,119 @@ header{
 }
 .mat-status{
   font-family:'Share Tech Mono',monospace;
-  font-size:0.5rem;
+  font-size:0.48rem;
   font-weight:700;
   letter-spacing:0.1em;
   text-transform:uppercase;
   flex-shrink:0;
+  margin-top:4px;
 }
 
-.materia.nocursada .mat-name  {color:var(--nocursada-text);}
-.materia.nocursada .mat-status{color:var(--nocursada-text);opacity:0.55;}
+/* card colour states */
+.materia.pendiente{border-color:var(--nocursada-border);background:var(--nocursada-bg);}
+.materia.pendiente .mat-name  {color:var(--nocursada-text);}
+.materia.pendiente .mat-status{color:var(--nocursada-text);opacity:0.5;}
+
 .materia.cursable{border-color:var(--cursable-border);background:var(--cursable-bg);}
 .materia.cursable .mat-name  {color:var(--cursable-text);}
-.materia.cursable .mat-status{color:var(--cursable-text);opacity:0.8;}
+.materia.cursable .mat-status{color:var(--cursable-text);opacity:0.85;}
+
 .materia.regular{border-color:var(--regular-border);background:var(--regular-bg);}
 .materia.regular .mat-name  {color:var(--regular-text);}
-.materia.regular .mat-status{color:var(--regular-text);opacity:0.8;}
+.materia.regular .mat-status{color:var(--regular-text);opacity:0.85;}
+
 .materia.aprobada{border-color:var(--aprobada-border);background:var(--aprobada-bg);}
 .materia.aprobada .mat-name  {color:var(--aprobada-text);}
-.materia.aprobada .mat-status{color:var(--aprobada-text);opacity:0.8;}
+.materia.aprobada .mat-status{color:var(--aprobada-text);opacity:0.85;}
 
-/* TOOLTIP */
+/* ── TOOLTIP ── */
 .mat-tooltip{
   display:none;
-  position:absolute;
-  bottom:calc(100% + 10px);
-  left:50%;
-  transform:translateX(-50%);
-  z-index:300;
-  background:#0a1020;
-  border:1px solid var(--accent);
-  border-radius:6px;
-  padding:10px 12px;
-  width:240px;
-  font-family:'Share Tech Mono',monospace;
-  font-size:0.58rem;
-  color:var(--text);
-  line-height:1.6;
+  position:fixed;
+  z-index:9999;
+  width:280px;
+  background:linear-gradient(145deg,#0d1628,#091020);
+  border:1px solid rgba(74,138,240,0.4);
+  border-radius:10px;
+  overflow:hidden;
+  font-family:'Rajdhani',sans-serif;
   pointer-events:none;
-  box-shadow:0 6px 24px rgba(0,0,0,0.85);
+  box-shadow:0 8px 32px rgba(0,0,0,0.9), 0 0 0 1px rgba(255,255,255,0.04);
 }
-.mat-tooltip::after{
-  content:'';position:absolute;top:100%;left:50%;
-  transform:translateX(-50%);
-  border:5px solid transparent;border-top-color:#0a1020;
-}
-.tt-title{color:var(--accent);font-size:0.64rem;margin-bottom:6px;letter-spacing:0.08em;font-weight:700;}
-.tt-section{margin-top:5px;}
-.tt-label{color:var(--muted);font-size:0.5rem;text-transform:uppercase;letter-spacing:0.1em;}
-.tt-val{color:var(--text);margin-top:1px;}
-.tt-libre{color:var(--regular-text);margin-top:5px;font-size:0.52rem;}
-.tt-divider{border:none;border-top:1px solid var(--dim);margin:6px 0;}
 .materia:hover .mat-tooltip{display:block;}
+
+.tt-header{
+  padding:10px 14px 9px;
+  border-bottom:1px solid rgba(255,255,255,0.06);
+  background:rgba(74,138,240,0.08);
+}
+.tt-matname{
+  font-size:1rem;
+  font-weight:700;
+  color:#e8f0ff;
+  line-height:1.2;
+  margin-bottom:4px;
+}
+.tt-badge{
+  display:inline-flex;align-items:center;gap:5px;
+  font-family:'Share Tech Mono',monospace;
+  font-size:0.5rem;letter-spacing:0.12em;
+  padding:2px 7px;border-radius:20px;font-weight:700;
+}
+.tt-badge.pendiente {background:rgba(58,80,112,0.4); color:#5a80a8; border:1px solid #2a3a55;}
+.tt-badge.cursable  {background:rgba(42,74,122,0.4); color:#8ab8e0; border:1px solid #2a4a7a;}
+.tt-badge.regular   {background:rgba(122,96,32,0.35);color:#e0c060; border:1px solid #7a6020;}
+.tt-badge.aprobada  {background:rgba(32,96,48,0.35); color:#60d080; border:1px solid #206030;}
+
+.tt-body{padding:10px 14px;}
+
+.tt-section{margin-bottom:10px;}
+.tt-section:last-child{margin-bottom:0;}
+
+.tt-section-header{
+  display:flex;align-items:center;gap:6px;
+  margin-bottom:6px;
+}
+.tt-section-icon{
+  width:16px;height:16px;border-radius:4px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:9px;flex-shrink:0;font-weight:700;
+}
+.tt-section-icon.pre {background:rgba(224,112,64,0.2);color:var(--prereq);border:1px solid rgba(224,112,64,0.4);}
+.tt-section-icon.post{background:rgba(64,176,224,0.2);color:var(--postreq);border:1px solid rgba(64,176,224,0.4);}
+.tt-section-icon.none{background:rgba(74,138,240,0.1);color:var(--accent);border:1px solid rgba(74,138,240,0.2);}
+
+.tt-section-title{
+  font-family:'Share Tech Mono',monospace;
+  font-size:0.5rem;letter-spacing:0.12em;text-transform:uppercase;
+  font-weight:700;
+}
+.tt-section-title.pre {color:var(--prereq);}
+.tt-section-title.post{color:var(--postreq);}
+.tt-section-title.none{color:var(--muted);}
+
+.tt-chips{display:flex;flex-wrap:wrap;gap:4px;}
+.tt-chip{
+  font-family:'Rajdhani',sans-serif;
+  font-size:0.72rem;font-weight:500;
+  padding:3px 8px;border-radius:4px;
+  line-height:1.2;
+}
+.tt-chip.pre {background:rgba(224,112,64,0.12);color:#f0a880;border:1px solid rgba(224,112,64,0.25);}
+.tt-chip.post{background:rgba(64,176,224,0.12);color:#80d0f0;border:1px solid rgba(64,176,224,0.25);}
+.tt-chip.none{color:var(--muted);font-style:italic;font-size:0.68rem;padding:3px 0;}
+
+.tt-libre{
+  display:flex;align-items:center;gap:5px;
+  margin-top:8px;padding-top:8px;
+  border-top:1px solid rgba(255,255,255,0.05);
+  font-family:'Share Tech Mono',monospace;
+  font-size:0.48rem;letter-spacing:0.1em;
+  color:var(--regular-text);
+}
+.tt-libre-star{font-size:10px;}
+
+.tt-divider{height:1px;background:rgba(255,255,255,0.05);margin:8px 0;}
 </style>
 </head>
 <body>
@@ -271,19 +335,16 @@ header{
   </header>
 
   <div class="legend-bar">
-    <div class="leg-item"><div class="leg-box nocursada"></div>NO CURSADA</div>
+    <div class="leg-item"><div class="leg-box pendiente"></div>CORRELATIVA PENDIENTE</div>
     <div class="leg-item"><div class="leg-box cursable"></div>PUEDO CURSAR</div>
     <div class="leg-item"><div class="leg-box regular"></div>REGULAR</div>
     <div class="leg-item"><div class="leg-box aprobada"></div>APROBADA</div>
-    <div class="arrow-legend">
-      <div class="al-item"><div class="al-line pre"></div>&nbsp;&nbsp;REQUIERE</div>
-      <div class="al-item"><div class="al-line post"></div>&nbsp;&nbsp;HABILITA</div>
-    </div>
+    <div class="leg-item"><div class="leg-box hl-prereq"></div>PRERREQUISITO</div>
+    <div class="leg-item"><div class="leg-box hl-postreq"></div>HABILITA</div>
     <div class="legend-hint">CLICK → cicla estado</div>
   </div>
 
   <div class="malla-outer" id="malla-outer">
-    <canvas id="arrow-canvas"></canvas>
     <div id="malla-grid"></div>
   </div>
 </div>
@@ -374,17 +435,18 @@ for(let y=1;y<=5;y++) byYearSem[y]={1:[],2:[]};
 materias.forEach(m => byYearSem[m.curso][m.sem].push(m));
 
 const CYCLE  = ['nocursada','regular','aprobada'];
-const LABELS = {nocursada:'NO CURSADA', cursable:'PUEDO CURSAR', regular:'REGULAR', aprobada:'APROBADA'};
 const YEAR_NAMES = {1:'Primer Año',2:'Segundo Año',3:'Tercer Año',4:'Cuarto Año',5:'Quinto Año'};
 const LIBRES = new Set(['20024','10030','10033','20026','20029','20031','20032','20034','20036','10043','10044','10045','10046','20044','20049']);
 
 let estados={}, currentUser=null, syncTimeout=null;
 
 function normalise(v){ return (v==='aprobada'||v==='regular') ? v : 'nocursada'; }
+
 function setSyncStatus(cls,txt){
   document.getElementById('sync-wrap').className='sync-dot-wrap '+cls;
   document.getElementById('sync-lbl').textContent=txt;
 }
+
 async function loadData(uid){
   try{
     const snap=await getDoc(doc(db,'usuarios',uid));
@@ -395,6 +457,7 @@ async function loadData(uid){
     setSyncStatus('synced','OK');
   }catch(e){ setSyncStatus('error','ERR'); }
 }
+
 async function saveData(){
   if(!currentUser)return;
   setSyncStatus('syncing','...');
@@ -406,30 +469,42 @@ async function saveData(){
     }catch(e){ setSyncStatus('error','ERR'); }
   },600);
 }
+
 function getEstado(id){ return normalise(estados[id]); }
+
+// Returns: 'aprobada' | 'regular' | 'cursable' | 'pendiente'
 function displayState(mat){
-  const e=getEstado(mat.id);
-  if(e!=='nocursada') return e;
-  if(!mat.corrCursar.length) return 'nocursada';
+  const e = getEstado(mat.id);
+  if(e === 'aprobada') return 'aprobada';
+  if(e === 'regular')  return 'regular';
+  if(!mat.corrCursar.length) return 'cursable'; // sin correlativas → siempre cursable
   return mat.corrCursar.every(c=>{ const ce=getEstado(c); return ce==='regular'||ce==='aprobada'; })
-    ? 'cursable' : 'nocursada';
+    ? 'cursable' : 'pendiente';
 }
+
+const STATUS_LABELS = {
+  aprobada:  'APROBADA',
+  regular:   'REGULAR',
+  cursable:  'PUEDO CURSAR',
+  pendiente: 'CORRELATIVA PENDIENTE',
+};
+
 function cycleEstado(id){
-  const cur=getEstado(id);
-  const idx=CYCLE.indexOf(cur);
-  estados[id]=CYCLE[(idx+1)%CYCLE.length];
+  const cur = getEstado(id);
+  const idx = CYCLE.indexOf(cur);
+  estados[id] = CYCLE[(idx+1)%CYCLE.length];
   saveData();
   renderAll();
 }
 
-window.loginGoogle=async function(){
+window.loginGoogle = async function(){
   document.getElementById('login-error').textContent='';
   try{ await signInWithPopup(auth,prov); }
   catch(e){ document.getElementById('login-error').textContent='Error al iniciar sesión.'; }
 };
-window.logoutUser=async function(){ await signOut(auth); };
+window.logoutUser = async function(){ await signOut(auth); };
 
-onAuthStateChanged(auth,async user=>{
+onAuthStateChanged(auth, async user=>{
   if(user){
     currentUser=user;
     document.getElementById('login-screen').style.display='none';
@@ -448,7 +523,7 @@ onAuthStateChanged(auth,async user=>{
   }
 });
 
-function renderAll(){ renderGrid(); renderStats(); setupArrows(); }
+function renderAll(){ renderGrid(); renderStats(); setupHover(); }
 
 function renderStats(){
   let ap=0,rg=0;
@@ -463,24 +538,63 @@ function renderStats(){
 
 function getName(id){ const m=materias.find(x=>x.id===id); return m?m.name:id; }
 
+// Full ancestor/descendant chain
+function getFullChain(id){
+  const prereqs  = new Set();
+  const postreqs = new Set();
+  function walkBack(cid){
+    const mat=materias.find(m=>m.id===cid);
+    if(!mat) return;
+    mat.corrCursar.forEach(pid=>{ if(!prereqs.has(pid)){ prereqs.add(pid); walkBack(pid); }});
+  }
+  function walkForward(cid){
+    materias.forEach(m=>{
+      if(m.corrCursar.includes(cid) && !postreqs.has(m.id)){ postreqs.add(m.id); walkForward(m.id); }
+    });
+  }
+  walkBack(id);
+  walkForward(id);
+  return { prereqs, postreqs };
+}
+
 function buildTooltip(m){
-  const habilitaParaCursar = materias.filter(x=>x.corrCursar.includes(m.id));
-  let html=`<div class="tt-title">${m.name}</div>`;
-  if(m.corrCursar.length){
-    html+=`<div class="tt-section"><div class="tt-label">Para cursar — regular:</div><div class="tt-val">${m.corrCursar.map(getName).join(', ')}</div></div>`;
-  } else {
-    html+=`<div class="tt-section"><div class="tt-label">Sin correlativas para cursar</div></div>`;
+  const ds = displayState(m);
+  // direct prereqs and postreqs
+  const directPrereqs  = m.corrCursar.map(getName);
+  const directPostreqs = materias.filter(x=>x.corrCursar.includes(m.id)).map(x=>x.name);
+
+  function chips(names, cls){
+    if(!names.length) return `<span class="tt-chip none">Ninguna</span>`;
+    return names.map(n=>`<span class="tt-chip ${cls}">${n}</span>`).join('');
   }
-  if(m.corrRendir.length){
-    html+=`<div class="tt-section"><div class="tt-label">Para rendir — aprobada:</div><div class="tt-val">${m.corrRendir.map(getName).join(', ')}</div></div>`;
-  }
-  if(habilitaParaCursar.length){
-    html+=`<hr class="tt-divider"><div class="tt-section"><div class="tt-label">Habilita para cursar:</div><div class="tt-val">${habilitaParaCursar.map(x=>x.name).join(', ')}</div></div>`;
-  }
-  if(LIBRES.has(m.id)){
-    html+=`<div class="tt-libre">★ Se puede rendir en condición LIBRE</div>`;
-  }
-  return html;
+
+  const libreHTML = LIBRES.has(m.id)
+    ? `<div class="tt-libre"><span class="tt-libre-star">★</span>Se puede rendir en condición LIBRE</div>`
+    : '';
+
+  return `
+    <div class="tt-header">
+      <div class="tt-matname">${m.name}</div>
+      <span class="tt-badge ${ds}">${STATUS_LABELS[ds]}</span>
+    </div>
+    <div class="tt-body">
+      <div class="tt-section">
+        <div class="tt-section-header">
+          <div class="tt-section-icon pre">←</div>
+          <span class="tt-section-title pre">Necesito tener regular</span>
+        </div>
+        <div class="tt-chips">${chips(directPrereqs,'pre')}</div>
+      </div>
+      <div class="tt-divider"></div>
+      <div class="tt-section">
+        <div class="tt-section-header">
+          <div class="tt-section-icon post">→</div>
+          <span class="tt-section-title post">Habilita para cursar</span>
+        </div>
+        <div class="tt-chips">${chips(directPostreqs,'post')}</div>
+      </div>
+      ${libreHTML}
+    </div>`;
 }
 
 function renderGrid(){
@@ -496,12 +610,8 @@ function renderGrid(){
         </div>
       </div>
       <div class="year-sems">
-        <div class="sem-half" data-year="${y}" data-sem="1">
-          ${s1.map(m=>card(m)).join('')}
-        </div>
-        <div class="sem-half" data-year="${y}" data-sem="2">
-          ${s2.map(m=>card(m)).join('')}
-        </div>
+        <div class="sem-half">${s1.map(m=>card(m)).join('')}</div>
+        <div class="sem-half">${s2.map(m=>card(m)).join('')}</div>
       </div>
     </div>`;
   }
@@ -512,128 +622,68 @@ function card(m){
   const ds=displayState(m);
   return `<div class="materia ${ds}" data-id="${m.id}" onclick="window._cycle('${m.id}')">
     <div class="mat-name">${m.name}</div>
-    <div class="mat-status">${LABELS[ds]}</div>
+    <div class="mat-status">${STATUS_LABELS[ds]}</div>
     <div class="mat-tooltip">${buildTooltip(m)}</div>
   </div>`;
 }
 
-window._cycle=id=>cycleEstado(id);
+window._cycle = id => cycleEstado(id);
 
-// ─── ARROW SYSTEM ────────────────────────────────────────────────────────────
+// ── HOVER HIGHLIGHT SYSTEM ───────────────────────────────────────────────────
 
-function getFullChain(id){
-  const prereqs  = new Set();
-  const postreqs = new Set();
-  function walkBack(cid){
-    const mat = materias.find(m=>m.id===cid);
-    if(!mat) return;
-    mat.corrCursar.forEach(pid=>{ if(!prereqs.has(pid)){ prereqs.add(pid); walkBack(pid); } });
-  }
-  function walkForward(cid){
-    materias.forEach(m=>{
-      if(m.corrCursar.includes(cid) && !postreqs.has(m.id)){ postreqs.add(m.id); walkForward(m.id); }
-    });
-  }
-  walkBack(id);
-  walkForward(id);
-  return { prereqs, postreqs };
-}
+function setupHover(){
+  const allCards = document.querySelectorAll('.materia');
 
-function getCardEdge(el, outerEl, isRight){
-  const r = el.getBoundingClientRect();
-  const o = outerEl.getBoundingClientRect();
-  return {
-    x: isRight ? (r.right - o.left) : (r.left - o.left),
-    y: r.top - o.top + r.height / 2,
-  };
-}
-
-function drawArrow(ctx, x1, y1, x2, y2, color){
-  const headLen = 7;
-  const dx = x2-x1, dy = y2-y1;
-  if(Math.sqrt(dx*dx+dy*dy) < 2) return;
-
-  const cx1 = x1 + dx*0.5, cy1 = y1;
-  const cx2 = x2 - dx*0.5, cy2 = y2;
-
-  ctx.save();
-  ctx.beginPath();
-  ctx.moveTo(x1,y1);
-  ctx.bezierCurveTo(cx1,cy1,cx2,cy2,x2,y2);
-  ctx.strokeStyle = color;
-  ctx.lineWidth = 1.5;
-  ctx.globalAlpha = 0.7;
-  ctx.stroke();
-
-  const angle = Math.atan2(y2-cy2, x2-cx2);
-  ctx.beginPath();
-  ctx.moveTo(x2,y2);
-  ctx.lineTo(x2 - headLen*Math.cos(angle-0.4), y2 - headLen*Math.sin(angle-0.4));
-  ctx.lineTo(x2 - headLen*Math.cos(angle+0.4), y2 - headLen*Math.sin(angle+0.4));
-  ctx.closePath();
-  ctx.fillStyle = color;
-  ctx.globalAlpha = 0.9;
-  ctx.fill();
-  ctx.restore();
-}
-
-function setupArrows(){
-  const outer  = document.getElementById('malla-outer');
-  const canvas = document.getElementById('arrow-canvas');
-  const ctx    = canvas.getContext('2d');
-
-  function resizeCanvas(){
-    canvas.width  = outer.scrollWidth;
-    canvas.height = outer.scrollHeight;
-  }
-  resizeCanvas();
-
-  function clearAll(){
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    document.querySelectorAll('.materia').forEach(el=>{
-      el.classList.remove('hl-prereq','hl-postreq','hl-origin');
+  function clearHighlights(){
+    allCards.forEach(el=>{
+      el.classList.remove('hl-prereq','hl-postreq','hl-origin','dimmed');
     });
   }
 
-  function drawForId(id){
-    clearAll();
-    resizeCanvas();
+  function applyHighlight(id){
     const { prereqs, postreqs } = getFullChain(id);
-    const originEl = document.querySelector(`.materia[data-id="${id}"]`);
-    if(!originEl) return;
+    const related = new Set([id,...prereqs,...postreqs]);
 
-    originEl.classList.add('hl-origin');
-    prereqs.forEach(pid=>{
-      const el=document.querySelector(`.materia[data-id="${pid}"]`);
-      if(el) el.classList.add('hl-prereq');
-    });
-    postreqs.forEach(pid=>{
-      const el=document.querySelector(`.materia[data-id="${pid}"]`);
-      if(el) el.classList.add('hl-postreq');
-    });
-
-    // prereq → origin (orange arrows)
-    prereqs.forEach(pid=>{
-      const srcEl=document.querySelector(`.materia[data-id="${pid}"]`);
-      if(!srcEl) return;
-      const s = getCardEdge(srcEl, outer, true);
-      const d = getCardEdge(originEl, outer, false);
-      drawArrow(ctx, s.x, s.y, d.x, d.y, '#e07040');
-    });
-
-    // origin → postreq (blue arrows)
-    postreqs.forEach(pid=>{
-      const dstEl=document.querySelector(`.materia[data-id="${pid}"]`);
-      if(!dstEl) return;
-      const s = getCardEdge(originEl, outer, true);
-      const d = getCardEdge(dstEl, outer, false);
-      drawArrow(ctx, s.x, s.y, d.x, d.y, '#40b0e0');
+    allCards.forEach(el=>{
+      const eid = el.dataset.id;
+      if(eid === id){
+        el.classList.add('hl-origin');
+      } else if(prereqs.has(eid)){
+        el.classList.add('hl-prereq');
+      } else if(postreqs.has(eid)){
+        el.classList.add('hl-postreq');
+      } else {
+        el.classList.add('dimmed');
+      }
     });
   }
 
-  document.querySelectorAll('.materia').forEach(el=>{
-    el.addEventListener('mouseenter', ()=>drawForId(el.dataset.id));
-    el.addEventListener('mouseleave', ()=>clearAll());
+  // Tooltip positioning — keep within viewport
+  const tooltips = document.querySelectorAll('.mat-tooltip');
+
+  allCards.forEach(el=>{
+    const tt = el.querySelector('.mat-tooltip');
+
+    el.addEventListener('mouseenter', e=>{
+      applyHighlight(el.dataset.id);
+    });
+
+    el.addEventListener('mousemove', e=>{
+      if(!tt) return;
+      const pad = 12;
+      let x = e.clientX + 16;
+      let y = e.clientY - 10;
+      const tw = 280, th = tt.offsetHeight || 220;
+      if(x + tw > window.innerWidth - pad)  x = e.clientX - tw - 16;
+      if(y + th > window.innerHeight - pad) y = window.innerHeight - th - pad;
+      if(y < pad) y = pad;
+      tt.style.left = x+'px';
+      tt.style.top  = y+'px';
+    });
+
+    el.addEventListener('mouseleave', ()=>{
+      clearHighlights();
+    });
   });
 }
 </script>
