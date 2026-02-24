@@ -288,7 +288,31 @@ header{
 
 .tt-divider{height:1px;background:rgba(255,255,255,0.05);margin:8px 0;}
 
-/* ── BOTTOM SHEET (mobile) ── */
+/* Info button — solo mobile */
+.mat-info-btn{
+  display:none;
+}
+
+@media (max-width:600px){
+  .mat-info-btn{
+    display:flex;
+    align-items:center;justify-content:center;
+    flex-shrink:0;
+    width:26px;height:26px;
+    margin-left:8px;
+    background:rgba(74,138,240,0.12);
+    border:1px solid rgba(74,138,240,0.3);
+    border-radius:50%;
+    color:var(--accent);
+    font-size:0.9rem;
+    cursor:pointer;
+    line-height:1;
+    padding:0;
+  }
+  .mat-info-btn:active{
+    background:rgba(74,138,240,0.28);
+  }
+}
 #sheet-overlay{
   display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:800;
   backdrop-filter:blur(2px);
@@ -368,8 +392,8 @@ header{
   .yn-num{ font-size:1rem; }
   .yn-txt{ font-size:0.5rem; }
 
-  .year-sems{ gap:0; }
-  .sem-half{ display:flex; flex-direction:column; gap:0; }
+  .year-sems{ gap:0; width:100%; }
+  .sem-half{ display:flex; flex-direction:column; gap:0; width:100%; }
   /* Separador entre semestres */
   .sem-half + .sem-half{
     margin-top:10px;
@@ -378,6 +402,7 @@ header{
   }
 
   /* Cards como líneas */
+  .sem-half{ width:100%; }
   .materia{
     width:100%;
     height:auto;
@@ -391,6 +416,7 @@ header{
     border-right:none;
     border-top:none;
     border-bottom:1px solid var(--border);
+    flex-shrink:unset;
   }
   /* Primer card de cada semestre: borde top */
   .sem-half .materia:first-child{
@@ -772,6 +798,7 @@ function card(m){
   return `<div class="materia ${ds}" data-id="${m.id}" onclick="window._cycle('${m.id}')">
     <div class="mat-name">${m.name}</div>
     <div class="mat-status">${STATUS_LABELS[ds]}</div>
+    <button class="mat-info-btn" onclick="event.stopPropagation();openSheet('${m.id}')">ⓘ</button>
   </div>`;
 }
 
@@ -805,7 +832,7 @@ function applyHighlightGlobal(id){
   });
 }
 
-function openSheet(id){
+window.openSheet = function(id){
   const m = materias.find(x=>x.id===id);
   if(!m) return;
   document.getElementById('sheet-content').innerHTML = buildTooltip(m);
@@ -837,17 +864,6 @@ function setupHover(){
   }
 
   allCards.forEach(el=>{
-
-    // ── MOBILE: long-press para sheet ──
-    let pressTimer = null;
-    el.addEventListener('touchstart', e=>{
-      pressTimer = setTimeout(()=>{
-        pressTimer = null;
-        openSheet(el.dataset.id);
-      }, 400);
-    }, {passive:true});
-    el.addEventListener('touchend', ()=>{ if(pressTimer){ clearTimeout(pressTimer); pressTimer=null; } });
-    el.addEventListener('touchmove', ()=>{ if(pressTimer){ clearTimeout(pressTimer); pressTimer=null; } });
 
     // ── DESKTOP: hover tooltip ──
     el.addEventListener('mouseenter', e=>{
