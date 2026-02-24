@@ -213,7 +213,7 @@ header{
   pointer-events:none;
   box-shadow:0 8px 32px rgba(0,0,0,0.9), 0 0 0 1px rgba(255,255,255,0.04);
 }
-.materia:hover .mat-tooltip{display:none;} /* tooltip now handled globally via JS */
+.materia:hover .mat-tooltip{display:none;}
 
 .tt-header{
   padding:10px 14px 9px;
@@ -287,6 +287,145 @@ header{
 .tt-libre-star{font-size:10px;}
 
 .tt-divider{height:1px;background:rgba(255,255,255,0.05);margin:8px 0;}
+
+/* ── BOTTOM SHEET (mobile) ── */
+#sheet-overlay{
+  display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:800;
+  backdrop-filter:blur(2px);
+}
+#sheet-overlay.open{display:block;}
+#bottom-sheet{
+  position:fixed;bottom:0;left:0;right:0;z-index:801;
+  background:linear-gradient(160deg,#0d1628,#091020);
+  border:1px solid rgba(74,138,240,0.35);
+  border-bottom:none;
+  border-radius:16px 16px 0 0;
+  transform:translateY(100%);
+  transition:transform 0.3s cubic-bezier(0.32,0.72,0,1);
+  max-height:82vh;overflow-y:auto;
+  padding-bottom:env(safe-area-inset-bottom,12px);
+}
+#bottom-sheet.open{transform:translateY(0);}
+.sheet-handle{
+  width:36px;height:4px;border-radius:2px;
+  background:rgba(255,255,255,0.18);margin:10px auto 0;
+}
+.sheet-close{
+  position:absolute;top:10px;right:14px;
+  background:none;border:none;color:var(--muted);
+  font-size:1.1rem;cursor:pointer;padding:4px 8px;line-height:1;
+}
+
+/* ── MOBILE RESPONSIVE ── */
+@media (max-width: 600px){
+  /* body scroll normal */
+  body{ overflow-x:hidden; }
+
+  /* Header compacto */
+  header{
+    padding:8px 12px;
+    flex-wrap:nowrap;
+    gap:8px;
+  }
+  .h-title{ font-size:0.75rem; letter-spacing:0.1em; }
+  .h-sub{ display:none; }
+  .h-right{ gap:8px; flex-wrap:nowrap; }
+  .stats{ gap:8px; }
+  .stat-n{ font-size:0.85rem; }
+  .stat-l{ font-size:0.42rem; }
+  /* Ocultar restantes y progreso en mobile */
+  .stat.rs, .prog-wrap, .sync-dot-wrap{ display:none; }
+  .user-pill span{ display:none; }
+  .user-pill{ padding:3px 6px 3px 3px; }
+
+  /* Legend compacta */
+  .legend-bar{ padding:5px 10px; gap:8px; }
+  .leg-item{ font-size:0.5rem; gap:4px; }
+  .leg-box{ width:10px; height:10px; }
+  .legend-hint{ display:none; }
+
+  /* Outer padding */
+  .malla-outer{ padding:10px 10px 80px; }
+
+  /* Year row: etiqueta arriba, contenido abajo */
+  .year-row{
+    flex-direction:column;
+    margin-bottom:20px;
+  }
+  .year-label-col{
+    width:100%;
+    flex-direction:row;
+    justify-content:flex-start;
+    padding-right:0;
+    border-right:none;
+    border-bottom:1px solid var(--border);
+    margin-right:0;
+    margin-bottom:8px;
+    padding-bottom:6px;
+    padding-top:0;
+  }
+  .yn{ flex-direction:row; gap:6px; align-items:baseline; }
+  .yn-num{ font-size:1rem; }
+  .yn-txt{ font-size:0.5rem; }
+
+  .year-sems{ gap:0; }
+  .sem-half{ display:flex; flex-direction:column; gap:0; }
+  /* Separador entre semestres */
+  .sem-half + .sem-half{
+    margin-top:10px;
+    padding-top:2px;
+    border-top:1px dashed var(--dim);
+  }
+
+  /* Cards como líneas */
+  .materia{
+    width:100%;
+    height:auto;
+    min-height:0;
+    flex-direction:row;
+    align-items:center;
+    justify-content:space-between;
+    padding:9px 12px;
+    border-radius:0;
+    border-left:none;
+    border-right:none;
+    border-top:none;
+    border-bottom:1px solid var(--border);
+  }
+  /* Primer card de cada semestre: borde top */
+  .sem-half .materia:first-child{
+    border-top:1px solid var(--border);
+  }
+  .materia:hover{ transform:none; filter:brightness(1.15); }
+  .materia:active{ transform:none; filter:brightness(0.85); }
+
+  .mat-name{
+    font-size:0.9rem;
+    -webkit-line-clamp:1;
+    flex:1;
+    margin-right:8px;
+  }
+  .mat-status{
+    font-size:0.46rem;
+    margin-top:0;
+    flex-shrink:0;
+    text-align:right;
+  }
+
+  /* Colorear borde izquierdo para identificar estado */
+  .materia.cursable { border-left:3px solid var(--cursable-border) !important; }
+  .materia.regular  { border-left:3px solid var(--regular-border)  !important; }
+  .materia.aprobada { border-left:3px solid var(--aprobada-border) !important; }
+  .materia.pendiente{ border-left:3px solid transparent !important; }
+
+  /* Highlights en mobile */
+  .materia.hl-prereq { border-left:3px solid var(--prereq) !important; }
+  .materia.hl-postreq{ border-left:3px solid var(--postreq) !important; }
+  .materia.hl-origin { border-left:3px solid #fff !important; box-shadow:none; }
+
+  /* Tooltip desktop: oculto en mobile */
+  #global-tooltip{ display:none !important; }
+}
 </style>
 </head>
 <body>
@@ -350,6 +489,15 @@ header{
 </div>
 
 <div id="global-tooltip" class="mat-tooltip" style="display:none;"></div>
+
+<!-- Bottom sheet (mobile) -->
+<div id="sheet-overlay" onclick="closeSheet()"></div>
+<div id="bottom-sheet">
+  <div class="sheet-handle"></div>
+  <button class="sheet-close" onclick="closeSheet()">✕</button>
+  <div id="sheet-content"></div>
+</div>
+
 <script type="module">
 import { initializeApp }                     from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged }
@@ -631,6 +779,41 @@ window._cycle = id => cycleEstado(id);
 
 // ── HOVER HIGHLIGHT SYSTEM ───────────────────────────────────────────────────
 
+const isTouchDevice = () => window.matchMedia('(max-width:600px)').matches || ('ontouchstart' in window && window.innerWidth <= 600);
+
+window.closeSheet = function(){
+  document.getElementById('bottom-sheet').classList.remove('open');
+  document.getElementById('sheet-overlay').classList.remove('open');
+  clearHighlightsGlobal();
+};
+
+function clearHighlightsGlobal(){
+  document.querySelectorAll('.materia').forEach(el=>{
+    el.classList.remove('hl-prereq','hl-postreq','hl-origin','dimmed');
+  });
+}
+
+function applyHighlightGlobal(id){
+  const allCards = document.querySelectorAll('.materia');
+  const { prereqs, postreqs } = getFullChain(id);
+  allCards.forEach(el=>{
+    const eid = el.dataset.id;
+    if(eid === id)             el.classList.add('hl-origin');
+    else if(prereqs.has(eid)) el.classList.add('hl-prereq');
+    else if(postreqs.has(eid))el.classList.add('hl-postreq');
+    else                       el.classList.add('dimmed');
+  });
+}
+
+function openSheet(id){
+  const m = materias.find(x=>x.id===id);
+  if(!m) return;
+  document.getElementById('sheet-content').innerHTML = buildTooltip(m);
+  document.getElementById('bottom-sheet').classList.add('open');
+  document.getElementById('sheet-overlay').classList.add('open');
+  applyHighlightGlobal(id);
+}
+
 function setupHover(){
   const allCards = document.querySelectorAll('.materia');
   const tt = document.getElementById('global-tooltip');
@@ -644,30 +827,38 @@ function setupHover(){
 
   function applyHighlight(id){
     const { prereqs, postreqs } = getFullChain(id);
-
     allCards.forEach(el=>{
       const eid = el.dataset.id;
-      if(eid === id){
-        el.classList.add('hl-origin');
-      } else if(prereqs.has(eid)){
-        el.classList.add('hl-prereq');
-      } else if(postreqs.has(eid)){
-        el.classList.add('hl-postreq');
-      } else {
-        el.classList.add('dimmed');
-      }
+      if(eid === id)             el.classList.add('hl-origin');
+      else if(prereqs.has(eid)) el.classList.add('hl-prereq');
+      else if(postreqs.has(eid))el.classList.add('hl-postreq');
+      else                       el.classList.add('dimmed');
     });
   }
 
   allCards.forEach(el=>{
 
+    // ── MOBILE: long-press para sheet ──
+    let pressTimer = null;
+    el.addEventListener('touchstart', e=>{
+      pressTimer = setTimeout(()=>{
+        pressTimer = null;
+        openSheet(el.dataset.id);
+      }, 400);
+    }, {passive:true});
+    el.addEventListener('touchend', ()=>{ if(pressTimer){ clearTimeout(pressTimer); pressTimer=null; } });
+    el.addEventListener('touchmove', ()=>{ if(pressTimer){ clearTimeout(pressTimer); pressTimer=null; } });
+
+    // ── DESKTOP: hover tooltip ──
     el.addEventListener('mouseenter', e=>{
+      if(window.matchMedia('(max-width:600px)').matches) return;
       applyHighlight(el.dataset.id);
       const m = materias.find(x=>x.id===el.dataset.id);
       if(m){ tt.innerHTML = buildTooltip(m); tt.style.display = 'block'; }
     });
 
     el.addEventListener('mousemove', e=>{
+      if(window.matchMedia('(max-width:600px)').matches) return;
       const pad = 12;
       let x = e.clientX + 16;
       let y = e.clientY - 10;
@@ -680,6 +871,7 @@ function setupHover(){
     });
 
     el.addEventListener('mouseleave', ()=>{
+      if(window.matchMedia('(max-width:600px)').matches) return;
       clearHighlights();
     });
   });
