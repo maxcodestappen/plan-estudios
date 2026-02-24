@@ -653,7 +653,24 @@ materias.forEach(m => byYearSem[m.curso][m.sem].push(m));
 
 const CYCLE  = ['nocursada','regular','aprobada'];
 const YEAR_NAMES = {1:'Primer Año',2:'Segundo Año',3:'Tercer Año',4:'Cuarto Año',5:'Quinto Año'};
-const LIBRES = new Set(['20024','10030','10033','20026','20029','20031','20032','20034','20036','10043','10044','10045','10046','20044','20049']);
+// * = Se puede rendir en condición LIBRE (RIEP Art. 123 bis)
+const LIBRES = new Set([
+  '20024', // Antropología
+  '10030', // Derecho Privado III
+  '10033', // Pensamiento Teológico
+  '20026', // Derecho Privado IV
+  '20029', // Pensamiento Social Cristiano
+  '20031', // Derecho Concursal
+  '20032', // Derecho Privado VI
+  '20034', // Filosofía del Derecho
+  '20036', // Seminario de Formación Humana I
+  '10043', // Derecho Administrativo
+  '10044', // Seminario de Formación Humana II
+  '20044', // Ética y Deontología
+  '10045', // Der. Ambiental y de los Rec. Naturales
+  '10046', // Derecho Internacional Privado
+  '20049', // Práctica Profesional Supervisada
+]);
 
 let estados={}, currentUser=null, syncTimeout=null;
 
@@ -701,8 +718,9 @@ function displayState(mat){
 
 function canRendir(mat){
   const e = getEstado(mat.id);
-  if(e !== 'regular') return false; // solo regulares pueden rendir
-  if(!mat.corrRendir.length) return true; // sin correlativas → siempre puede rendir
+  if(e !== 'regular') return false;
+  if(LIBRES.has(mat.id)) return true; // libre: solo necesita haber cursado la materia misma
+  if(!mat.corrRendir.length) return true;
   return mat.corrRendir.every(c => getEstado(c) === 'aprobada');
 }
 
