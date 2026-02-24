@@ -202,6 +202,28 @@ header{
   white-space:nowrap;
 }
 
+/* Rendir primary state */
+.mat-status.rendir-primary{
+  color:#b090f8;
+}
+.mat-status-sub{
+  font-family:'Share Tech Mono',monospace;
+  font-size:0.42rem;
+  font-weight:700;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  color:var(--regular-text);
+  opacity:0.4;
+  margin-top:1px;
+}
+
+/* Card border accent when can-rendir */
+.materia.can-rendir{
+  border-color:#7060c0 !important;
+  background:linear-gradient(160deg, var(--regular-bg) 0%, #110d20 100%);
+}
+.materia.can-rendir .mat-name{ color:#d0c8f0; }
+
 /* card colour states */
 .materia.pendiente{border-color:var(--nocursada-border);background:var(--nocursada-bg);}
 .materia.pendiente .mat-name  {color:var(--nocursada-text);}
@@ -463,11 +485,11 @@ header{
   }
   .mat-rendir{ font-size:0.42rem; }
 
-  /* Colorear borde izquierdo para identificar estado */
-  .materia.cursable { border-left:3px solid var(--cursable-border) !important; }
-  .materia.regular  { border-left:3px solid var(--regular-border)  !important; }
-  .materia.aprobada { border-left:3px solid var(--aprobada-border) !important; }
-  .materia.pendiente{ border-left:3px solid transparent !important; }
+  .materia.cursable  { border-left:3px solid var(--cursable-border) !important; }
+  .materia.regular   { border-left:3px solid var(--regular-border)  !important; }
+  .materia.can-rendir{ border-left:3px solid #7060c0 !important; }
+  .materia.aprobada  { border-left:3px solid var(--aprobada-border) !important; }
+  .materia.pendiente { border-left:3px solid transparent !important; }
 
   /* Highlights en mobile */
   .materia.hl-prereq { border-left:3px solid var(--prereq) !important; }
@@ -828,12 +850,21 @@ function renderGrid(){
 function card(m){
   const ds=displayState(m);
   const rendir = canRendir(m);
-  const rendirBadge = rendir ? `<div class="mat-rendir">PUEDO RENDIR</div>` : '';
-  return `<div class="materia ${ds}" data-id="${m.id}" onclick="window._cycle('${m.id}')">
+
+  let primaryLabel, secondaryLabel;
+  if(rendir){
+    primaryLabel  = `<div class="mat-status rendir-primary">PUEDO RENDIR</div>`;
+    secondaryLabel= `<div class="mat-status-sub">REGULAR</div>`;
+  } else {
+    primaryLabel  = `<div class="mat-status">${STATUS_LABELS[ds]}</div>`;
+    secondaryLabel= '';
+  }
+
+  return `<div class="materia ${ds}${rendir?' can-rendir':''}" data-id="${m.id}" onclick="window._cycle('${m.id}')">
     <div class="mat-name">${m.name}</div>
     <div class="mat-status-wrap">
-      <div class="mat-status">${STATUS_LABELS[ds]}</div>
-      ${rendirBadge}
+      ${primaryLabel}
+      ${secondaryLabel}
     </div>
     <button class="mat-info-btn" onclick="event.stopPropagation();openSheet('${m.id}')">ⓘ</button>
   </div>`;
