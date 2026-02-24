@@ -181,6 +181,26 @@ header{
   flex-shrink:0;
   margin-top:4px;
 }
+.mat-status-wrap{
+  display:flex;
+  flex-direction:column;
+  gap:3px;
+  flex-shrink:0;
+}
+.mat-rendir{
+  font-family:'Share Tech Mono',monospace;
+  font-size:0.44rem;
+  font-weight:700;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:#a0e0ff;
+  opacity:0.9;
+  background:rgba(64,176,224,0.12);
+  border:1px solid rgba(64,176,224,0.3);
+  border-radius:3px;
+  padding:1px 4px;
+  white-space:nowrap;
+}
 
 /* card colour states */
 .materia.pendiente{border-color:var(--nocursada-border);background:var(--nocursada-bg);}
@@ -434,9 +454,14 @@ header{
   .mat-status{
     font-size:0.46rem;
     margin-top:0;
-    flex-shrink:0;
     text-align:right;
   }
+  .mat-status-wrap{
+    flex-shrink:0;
+    align-items:flex-end;
+    margin-left:8px;
+  }
+  .mat-rendir{ font-size:0.42rem; }
 
   /* Colorear borde izquierdo para identificar estado */
   .materia.cursable { border-left:3px solid var(--cursable-border) !important; }
@@ -657,6 +682,13 @@ function displayState(mat){
     ? 'cursable' : 'pendiente';
 }
 
+function canRendir(mat){
+  const e = getEstado(mat.id);
+  if(e !== 'regular') return false; // solo regulares pueden rendir
+  if(!mat.corrRendir.length) return true; // sin correlativas → siempre puede rendir
+  return mat.corrRendir.every(c => getEstado(c) === 'aprobada');
+}
+
 const STATUS_LABELS = {
   aprobada:  'APROBADA',
   regular:   'REGULAR',
@@ -795,9 +827,14 @@ function renderGrid(){
 
 function card(m){
   const ds=displayState(m);
+  const rendir = canRendir(m);
+  const rendirBadge = rendir ? `<div class="mat-rendir">PUEDO RENDIR</div>` : '';
   return `<div class="materia ${ds}" data-id="${m.id}" onclick="window._cycle('${m.id}')">
     <div class="mat-name">${m.name}</div>
-    <div class="mat-status">${STATUS_LABELS[ds]}</div>
+    <div class="mat-status-wrap">
+      <div class="mat-status">${STATUS_LABELS[ds]}</div>
+      ${rendirBadge}
+    </div>
     <button class="mat-info-btn" onclick="event.stopPropagation();openSheet('${m.id}')">ⓘ</button>
   </div>`;
 }
