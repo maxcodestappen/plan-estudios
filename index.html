@@ -775,9 +775,10 @@ function getFullChain(id){
 
 function buildTooltip(m){
   const ds = displayState(m);
-  // direct prereqs and postreqs
-  const directPrereqs  = m.corrCursar.map(getName);
-  const directPostreqs = materias.filter(x=>x.corrCursar.includes(m.id)).map(x=>x.name);
+  const directPrereqsCursar  = m.corrCursar.map(getName);
+  const directPrereqsRendir  = m.corrRendir.map(getName);
+  const directPostreqsCursar = materias.filter(x=>x.corrCursar.includes(m.id)).map(x=>x.name);
+  const directPostreqsRendir = materias.filter(x=>x.corrRendir.includes(m.id)).map(x=>x.name);
 
   function chips(names, cls){
     if(!names.length) return `<span class="tt-chip none">Ninguna</span>`;
@@ -793,17 +794,33 @@ function buildTooltip(m){
       <div class="tt-section">
         <div class="tt-section-header">
           <div class="tt-section-icon pre">←</div>
-          <span class="tt-section-title pre">Necesito tener regular</span>
+          <span class="tt-section-title pre">Para cursar: necesito regular</span>
         </div>
-        <div class="tt-chips">${chips(directPrereqs,'pre')}</div>
+        <div class="tt-chips">${chips(directPrereqsCursar,'pre')}</div>
+      </div>
+      <div class="tt-divider"></div>
+      <div class="tt-section">
+        <div class="tt-section-header">
+          <div class="tt-section-icon pre">←</div>
+          <span class="tt-section-title pre">Para rendir: necesito aprobada</span>
+        </div>
+        <div class="tt-chips">${chips(directPrereqsRendir,'pre')}</div>
       </div>
       <div class="tt-divider"></div>
       <div class="tt-section">
         <div class="tt-section-header">
           <div class="tt-section-icon post">→</div>
-          <span class="tt-section-title post">Habilita para cursar</span>
+          <span class="tt-section-title post">Habilita a cursar</span>
         </div>
-        <div class="tt-chips">${chips(directPostreqs,'post')}</div>
+        <div class="tt-chips">${chips(directPostreqsCursar,'post')}</div>
+      </div>
+      <div class="tt-divider"></div>
+      <div class="tt-section">
+        <div class="tt-section-header">
+          <div class="tt-section-icon post">→</div>
+          <span class="tt-section-title post">Habilita a rendir</span>
+        </div>
+        <div class="tt-chips">${chips(directPostreqsRendir,'post')}</div>
       </div>
     </div>`;
 }
