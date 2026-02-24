@@ -213,7 +213,7 @@ header{
   pointer-events:none;
   box-shadow:0 8px 32px rgba(0,0,0,0.9), 0 0 0 1px rgba(255,255,255,0.04);
 }
-.materia:hover .mat-tooltip{display:block;}
+.materia:hover .mat-tooltip{display:none;} /* tooltip now handled globally via JS */
 
 .tt-header{
   padding:10px 14px 9px;
@@ -349,6 +349,7 @@ header{
   </div>
 </div>
 
+<div id="global-tooltip" class="mat-tooltip" style="display:none;"></div>
 <script type="module">
 import { initializeApp }                     from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged }
@@ -623,7 +624,6 @@ function card(m){
   return `<div class="materia ${ds}" data-id="${m.id}" onclick="window._cycle('${m.id}')">
     <div class="mat-name">${m.name}</div>
     <div class="mat-status">${STATUS_LABELS[ds]}</div>
-    <div class="mat-tooltip">${buildTooltip(m)}</div>
   </div>`;
 }
 
@@ -633,16 +633,17 @@ window._cycle = id => cycleEstado(id);
 
 function setupHover(){
   const allCards = document.querySelectorAll('.materia');
+  const tt = document.getElementById('global-tooltip');
 
   function clearHighlights(){
     allCards.forEach(el=>{
       el.classList.remove('hl-prereq','hl-postreq','hl-origin','dimmed');
     });
+    tt.style.display = 'none';
   }
 
   function applyHighlight(id){
     const { prereqs, postreqs } = getFullChain(id);
-    const related = new Set([id,...prereqs,...postreqs]);
 
     allCards.forEach(el=>{
       const eid = el.dataset.id;
@@ -658,18 +659,15 @@ function setupHover(){
     });
   }
 
-  // Tooltip positioning — keep within viewport
-  const tooltips = document.querySelectorAll('.mat-tooltip');
-
   allCards.forEach(el=>{
-    const tt = el.querySelector('.mat-tooltip');
 
     el.addEventListener('mouseenter', e=>{
       applyHighlight(el.dataset.id);
+      const m = materias.find(x=>x.id===el.dataset.id);
+      if(m){ tt.innerHTML = buildTooltip(m); tt.style.display = 'block'; }
     });
 
     el.addEventListener('mousemove', e=>{
-      if(!tt) return;
       const pad = 12;
       let x = e.clientX + 16;
       let y = e.clientY - 10;
