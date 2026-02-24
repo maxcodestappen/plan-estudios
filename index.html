@@ -314,15 +314,7 @@ header{
 .tt-chip.post{background:rgba(64,176,224,0.12);color:#80d0f0;border:1px solid rgba(64,176,224,0.25);}
 .tt-chip.none{color:var(--muted);font-style:italic;font-size:0.68rem;padding:3px 0;}
 
-.tt-libre{
-  display:flex;align-items:center;gap:5px;
-  margin-top:8px;padding-top:8px;
-  border-top:1px solid rgba(255,255,255,0.05);
-  font-family:'Share Tech Mono',monospace;
-  font-size:0.48rem;letter-spacing:0.1em;
-  color:var(--regular-text);
-}
-.tt-libre-star{font-size:10px;}
+
 
 .tt-divider{height:1px;background:rgba(255,255,255,0.05);margin:8px 0;}
 
@@ -653,24 +645,7 @@ materias.forEach(m => byYearSem[m.curso][m.sem].push(m));
 
 const CYCLE  = ['nocursada','regular','aprobada'];
 const YEAR_NAMES = {1:'Primer Año',2:'Segundo Año',3:'Tercer Año',4:'Cuarto Año',5:'Quinto Año'};
-// * = Se puede rendir en condición LIBRE (RIEP Art. 123 bis)
-const LIBRES = new Set([
-  '20024', // Antropología
-  '10030', // Derecho Privado III
-  '10033', // Pensamiento Teológico
-  '20026', // Derecho Privado IV
-  '20029', // Pensamiento Social Cristiano
-  '20031', // Derecho Concursal
-  '20032', // Derecho Privado VI
-  '20034', // Filosofía del Derecho
-  '20036', // Seminario de Formación Humana I
-  '10043', // Derecho Administrativo
-  '10044', // Seminario de Formación Humana II
-  '20044', // Ética y Deontología
-  '10045', // Der. Ambiental y de los Rec. Naturales
-  '10046', // Derecho Internacional Privado
-  '20049', // Práctica Profesional Supervisada
-]);
+
 
 let estados={}, currentUser=null, syncTimeout=null;
 
@@ -719,7 +694,6 @@ function displayState(mat){
 function canRendir(mat){
   const e = getEstado(mat.id);
   if(e !== 'regular') return false;
-  if(LIBRES.has(mat.id)) return true; // libre: solo necesita haber cursado la materia misma
   if(!mat.corrRendir.length) return true;
   return mat.corrRendir.every(c => getEstado(c) === 'aprobada');
 }
@@ -810,10 +784,6 @@ function buildTooltip(m){
     return names.map(n=>`<span class="tt-chip ${cls}">${n}</span>`).join('');
   }
 
-  const libreHTML = LIBRES.has(m.id)
-    ? `<div class="tt-libre"><span class="tt-libre-star">★</span>Se puede rendir en condición LIBRE</div>`
-    : '';
-
   return `
     <div class="tt-header">
       <div class="tt-matname">${m.name}</div>
@@ -835,7 +805,6 @@ function buildTooltip(m){
         </div>
         <div class="tt-chips">${chips(directPostreqs,'post')}</div>
       </div>
-      ${libreHTML}
     </div>`;
 }
 
